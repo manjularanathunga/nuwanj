@@ -1,2 +1,0 @@
-# nuwanj
-Project for NuwanJ
