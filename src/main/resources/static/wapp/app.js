@@ -24,4 +24,8 @@ var app = angular.module('myApp',['ngRoute'])
                 templateUrl : 'wapp/view/loginPage.html',
                 controller: 'LoginPageController'
             })
+            .when("/useradmin", {
+                templateUrl : 'wapp/view/userAdminPage.html',
+                controller: 'UserAdminController'
+            })
     }]);
