@@ -1,16 +1,19 @@
 package com.nj.websystem.model;
 
+import com.nj.websystem.enums.Status;
+import com.nj.websystem.enums.UserRoles;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "TBL_USER")
-public class TblUser {
+@Table(name = "TBL_USER_ADMIN")
+public class UserAdmin {
 
     @Id
     @Column(name = "id", nullable = false)
-    @SequenceGenerator(name = "TBL_USER_SEQ", sequenceName = "TBL_USER_SEQ" )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TBL_USER_SEQ")
+    @SequenceGenerator(name = "TBL_USER_ADMIN_SEQ", sequenceName = "TBL_USER_ADMIN_SEQ" )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TTBL_USER_ADMIN_SEQ")
     private Long id;
     private String userId;
     private String fistName;
@@ -22,7 +25,7 @@ public class TblUser {
     private String userPFNumber;
     private String telNumber;
     private String mobNumber;
-    private boolean active;
+    private Status active;
     private Date dateCreated;
     private String actionBy;
     private Date lastDateModified;
@@ -83,38 +86,6 @@ public class TblUser {
         this.userRoles = userRoles;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public String getActionBy() {
-        return actionBy;
-    }
-
-    public void setActionBy(String actionBy) {
-        this.actionBy = actionBy;
-    }
-
-    public Date getLastDateModified() {
-        return lastDateModified;
-    }
-
-    public void setLastDateModified(Date lastDateModified) {
-        this.lastDateModified = lastDateModified;
-    }
-
     public String getUserEmail() {
         return userEmail;
     }
@@ -145,5 +116,37 @@ public class TblUser {
 
     public void setMobNumber(String mobNumber) {
         this.mobNumber = mobNumber;
+    }
+
+    public Status getActive() {
+        return active;
+    }
+
+    public void setActive(Status active) {
+        this.active = active;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getActionBy() {
+        return actionBy;
+    }
+
+    public void setActionBy(String actionBy) {
+        this.actionBy = actionBy;
+    }
+
+    public Date getLastDateModified() {
+        return lastDateModified;
+    }
+
+    public void setLastDateModified(Date lastDateModified) {
+        this.lastDateModified = lastDateModified;
     }
 }

@@ -28,4 +28,8 @@ var app = angular.module('myApp',['ngRoute'])
                 templateUrl : 'wapp/view/userAdminPage.html',
                 controller: 'UserAdminController'
             })
+            .when("/patient", {
+                templateUrl : 'wapp/view/patientPage.html',
+                controller: 'PatientController'
+            })
     }]);
