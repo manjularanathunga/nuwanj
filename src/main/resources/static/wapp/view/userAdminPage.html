@@ -1,19 +1,14 @@
 <div class="container-fluid">
-    <h3>User Admin {{actionType.toUpperCase()}}</h3>
-    <hr/>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <span ng-show="useris_show">
-                        <label class="col-sm-1 fleft" for="userid">User Id</label>
-                        <select class="form-control col-sm-3 fleft" id="userid" ng-module="userid">
-                            <option>Admin</option>
-                            <option>saman</option>
-                            <option>suranga</option>
-                            <option>nilantha</option>
-                        </select>
-                    </span>
+                    <div ng-show="useris_show">
+                        <label class="col-sm-1 fleft" for="selectuser">User</label>
+                        <select class="form-control col-sm-3 fleft"
+                                id="selectuser" ng-change="onSelectAdminUser()"
+                                ng-model="selectuser" ng-options="user as user.userId for user in userAdminList"></select>
+                    </div>
                     <div class="d-flex flex-row-reverse">
                         <button class="btn btn-danger" ng-click="reset();" ng-show="btnResetShow" type="button"><i
                                 aria-hidden="true" class="fa fa fa-reply"></i></button>&nbsp;
@@ -29,91 +24,107 @@
                 </div>
             </div>
         </div>
-
-        <span class="border">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">User Id</label>
-                            <input ng-module="sysuser.userId" class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
+        <form name="form" ng-submit="save_submit()" role="form">
+            <div> <!--class="border"-->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft required" for="userId">User</label>
+                                <input class="form-control col-sm-8 fleft" id="userId" name="userId" ng-disabled="component_is_disabled"
+                                       ng-model="usr.userId" required type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft required">Role</label>
+                                <select class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled"
+                                        ng-model="usr.role" required>
+                                    <option value="">
+                                    <option value="ADMIN">ADMIN
+                                    <option value="USER">USER
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">userRoles</label>
-                            <input class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft required" for="fistName">fistName</label>
+                                <input class="form-control col-sm-8 fleft" id="fistName" name="fistName" ng-disabled="component_is_disabled"
+                                       ng-model="usr.fistName" required type="text">
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft" for="userEmail">Email</label>
+                                <input class="form-control col-sm-8 fleft" id="userEmail" name="userEmail" ng-disabled="component_is_disabled"
+                                       ng-model="usr.userEmail" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft" for="middleName">Middle Name</label>
+                                <input class="form-control col-sm-8 fleft" id="middleName" name="middleName" ng-disabled="component_is_disabled"
+                                       ng-model="usr.middleName" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft required" for="userPFNumber">PF #</label>
+                                <input class="form-control col-sm-8 fleft" id="userPFNumber" name="userPFNumber" ng-disabled="component_is_disabled"
+                                       ng-model="usr.userPFNumber" required type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft required" for="lastName">Last Name</label>
+                                <input class="form-control col-sm-8 fleft" id="lastName" name="lastName" ng-disabled="component_is_disabled"
+                                       ng-model="usr.lastName" required type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-4 fleft required" for="telNumber">Telephone</label>
+                                <input class="form-control col-sm-8 fleft" id="telNumber" name="telNumber" ng-disabled="component_is_disabled"
+                                       ng-model="usr.telNumber" required type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4 d-flex flex-row-reverse">
+                        <button class="btn btn-secondary" ng-click="reset();" type="reset" type="button">Reset</button>&nbsp;
+                        <button class="btn btn-success" ng-disabled="save_is_disabled" type="submit" type="button">
+                            {{btnSubmitText}}
+                        </button>&nbsp;
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">fistName</label>
-                            <input ng-module="sysuser.fistName" class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">Email</label>
-                            <input class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">Middle Name</label>
-                            <input ng-module="sysuser.middleName" class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">userPFNumber</label>
-                            <input class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">Last Name</label>
-                            <input ng-module="sysuser.lastName" class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-4 fleft" for="sel1">Telephone</label>
-                            <input class="form-control col-sm-8 fleft" ng-disabled="component_is_disabled" type="text">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <br>
-            <div class="row">
-                <div class="col-sm-4">
-                </div>
-                <div class="col-sm-4">
-                </div>
-                <div class="col-sm-4 d-flex flex-row-reverse">
-                    <button class="btn btn-success" ng-click="save_submit();" ng-disabled="save_is_disabled" type="button">Save</button>
-                </div>
-            </div>
-        </span>
+        </form>
         <div class="embed-responsive embed-responsive-21by9">
             <iframe class="embed-responsive-item" src=""></iframe>
         </div>

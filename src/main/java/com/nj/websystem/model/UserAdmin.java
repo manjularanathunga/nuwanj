@@ -12,15 +12,15 @@ public class UserAdmin {
 
     @Id
     @Column(name = "id", nullable = false)
-    @SequenceGenerator(name = "TBL_USER_ADMIN_SEQ", sequenceName = "TBL_USER_ADMIN_SEQ" )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TTBL_USER_ADMIN_SEQ")
+    @SequenceGenerator(name = "TBL_USER_ADMIN_SEQ", sequenceName = "TBL_USER_ADMIN_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TBL_USER_ADMIN_SEQ")
     private Long id;
     private String userId;
     private String fistName;
     private String middleName;
     private String lastName;
     private String passWord;
-    private UserRoles userRoles;
+    private UserRoles role;
     private String userEmail;
     private String userPFNumber;
     private String telNumber;
@@ -29,6 +29,21 @@ public class UserAdmin {
     private Date dateCreated;
     private String actionBy;
     private Date lastDateModified;
+
+    public UserAdmin() {
+    }
+
+    public UserAdmin(Long id,String userId, String fistName, String lastName, String passWord, UserRoles role, String userPFNumber, Date dateCreated, String actionBy) {
+        this.id = id;
+        this.userId = userId;
+        this.fistName = fistName;
+        this.lastName = lastName;
+        this.passWord = passWord;
+        this.role = role;
+        this.userPFNumber = userPFNumber;
+        this.dateCreated = dateCreated;
+        this.actionBy = actionBy;
+    }
 
     public Long getId() {
         return id;
@@ -78,12 +93,12 @@ public class UserAdmin {
         this.passWord = passWord;
     }
 
-    public UserRoles getUserRoles() {
-        return userRoles;
+    public UserRoles getRole() {
+        return role;
     }
 
-    public void setUserRoles(UserRoles userRoles) {
-        this.userRoles = userRoles;
+    public void setRole(UserRoles role) {
+        this.role = role;
     }
 
     public String getUserEmail() {
