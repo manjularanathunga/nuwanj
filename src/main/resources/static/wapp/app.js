@@ -22,7 +22,7 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
             var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {
-                // $location.path('/login');
+                $location.path('/login');
             }
         });
 
@@ -73,6 +73,10 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
             .when("/screenaccess", {
                 templateUrl: 'wapp/view/screenAccessPage.html',
                 controller: 'ScreenAccessController'
+            })
+            .when("/userscreen", {
+                templateUrl: 'wapp/view/userScreenPage.html',
+                controller: 'UserScreenController'
             })
 
 

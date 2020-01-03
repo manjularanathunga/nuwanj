@@ -5,8 +5,9 @@
         .module('app')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService'];
-    function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService) {
+    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', '$window'];
+
+    function AuthenticationService($http, $cookies, $rootScope, $timeout, $window) {
         var service = {};
 
         service.Login = Login;
@@ -19,29 +20,31 @@
 
             /* Dummy authentication for testing, uses $timeout to simulate api call
              ----------------------------------------------*/
-            $timeout(function () {
-                var response;
-                UserService.GetByUsername(username)
-                    .then(function (user) {
-                        if (user !== null && user.password === password) {
-                            response = { success: true };
-                        } else {
-                            response = { success: false, message: 'Username or password is incorrect' };
-                        }
-                        callback(response);
-                    });
-            }, 1000);
+            /*            $timeout(function () {
+                            var response;
+                            UserService.GetByUsername(username)
+                                .then(function (user) {
+                                    if (user !== null && user.password === password) {
+                                        response = { success: true };
+                                    } else {
+                                        response = { success: false, message: 'Username or password is incorrect' };
+                                    }
+                                    callback(response);
+                                });
+                        }, 1000);*/
 
-            /* Use this for real authentication
-             ----------------------------------------------*/
-            //$http.post('/api/authenticate', { username: username, password: password })
-            //    .success(function (response) {
-            //        callback(response);
-            //    });
-
+            $http.post('/users/authenticate', {username: username, password: password}).then(function (response) {
+                callback(response);
+            }, function (response) {
+                callback(response);
+            });
         }
 
-        function SetCredentials(username, password) {
+        function SetCredentials(username, password, response) {
+
+            var lsuserid = response.data.response.userId;
+            var lsuserroles = response.data.response.userRoles;
+            var lsloggedUser = response.data.response.fistName + ' ' + response.data.response.lastName;
             var authdata = Base64.encode(username + ':' + password);
 
             $rootScope.globals = {
@@ -51,19 +54,31 @@
                 }
             };
 
-            // set default auth header for http requests
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+            $window.localStorage.setItem('mdbUserId', lsuserid);
+            $window.localStorage.setItem('mdbRole', lsuserroles);
+            $window.localStorage.setItem('mdbAuthData', authdata);
+            $window.localStorage.setItem('mdbloggedUser', lsloggedUser);
+            $rootScope.loggedUser = lsloggedUser;
 
-            // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
+            // store user details in globals cookie that keeps user logged in for 1 week (or until they logout) cookieExp.setDate(cookieExp.getDate() + 7);
             var cookieExp = new Date();
-            cookieExp.setDate(cookieExp.getDate() + 7);
-            $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
+            cookieExp.setDate(cookieExp.getDate());
+            $cookies.putObject('globals', $rootScope.globals, {expires: cookieExp});
         }
 
         function ClearCredentials() {
+            console.log('call ClearCredentials');
             $rootScope.globals = {};
             $cookies.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic';
+
+            $window.localStorage.removeItem('mdbUserId');
+            $window.localStorage.removeItem('mdbRole');
+            $window.localStorage.removeItem('mdbAuthData');
+            $window.localStorage.removeItem('mdbUsername');
+
+            $rootScope.loggedUser = '';
         }
     }
 

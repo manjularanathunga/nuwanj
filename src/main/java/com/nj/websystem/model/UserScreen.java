@@ -25,6 +25,22 @@ public class UserScreen {
         this.id = id;
     }
 
+    public Long getUserAdminId() {
+        return userAdminId;
+    }
+
+    public void setUserAdminId(Long userAdminId) {
+        this.userAdminId = userAdminId;
+    }
+
+    public Long getSystemScreenId() {
+        return systemScreenId;
+    }
+
+    public void setSystemScreenId(Long systemScreenId) {
+        this.systemScreenId = systemScreenId;
+    }
+
     public String getProp() {
         return prop;
     }
