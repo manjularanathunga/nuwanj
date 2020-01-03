@@ -14,7 +14,9 @@ app.controller('PatientTestController', function($scope, $rootScope, $http, $loc
     var res = $http.get("patientmedicaltest/findAllActiveByBillingNumber?billingNumber=" + $scope.uicompo.billingNumber)
         .then(function(response) {
             if (response.data.success) {
-                $scope.patientMediTestList = response.data.response;
+                var dList = response.data.response;
+                $scope.patient = dList[0];
+                $scope.patientMediTestList = dList[1];
             } else {
                 $scope.patientMediTestList = [];
             }
