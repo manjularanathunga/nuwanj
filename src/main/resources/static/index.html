@@ -35,6 +35,7 @@
     <script src="wapp/controller/LabResultsController.js"></script>
     <script src="wapp/controller/PatientTestController.js"></script>
     <script src="wapp/controller/DailyPatientController.js"></script>
+    <script src="wapp/controller/ScreenAccessController.js"></script>
 
     <script src="wapp/app-services/authentication.service.js"></script>
     <script src="wapp/app-services/user.service.js"></script>
@@ -60,13 +61,25 @@
                 <a href="#!billing">Billing</a>
             </li>
             <li>
+                <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#homeSubmenu">Medical</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#!meditest">Test Setup</a>
+                    </li>
+                    <li>
+                        <a href="#!patienttest">Test by Patient</a>
+                    </li>
+                    <li>
+                        <a href="#!patient">Patient</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
                 <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#homeSubmenu1">Lab</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu1">
                     <li>
                         <a href="#!labresults">Enter Test Results</a>
-                    </li>
-                    <li>
-                        <a href="#!patienttest">Test by Patient</a>
                     </li>
                  </ul>
             </li>
@@ -79,16 +92,13 @@
                 </ul>
             </li>
             <li>
-                <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#homeSubmenu">Administration</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
+                <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#homeSubmenu0">Administration</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu0">
                     <li>
                         <a href="#!useradmin">User Admin</a>
                     </li>
                     <li>
-                        <a href="#!patient">Patient</a>
-                    </li>
-                    <li>
-                        <a href="#!meditest">Test Setup</a>
+                        <a href="#!screenaccess">Screen</a>
                     </li>
                 </ul>
             </li>

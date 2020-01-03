@@ -1,25 +1,21 @@
 package com.nj.websystem.controller;
 
-import com.nj.websystem.model.ScreenAccess;
-import com.nj.websystem.model.UserAdmin;
-import com.nj.websystem.rest.AuthRequest;
+import com.nj.websystem.model.SystemScreen;
 import com.nj.websystem.rest.HttpResponse;
 import com.nj.websystem.service.ScreenAccessService;
-import com.nj.websystem.service.UserAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/screen")
-public class ScreenAccessController {
+public class SystemScreenController {
 
-    static Logger logger = LoggerFactory.getLogger(ScreenAccessController.class);
+    static Logger logger = LoggerFactory.getLogger(SystemScreenController.class);
 
     @Autowired
     private ScreenAccessService services;
@@ -35,7 +31,7 @@ public class ScreenAccessController {
     public HttpResponse getById(@RequestParam(value = "id", required = false) String id) {
         logger.info("Request UserAdmin Id : {} " + id);
         HttpResponse res = new HttpResponse();
-        ScreenAccess screen = services.getOne(Long.parseLong(id));
+        SystemScreen screen = services.getOne(Long.parseLong(id));
         if (screen != null) {
             res.setResponse(screen);
             res.setSuccess(true);
@@ -48,10 +44,10 @@ public class ScreenAccessController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ScreenAccess save(@RequestBody ScreenAccess obj) {
+    public SystemScreen save(@RequestBody SystemScreen obj) {
         logger.info("Save / UserAdmin Name : {} " + obj.getScreenName());
         HttpResponse res = new HttpResponse();
-        ScreenAccess result = services.save(obj);
+        SystemScreen result = services.save(obj);
         if (result == null) {
             res.setResponse(result);
             res.setSuccess(true);
@@ -67,7 +63,7 @@ public class ScreenAccessController {
     public HttpResponse delete(@RequestParam(value = "id", required = false) Long id) {
         logger.info("Delete UserAdmin Name : {} " + id);
         HttpResponse response = new HttpResponse();
-        ScreenAccess item = services.getOne(id);
+        SystemScreen item = services.getOne(id);
         if (item != null) {
             services.delete(item);
             response.setSuccess(true);
@@ -80,7 +76,7 @@ public class ScreenAccessController {
     }
 
     @RequestMapping(value = "/bulkInsert", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<ScreenAccess> bulkInsert(@RequestBody List<ScreenAccess> items) {
+    public List<SystemScreen> bulkInsert(@RequestBody List<SystemScreen> items) {
         logger.info("UserAdmin countt : {} " + items.size());
         return services.saveAll(items);
     }

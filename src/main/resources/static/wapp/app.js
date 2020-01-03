@@ -67,9 +67,14 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
                 controller: 'PatientTestController'
             })
             .when("/dailypatientreport", {
-            templateUrl: 'wapp/view/dailyPatientPage.html',
-            controller: 'DailyPatientController'
-        })
+                templateUrl: 'wapp/view/dailyPatientPage.html',
+                controller: 'DailyPatientController'
+            })
+            .when("/screenaccess", {
+                templateUrl: 'wapp/view/screenAccessPage.html',
+                controller: 'ScreenAccessController'
+            })
 
 
     }]);
+

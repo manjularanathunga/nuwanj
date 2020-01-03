@@ -3,15 +3,16 @@ package com.nj.websystem.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TBL_SCREEN_ACCESS")
-public class ScreenAccess {
+@Table(name = "TBL_USER_SCREEN")
+public class UserScreen {
 
     @Id
     @Column(name = "id", nullable = false)
-    @SequenceGenerator(name = "TBL_SCREEN_ACCESS_SEQ", sequenceName = "TBL_SCREEN_ACCESS_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TBL_SCREEN_ACCESS_SEQ")
+    @SequenceGenerator(name = "TBL_USER_SCREEN_SEQ", sequenceName = "TBL_USER_SCREEN_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TBL_USER_SCREEN_SEQ")
     private Long id;
-    private String ScreenName;
+    private Long userAdminId;
+    private Long systemScreenId;
     private String prop;
     private boolean readEnabled;
     private boolean writeEnabled;
@@ -22,14 +23,6 @@ public class ScreenAccess {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getScreenName() {
-        return ScreenName;
-    }
-
-    public void setScreenName(String screenName) {
-        ScreenName = screenName;
     }
 
     public String getProp() {
