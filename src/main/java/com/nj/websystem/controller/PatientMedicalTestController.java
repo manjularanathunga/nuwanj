@@ -7,24 +7,21 @@ import com.nj.websystem.model.PatientMedicalTest;
 import com.nj.websystem.rest.HttpResponse;
 import com.nj.websystem.service.PatientMedicalTestService;
 import com.nj.websystem.service.PatientService;
-import com.nj.websystem.util.DateUtility;
 import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/patientmedicaltest")
-public class PetientMedicalTestController {
+public class PatientMedicalTestController {
 
-    static Logger logger = LoggerFactory.getLogger(PetientMedicalTestController.class);
+    static Logger logger = LoggerFactory.getLogger(PatientMedicalTestController.class);
 
     @Autowired
     private PatientMedicalTestService services;
@@ -110,7 +107,7 @@ public class PetientMedicalTestController {
         logger.info("Saving TestName : " + obj.getName());
         List<PatientMedicalTest> testsList = services.getAllByTestType(obj.getTestType());
         String testNumber = StringUtility.getDate(StringUtility.YY)+obj.getTestType() + String.format("%05d", (testsList.size()+ 1));
-        obj.setTestNumber(testNumber);
+        obj.setTestNumber(testNumber.toUpperCase());
         PatientMedicalTest savedMedicalTest = services.save(obj);
 
         if (savedMedicalTest != null) {
