@@ -76,8 +76,14 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
     $scope.showUI = function(itm, opType) {
         $scope.actionType = opType;
         if ('delete' === $scope.actionType) {
-            $http.delete("patientmedicaltest/delete?id=" + itm.id);
-            loadPatientMediTestList();
+            if($scope.billingList.length > 0){
+                for (var i = 0; i < $scope.billingList.length; i++) {
+                  if($scope.billingList[i].id === itm.id){
+                        //$scope.billingList.remove(i);
+                        $scope.billingList.splice(i, 1);
+                  }
+                }
+            }
         }
     };
 
@@ -157,6 +163,12 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         saveTest.id = null;
         saveTest.billingNumber = $scope.uicompo.billingNumber;
         saveTest.status = "OPEN";
+        if($scope.billingList){
+           saveTest.id = 0;
+        }else{
+          saveTest.id = $scope.billingList.length();
+        }
+
 
         $scope.billingList.push(saveTest);
 
@@ -280,7 +292,18 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
             $scope.mediTestList = [];
             $scope.patientMediTestList = [];
             $scope.findByPatientId($scope.patient.patientId);
+        }
+    }
 
+    $scope.copyBillNumber = function() {
+        $scope.uicompo.billingNumber = $scope.uicompo.showBillingNumber;
+    }
+
+    $scope.loadPatientId = function() {
+        if ($scope.patient.patientId) {
+            $scope.mediTestList = [];
+            $scope.patientMediTestList = [];
+            $scope.findByPatientId($scope.patient.patientId);
         }
     }
 

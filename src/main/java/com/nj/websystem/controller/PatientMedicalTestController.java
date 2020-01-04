@@ -219,6 +219,9 @@ public class PatientMedicalTestController {
     public HttpResponse bulkInsert(@RequestBody List<PatientMedicalTest> items) {
         logger.info("PatientMedicalTest count : {} " + items.size());
         HttpResponse response = new HttpResponse();
+        items.forEach( i ->
+                i.setId(null)
+        );
         List result = services.saveAll(items);
         if (result != null && result.size() > 0) {
             response.setSuccess(true);

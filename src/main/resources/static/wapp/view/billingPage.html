@@ -257,7 +257,7 @@
                             <div class="col-sm-4 input-group">
                                 <label class="font-size-sm">SEARCH ID</label>
                             </div>
-                            <div class="col-sm-8 input-group">
+                            <div class="col-sm-6 input-group">
                                 <input list="patientId" ng-change="loadPatientList()"
                                        ng-keypress="keypressId($event)"
                                        ng-model="patient.patientId"
@@ -265,6 +265,13 @@
                                 <datalist id="patientId" ng-model="patient.patientId">
                                     <option ng-repeat="p in ptestList">{{p.patientId}}</option>
                                 </datalist>
+                            </div>
+                            <div class="col-sm-2 input-group">
+                                <button class="btn btn-primary pr-sm-1" ng-click="loadPatientId();" ng-disabled="disabledAddTest"
+                                        style="width: 45px;"
+                                        title="Add Test to the Patient Test list"
+                                        type="button"><i
+                                        class="fa fa-plus-circle"></i></button>
                             </div>
                         </div>
                         OR
@@ -327,8 +334,14 @@
                             <div class="col-sm-4">
                                 <label class="font-size-sm">Billing #</label>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-6">
                                 <input ng-model="uicompo.billingNumber" type="text">
+                            </div>
+                            <div class="col-sm-2">
+                                <button ng-click="copyBillNumber()"
+                                        type="button">
+                                    <span style="color: SlateBlue">Copy</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -348,21 +361,21 @@
                     </div>
 
                     <div class="row pt-3 pb-3 input-group">
-                        <div class="col-sm-6">
-                            <label class=" ">Next Available Bill #</label>
+                        <div class="col-sm-4 p-0">
+                            <label class=" ">Next Available #</label>
                         </div>
-                        <div class="col-sm-2">
-                            <label class="font-size-sm red ">{{uicompo.showBillingNumber}}</label>
+                        <div class="col-sm-2 p-0">
+                            <label class="font-size-sm red">{{uicompo.showBillingNumber}}</label>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="col-sm-12">
-                                <button class="btn btn-success" ng-click="addSelectedTest()"
+                        <div class="col-sm-6 d-flex flex-row-reverse">
+                            <div class="col-sm-12 pl-2" style="padding-left: 0px; left: 85px;">
+                                <button ng-click="addSelectedTest()" class="btn btn-success"
                                         type="button">
-                                    <i class="fa fa-plus"></i>
+                                    <span>Add</span>
                                 </button>
-                                <button class="btn btn-danger" data-dismiss="modal"
+                                <button data-dismiss="modal" class="btn btn-danger"
                                         type="button">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <span>Close</span>
                                 </button>
                             </div>
                         </div>
