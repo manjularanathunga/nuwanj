@@ -17,7 +17,6 @@ public class Patient {
     private Long id;
     @Column(unique = true)
     private String patientId;
-    @Column(unique = true)
     private String nicNumber;
     private String other;
     private String patientName;
@@ -29,6 +28,7 @@ public class Patient {
     private Gender gender;
     private String actionBy;
     private String bht;
+    private String remarks;
     private Date dateCreated;
     private Date lastModified;
     private Status status;
@@ -160,5 +160,13 @@ public class Patient {
 
     public void setDistrictName(String districtName) {
         this.districtName = districtName;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

@@ -7,6 +7,7 @@ import com.nj.websystem.service.UserAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ public class LoggingController {
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public List getList() {
-        List list = services.findAll();
+        List list = services.findAll(Sort.by(Sort.Direction.ASC,"id"));
         logger.info("Count of UserAdmin : {} " + list.size());
         return list;
     }

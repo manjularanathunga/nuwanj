@@ -83,9 +83,9 @@ public class PatientMedicalTestController {
         if(medicalTest != null){
             String exitsingNumber =  medicalTest.getBillingNumber().substring(3,medicalTest.getBillingNumber().length());
             logger.info("Patient - NextPatientId : {} " + exitsingNumber);
-            nextNumber = StringUtility.getDate(StringUtility.YY) + type + StringUtility.getFilledNumber((Integer.parseInt(exitsingNumber)+1),4L);
+            nextNumber = StringUtility.getCustDateByPatten(StringUtility.YY) + type + StringUtility.getFilledNumber((Integer.parseInt(exitsingNumber)+1),4L);
         }else{
-            nextNumber = StringUtility.getDate(StringUtility.YY) + type +StringUtility.getFilledNumber((1),4L);
+            nextNumber = StringUtility.getCustDateByPatten(StringUtility.YY) + type +StringUtility.getFilledNumber((1),4L);
         }
 
         if (!StringUtility.isEmpty(nextNumber)) {
@@ -106,7 +106,7 @@ public class PatientMedicalTestController {
         HttpResponse res = new HttpResponse();
         logger.info("Saving TestName : " + obj.getName());
         List<PatientMedicalTest> testsList = services.getAllByTestType(obj.getTestType());
-        String testNumber = StringUtility.getDate(StringUtility.YY)+obj.getTestType() + String.format("%05d", (testsList.size()+ 1));
+        String testNumber = StringUtility.getCustDateByPatten(StringUtility.YY)+obj.getTestType() + String.format("%05d", (testsList.size()+ 1));
         obj.setTestNumber(testNumber.toUpperCase());
         PatientMedicalTest savedMedicalTest = services.save(obj);
 

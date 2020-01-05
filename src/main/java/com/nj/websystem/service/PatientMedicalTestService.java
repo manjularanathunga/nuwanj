@@ -5,7 +5,6 @@ import com.nj.websystem.enums.TestType;
 import com.nj.websystem.model.PatientMedicalTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;

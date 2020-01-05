@@ -211,8 +211,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
     };
 
     $scope.loadPatientList = function() {
-        console.log('loadPatientList');
-        if ($scope.patient.patientId.length > 3) {
+        if ($scope.patient.patientId.length > 5) {
             $http.get("patient/findByPatientListById?patientId=" + $scope.patient.patientId)
                 .then(function(response) {
                     $scope.ptestList = response.data.response;
@@ -221,7 +220,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
     };
 
     $scope.loadPatientListByNIC = function() {
-        if ($scope.patient.nicNumber.length > 3) {
+        if ($scope.patient.nicNumber.length > 5) {
             $http.get("patient/findByPatientListById?nicNumber=" + $scope.patient.nicNumber)
                 .then(function(response) {
                     $scope.ptestList = response.data.response;

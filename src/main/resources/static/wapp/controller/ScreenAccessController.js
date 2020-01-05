@@ -31,23 +31,28 @@ app.controller('ScreenAccessController', function($scope, $rootScope, $http, $lo
     $scope.saveModal = function () {
         $scope.mtest.lastModified = new Date();
         $scope.mtest.actionBy = loggedUser;
-
-        if ('add' === $scope.actionType) {
+       if ('add' === $scope.actionType) {
             $scope.mtest.dateCreated = new Date();
             $scope.mtest.status = 'ACTIVE';
+            $http.post('/screen/save', $scope.mtest).then(function (response) {
+                loadList();
+             }, function (response) {
+            });
         } else if ('edit' === $scope.actionType) {
             $scope.mtest.status = 'ACTIVE';
-
+            $http.post('/screen/save', $scope.mtest).then(function (response) {
+                loadList();
+             }, function (response) {
+            });
         } else if ('delete' === $scope.actionType) {
-            $scope.mtest.status = 'DELETED';
+            $http.delete('/screen/delete?id=', $scope.mtest.id).then(function (response) {
+             }, function (response) {
+            });
         }
 
         $http.post('/screen/save', $scope.mtest).then(function (response) {
             loadList();
-            //reset_screen();
-            //Pop.msgWithButton('New User <<'+ item.fistName + '>> Created','New user <<'+ item.userId + '>>has been created, Auto generated password for the first login user : <<'+item.userId+'>> is : <<' + item.passWord +'>>', 'success');
-        }, function (response) {
-            //Pop.msgWithButton('UPDATE','Fail User '+ item.fistName + ' Saving', 'error');
+         }, function (response) {
         });
     };
 

@@ -1,6 +1,5 @@
 package com.nj.websystem.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtility {

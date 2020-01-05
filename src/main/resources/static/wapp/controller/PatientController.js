@@ -21,12 +21,12 @@ app.controller('PatientController', function ($scope, $rootScope, $http, $locati
             $scope.patient = {};
             $scope.patient.status = 'ACTIVE';
         } else if ('edit' === $scope.actionType) {
-            $scope.heading = 'Edit Patient Details';
+            $scope.heading = 'Edit Patient Details :' + itm.id;
             $scope.itemDisabled = false;
             $scope.patient = itm;
             $scope.patient.dateOfBirth = new Date(itm.dateOfBirth);
         } else if ('delete' === $scope.actionType) {
-            $scope.heading = 'Delete Patient Details';
+            $scope.heading = 'Delete Patient Details :' + itm.id;
             $scope.itemDisabled = true;
             $scope.patient = itm;
         }
@@ -39,26 +39,32 @@ app.controller('PatientController', function ($scope, $rootScope, $http, $locati
 
         if ('add' === $scope.actionType) {
             $scope.patient.dateCreated = new Date();
+            $http.post('/patient/save', $scope.patient).then(function (response) {
+             }, function (response) {
+            });
         } else if ('edit' === $scope.actionType) {
             $scope.patient.status = 'ACTIVE';
-
+            $http.post('/patient/save', $scope.patient).then(function (response) {
+             }, function (response) {
+            });
         } else if ('delete' === $scope.actionType) {
-            $scope.patient.status = 'DELETED';
+            $http.delete('/patient/delete?id='+$scope.patient.id).then(function (response) {
+             }, function (response) {
+            });
         }
-
-        $http.post('/patient/save', $scope.patient).then(function (response) {
-            loadList();
-            //reset_screen();
-            //Pop.msgWithButton('New User <<'+ item.fistName + '>> Created','New user <<'+ item.userId + '>>has been created, Auto generated password for the first login user : <<'+item.userId+'>> is : <<' + item.passWord +'>>', 'success');
-        }, function (response) {
-            //Pop.msgWithButton('UPDATE','Fail User '+ item.fistName + ' Saving', 'error');
-        });
+        loadList();
     };
 
 
+    $scope.loadBulkData = function () {
+        $http.get("patient/loadPatient").then(function (response) {
+            loadList();
+        });
+    };
+
     var loadList = function () {
         $http.get("patient/getList").then(function (response) {
-            $scope.patientList = response.data;
+            $scope.patientList = response.data.content;
         });
     };
     loadList();

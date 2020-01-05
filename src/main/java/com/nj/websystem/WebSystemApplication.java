@@ -1,7 +1,5 @@
 package com.nj.websystem;
 
-import com.nj.websystem.controller.LoggingController;
-import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.UserRoles;
 import com.nj.websystem.model.UserAdmin;
 import com.nj.websystem.service.UserAdminService;

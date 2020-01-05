@@ -2,7 +2,6 @@ package com.nj.websystem.controller;
 
 import com.nj.websystem.model.UserScreen;
 import com.nj.websystem.rest.HttpResponse;
-import com.nj.websystem.service.SystemScreenService;
 import com.nj.websystem.service.UserScreenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

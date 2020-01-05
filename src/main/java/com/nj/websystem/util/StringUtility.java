@@ -8,9 +8,14 @@ public class StringUtility {
     final static public String YY = "yy";
     private static SimpleDateFormat simpleDateFormat = null;
 
-    public static String getDate(String pattern) {
+    public static String getCustDateByPatten(String pattern) {
         simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(new Date());
+    }
+
+    public static String getCustDateByPatten(String pattern, Date givenDate) {
+        simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(givenDate);
     }
 
     public static String getFilledNumber(int number, Long filCount) {
