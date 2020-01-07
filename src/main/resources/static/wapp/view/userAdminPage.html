@@ -7,7 +7,8 @@
                         <label class="col-sm-1 fleft" for="selectuser">User</label>
                         <select class="form-control col-sm-3 fleft"
                                 id="selectuser" ng-change="onSelectAdminUser()"
-                                ng-model="selectuser" ng-options="user as user.userId for user in userAdminList"></select>
+                                ng-model="selectuser"
+                                ng-options="user as user.userId for user in userAdminList"></select>
                     </div>
                     <div class="d-flex flex-row-reverse">
                         <button class="btn btn-danger" ng-click="reset();" ng-show="btnResetShow" type="button"><i
@@ -31,7 +32,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-4 fleft required" for="userId">User</label>
-                                <input class="form-control col-sm-8 fleft" id="userId" name="userId" ng-disabled="component_is_disabled"
+                                <input class="form-control col-sm-8 fleft" id="userId" name="userId"
+                                       ng-disabled="component_is_disabled"
                                        ng-model="usr.userId" required type="text">
                             </div>
                         </div>
@@ -55,7 +57,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-4 fleft required" for="fistName">fistName</label>
-                                <input class="form-control col-sm-8 fleft" id="fistName" name="fistName" ng-disabled="component_is_disabled"
+                                <input class="form-control col-sm-8 fleft" id="fistName" name="fistName"
+                                       ng-disabled="component_is_disabled"
                                        ng-model="usr.fistName" required type="text">
                             </div>
                         </div>
@@ -64,7 +67,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-4 fleft" for="userEmail">Email</label>
-                                <input class="form-control col-sm-8 fleft" id="userEmail" name="userEmail" ng-disabled="component_is_disabled"
+                                <input class="form-control col-sm-8 fleft" id="userEmail" name="userEmail"
+                                       ng-disabled="component_is_disabled"
                                        ng-model="usr.userEmail" type="text">
                             </div>
                         </div>
@@ -75,7 +79,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-4 fleft" for="middleName">Middle Name</label>
-                                <input class="form-control col-sm-8 fleft" id="middleName" name="middleName" ng-disabled="component_is_disabled"
+                                <input class="form-control col-sm-8 fleft" id="middleName" name="middleName"
+                                       ng-disabled="component_is_disabled"
                                        ng-model="usr.middleName" type="text">
                             </div>
                         </div>
@@ -84,7 +89,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-4 fleft required" for="userPFNumber">PF #</label>
-                                <input class="form-control col-sm-8 fleft" id="userPFNumber" name="userPFNumber" ng-disabled="component_is_disabled"
+                                <input class="form-control col-sm-8 fleft" id="userPFNumber" name="userPFNumber"
+                                       ng-disabled="component_is_disabled"
                                        ng-model="usr.userPFNumber" required type="text">
                             </div>
                         </div>
@@ -95,7 +101,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-4 fleft required" for="lastName">Last Name</label>
-                                <input class="form-control col-sm-8 fleft" id="lastName" name="lastName" ng-disabled="component_is_disabled"
+                                <input class="form-control col-sm-8 fleft" id="lastName" name="lastName"
+                                       ng-disabled="component_is_disabled"
                                        ng-model="usr.lastName" required type="text">
                             </div>
                         </div>
@@ -104,7 +111,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-4 fleft required" for="telNumber">Telephone</label>
-                                <input class="form-control col-sm-8 fleft" id="telNumber" name="telNumber" ng-disabled="component_is_disabled"
+                                <input class="form-control col-sm-8 fleft" id="telNumber" name="telNumber"
+                                       ng-disabled="component_is_disabled"
                                        ng-model="usr.telNumber" required type="text">
                             </div>
                         </div>

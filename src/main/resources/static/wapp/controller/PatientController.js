@@ -1,4 +1,4 @@
-app.controller('PatientController', function ($scope, $rootScope, $http, $location, $window) {
+app.controller('PatientController', function ($scope, $rootScope, $http, $location, $window, Pop) {
     $rootScope.pageTitle = "Patient Setup";
 
     $scope.patientList = [];
@@ -7,10 +7,49 @@ app.controller('PatientController', function ($scope, $rootScope, $http, $locati
     $scope.itemDisabled = false;
     $scope.actionType = '';
     $scope.genderLst = ['MALE', 'FEMALE'];
+    $scope.uicompo = {};
+    $scope.uicompo.patientId = '';
+    $scope.ptestList = [];
+    $scope.btnDisabledRecSearch = true;
 
     var loggedUser = '-';
     if ($rootScope.globals && $rootScope.globals.currentUser) {
         loggedUser = $rootScope.globals.currentUser.username;
+    }
+
+    $scope.showRecordSearch = function () {
+        $scope.btnDisabledRecSearch = true;
+        $("#modal-p-search").modal("show");
+    }
+
+    $scope.recordSearch = function () {
+        if ($scope.uicompo.patientId.length > 4) {
+        $http.get("patient/findByPatientIdContainingPages?patientId=" + $scope.uicompo.patientId)
+        .then(function(response) {
+            $scope.patientList = response.data.response;
+            $("#modal-p-search").modal("hide");
+        });
+        }else{
+            Pop.timeMsg('error',' PATIENT # SEARCH SHOULD HAVE MINIMUM 5 NUMBERS','PATIENT SEARCH', 2000);
+        }
+    }
+
+    $scope.changeSearchNumber = function () {
+        if ($scope.uicompo.patientId.length > 5) {
+            $http.get("patient/findByPatientListById?patientId=" + $scope.uicompo.patientId)
+            .then(function(response) {
+                $scope.ptestList = response.data.response;
+                $scope.btnDisabledRecSearch = false;
+            });
+        }
+    }
+
+    $scope.keypressId = function(e) {
+        if (e.keyCode == 13) {
+            $scope.mediTestList = [];
+            $scope.patientMediTestList = [];
+            $scope.findByPatientId($scope.patient.patientId);
+        }
     }
 
     $scope.showUI = function (itm, opType) {

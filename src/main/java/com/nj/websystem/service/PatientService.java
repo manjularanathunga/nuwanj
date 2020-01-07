@@ -1,5 +1,6 @@
 package com.nj.websystem.service;
 
+import com.nj.websystem.enums.Status;
 import com.nj.websystem.model.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,8 @@ public interface PatientService extends PagingAndSortingRepository<Patient, Long
 
     @Query("Select c.patientId from Patient c where c.patientId like :patientId%")
     Page<String> findByPatientIdContaining(String patientId, Pageable pageable);
+
+    List<Patient> findByPatientIdContainingAndStatus(String patientId, Status status);
 
     // @Query(value = FIND_PROJECTS, nativeQuery = true)
     // List<Patient> findByPatientIdContaining(String patientId, Pageable pageable);

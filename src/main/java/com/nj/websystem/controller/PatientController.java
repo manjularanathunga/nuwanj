@@ -58,7 +58,7 @@ public class PatientController {
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public Page<Patient> getList() {
-        Pageable paging = PageRequest.of(1, 10, Sort.by("id"));
+        Pageable paging = PageRequest.of(0, 10, Sort.by("id"));
         Page<Patient> list = services.findAll(paging);
         logger.info("Count of UserAdmin : {} " + list.getTotalElements());
         return list;
@@ -112,6 +112,23 @@ public class PatientController {
         }
         return res;
     }
+    @RequestMapping(value = "/findByPatientIdContainingPages", method = RequestMethod.GET, headers = "Accept=application/json")
+    public HttpResponse findByPatientIdContainingAndStatus(@RequestParam(value = "patientId", required = false) String patientId) {
+        logger.info("Request Patient findByPatientListById : {} " + patientId);
+        Pageable paging = PageRequest.of(1, 100, Sort.by("patientId"));
+        HttpResponse res = new HttpResponse();
+        List<Patient> patientList = services.findByPatientIdContainingAndStatus(patientId, Status.ACTIVE);
+        if (patientList != null && !patientList.isEmpty()) {
+            res.setResponse(patientList);
+            res.setSuccess(true);
+            res.setRecCount(patientList.size());
+        } else {
+            res.setSuccess(false);
+            res.setException("Invalid Patient ID !");
+        }
+        return res;
+    }
+
 
     @RequestMapping(value = "/findByNicNumber", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse findByNicNumber(@RequestParam(value = "id", required = false) String nicNumber) {
