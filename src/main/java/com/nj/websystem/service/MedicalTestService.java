@@ -11,7 +11,7 @@ public interface MedicalTestService extends JpaRepository<MedicalTest, Long> {
 
     List<MedicalTest> findById(String id);
 
-    @Query("From MedicalTest ORDER BY name ASC")
+    @Query("From MedicalTest ORDER BY testNumber ASC")
     List<MedicalTest> findAll();
 
     List<MedicalTest> findAllByTestType(TestType testType);

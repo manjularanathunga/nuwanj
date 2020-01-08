@@ -171,13 +171,13 @@ public class PatientController {
 
     @RequestMapping(value = "/loadPatient", method = RequestMethod.GET, headers = "Accept=application/json")
     public List loadPatient() {
-        List list = getPatient();
+        List list = loadBulk();
         services.saveAll(list);
-        logger.info("Count of loadPatient : {} " + list.size());
+        logger.info("Count of loadBulk : {} " + list.size());
         return list;
     }
 
-    private List getPatient(){
+    private List loadBulk(){
         List<List> lineList = null;
         String csvFile = "/Users/sirimewanranathunga/Desktop/PatientData/juwan-2019/Patient-Table 1.csv";
         try {

@@ -60,5 +60,11 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             $scope.medicalTestList = response.data;
         });
     };
+
+    $scope.loadBulkData = function () {
+        $http.get("medicaltest/loadBulk").then(function (response) {
+            loadList();
+        });
+    };
     loadList();
 });

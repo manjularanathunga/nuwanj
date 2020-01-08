@@ -1,14 +1,21 @@
 package com.nj.websystem.controller;
 
+import com.nj.websystem.enums.Gender;
+import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
 import com.nj.websystem.model.MedicalTest;
+import com.nj.websystem.model.Patient;
 import com.nj.websystem.rest.HttpResponse;
 import com.nj.websystem.service.MedicalTestService;
+import com.nj.websystem.util.CSVUtils;
+import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -76,4 +83,80 @@ public class MedicalTestController {
         return services.saveAll(items);
     }*/
 
+    @RequestMapping(value = "/loadBulk", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List loadPatient() {
+        List list = loadBulk();
+        services.saveAll(list);
+        logger.info("Count of loadBulk : {} " + list.size());
+        return list;
+    }
+
+
+    private List loadBulk(){
+        List<List> lineList = null;
+        String csvFile = "/Users/sirimewanranathunga/Desktop/PatientData/juwan-2019/Hospital Test.csv";
+        try {
+            lineList = CSVUtils.LoadFile(csvFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<MedicalTest> listOfPatients =new ArrayList<>();
+        MedicalTest p;
+        int count = 0;
+        for(List<String> l: lineList){
+            if(l.get(0).equals("ID Test")){
+                continue;
+            }
+            int j=0;
+            for(String s: l){
+                System.out.print("["+j+"]=" + s +", ");
+                j++;
+            }
+
+            p =new MedicalTest();
+
+            try{
+                String data = l.get(0);
+                if(CSVUtils.get(data)){
+                    p.setTestNumber(data);
+                }else{
+                    //CSVUtils.logError( l, p,"Error in Remarks :"+ data);
+                }
+            }catch (Exception e){
+                //CSVUtils.logError( l, p,"Error in Remarks :"+ e.getMessage());
+            }
+            p.setDateCreated(new Date());
+            try{
+                String data = l.get(2);
+                if(CSVUtils.get(data)){
+                   p.setName(data);
+                }else{
+                    //CSVUtils.logError( l, p,"Error in DateCreated :"+ data);
+                }
+            }catch (Exception e){
+                //CSVUtils.logError( l, p,"Error in DateCreated :"+ e.getMessage());
+            }
+
+            try{
+                String data = l.get(3);
+                if(CSVUtils.get(data)){
+                    p.setPrice(new Double(data));
+                }else{
+                    //CSVUtils.logError( l, p,"Error in PatientName :"+ data);
+                }
+            }catch (Exception e){
+                //CSVUtils.logError( l, p,"Error in PatientName :"+ e.getMessage());
+            }
+
+
+
+            p.setActionBy("admin");
+            p.setStatus(Status.ACTIVE);
+            System.out.println(p.toString());
+            listOfPatients.add(p);
+            count++;
+            // break;
+        }
+        return listOfPatients;
+    }
 }

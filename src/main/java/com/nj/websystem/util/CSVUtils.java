@@ -1,5 +1,7 @@
 package com.nj.websystem.util;
 
+import com.nj.websystem.model.Patient;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +118,26 @@ public class CSVUtils {
         result.add(curVal.toString());
 
         return result;
+    }
+
+    public static Patient logError(List<String> l, Patient p, String error){
+        StringBuilder _sb =new StringBuilder(l.get(2));
+        _sb.append("/n/r");
+        //_sb.append("Error in DOB Years :"+ l.get(7) +"/" + l.get(8) +"/" + l.get(9) );
+        _sb.append(error);
+        p.setRemarks(_sb.toString());
+        return p;
+    }
+
+    public static boolean get(String val){
+        if(val != null)
+            if(!val.isEmpty() && !val.equals("?")){
+                return true;
+            }else {
+                return false;
+            }
+        else
+            return false;
     }
 
 }

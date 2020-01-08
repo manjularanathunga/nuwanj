@@ -29,9 +29,10 @@
                 <thead class="bg-secondary text-light">
                 <tr>
                     <th class="first-col" width="2%">&nbsp;</th>
-                    <th width="7%">TEST #</th>
+
                     <th width="15%">#</th>
                     <th width="20%">TEST</th>
+                    <th width="7%">TYPE</th>
                     <th width="10%">Price</th>
                     <th width="10%">reference</th>
                     <th width="10%">units</th>
@@ -51,9 +52,9 @@
                             </button>
                         </div>
                     </td>
-                    <td>{{itm.testType}}</td>
                     <td>{{itm.testNumber}}</td>
                     <td>{{itm.name}}</td>
+                    <td>{{itm.testType}}</td>
                     <td>{{itm.price}}</td>
                     <td>{{itm.reference}}</td>
                     <td>{{itm.units}}</td>
@@ -184,4 +185,11 @@
             </form>
         </div>
     </div>
+</div>
+
+
+<div>
+    <button class="btn btn-primary" data-dismiss="modal" ng-click="loadBulkData()" type="button">
+        loadBulkData
+    </button>&nbsp;
 </div>
