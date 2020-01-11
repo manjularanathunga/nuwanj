@@ -78,7 +78,8 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     }
 
     $scope.showHistory = function(itm) {
-        $scope.heading = 'Scan history'
+        $scope.heading = 'History'
+        $scope.patientTest = itm;
         $("#modal-scan-history").modal("show");
     }
 
