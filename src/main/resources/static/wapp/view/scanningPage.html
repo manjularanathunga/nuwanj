@@ -11,14 +11,14 @@
                                type="text">
                     </div>
                     <div class="col-sm-2 p-0">
-                    <button class="btn btn-warning" ng-click="serchOldBillNo();" ng-disabled="disabledLoadByBillingNum"
+                    <button class="btn btn-warning" ng-click="searchBilling();"
                             style="width: 45px;"
                             title="Re - Print"
                             type="button"><i
                             class="fa fa-search"></i></button>
                     </div>
                     <div class="col-sm-2 p-0">
-                        <button class="btn btn-primary" ng-click="serchOldBillNo();" ng-disabled="disabledLoadByBillingNum"
+                        <button class="btn btn-primary" ng-click=""
                                 title="Re - Print"
                                 type="button">Advance</button>
                     </div>
@@ -47,26 +47,16 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
-
-        <div class="row l-raw">
-
-        </div>
-
 
         <div class="row l-raw">
             <div class="col-2">
                 <div class="row">
                     <div class="col-sm-2">
-                        <label class="font-size-sm">Sex</label>
+                        <label class="font-size-sm">Sex: </label>
                     </div>
                     <div class="col-sm-6">
-                        <input name="input" ng-disabled="uicompo.itemDisabled" ng-model="patient.gender" style="width: 100px"
-                               title="Sex"
-                               type="text"/>
+                        <span>{{patient.gender}}</span>
                     </div>
                 </div>
             </div>
@@ -74,12 +64,10 @@
                 <div class="row">
                     <div class="row">
                         <div class="col-sm-2">
-                            <label class="font-size-sm">BHT</label>
+                            <label class="font-size-sm">BHT :</label>
                         </div>
                         <div class="col-sm-6">
-                            <input name="input" ng-disabled="uicompo.itemDisabled" ng-model="patient.bht" style="width: 100px"
-                                   title="BHD"
-                                   type="text"/>
+                            <span>{{patient.bht}}</span>
                         </div>
                     </div>
                 </div>
@@ -88,12 +76,10 @@
                 <div class="row">
                     <div class="row">
                         <div class="col-sm-1">
-                            <label class="font-size-sm">Age</label>
+                            <label class="font-size-sm">Age: </label>
                         </div>
                         <div class="col-sm-6">
-                            <input name="input" ng-disabled="uicompo.itemDisabled" ng-model="patient.bht" style="width: 50px"
-                                   title="BHD"
-                                   type="text"/>
+                            <span>{{patient.currentAge}}</span>
                         </div>
                     </div>
                 </div>
@@ -101,11 +87,10 @@
             <div class="col-3 p-0">
                 <div class="row">
                     <div class="col-sm-3 p-0">
-                        <label class="font-size-sm">Seen By</label>
+                        <label class="font-size-sm">SeenBy: </label>
                     </div>
                     <div class="col-sm-9">
-                        <input ng-disabled="uicompo.itemDisabled" ng-model="patient.patientName" style="width: 200px;"
-                               type="text">
+                        <span>{{patient.seenBy}}</span>
                     </div>
                 </div>
             </div>
@@ -115,13 +100,17 @@
                         <label class="font-size-sm">Date</label>
                     </div>
                     <div class="col-sm-6">
-                        <input ng-disabled="uicompo.itemDisabled" ng-model="patient.patientName" style="width: 100px;"
-                               type="text">
+                        <span>{{patient.dateCreated  | date:'yyyy-MM-dd'}}</span>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
+    </div>
+<!--    {{patientScan}}-->
+    <div class="raw pt-1 pb-1">
+       <div>
+           <span style="color: red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data has been not added to system until save </span>
+       </div>
     </div>
     <div class="row l-raw pt-1 pr-1">
         <div class="col-10 p-0">
@@ -133,7 +122,7 @@
                                 <label class="font-size-sm">Procedure</label>
                             </div>
                             <div class="col-sm-11">
-                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patient.gender" rows="4" cols="100"
+                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patientScan.procedure" rows="4" cols="100"
                                        title=""/>
                             </div>
                         </div>
@@ -146,7 +135,7 @@
                                 <label class="font-size-sm">Indication</label>
                             </div>
                             <div class="col-sm-11">
-                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patient.gender" rows="4" cols="100"
+                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patientScan.indication" rows="4" cols="100"
                                           title=""/>
                             </div>
                         </div>
@@ -159,7 +148,7 @@
                                 <label class="font-size-sm">Finding</label>
                             </div>
                             <div class="col-sm-11">
-                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patient.gender" rows="4" cols="100"
+                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patientScan.finding" rows="4" cols="100"
                                           title=""/>
                             </div>
                         </div>
@@ -172,7 +161,7 @@
                                 <label class="font-size-sm">Impression</label>
                             </div>
                             <div class="col-sm-11">
-                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patient.gender" rows="4" cols="100"
+                                <textarea name="input" ng-disabled="uicompo.itemDisabled" ng-model="patientScan.impression" rows="4" cols="100"
                                           title=""/>
                             </div>
                         </div>
@@ -189,24 +178,15 @@
                     <tbody>
                     <tr>
                         <td>
-                            <button class="btn btn-primary" ng-click="serchOldBillNo();" ng-disabled="disabledLoadByBillingNum"
+                            <button class="btn btn-primary" ng-click="saveModal();" ng-disabled="disabledLoadByBillingNum"
                                                 title="Re - Print"
                                                 type="button">Save Scan</button>
-                            <button class="btn btn-success" ng-click="serchOldBillNo();" ng-disabled="disabledLoadByBillingNum"
+                            <button class="btn btn-success" ng-click="showImage();" ng-disabled="disabledLoadByBillingNum"
                                     title="Re - Print"
                                     type="button">Img</button></td>
                     </tr>
-                    <tr>
-                        <td style="padding-bottom: 1px; padding-top: 1px;"><label class="font-size-sm"><strong>Scan Record History</strong></label></td>
-                    </tr>
-                    <tr>
-                        <td style="padding-bottom: 1px; padding-top: 1px;"><span style="color: royalblue">Technetium Red Blood Cell Tagging</span>-<span style="color: firebrick">19DX00004</span></td>
-                    </tr>
-                    <tr>
-                        <td style="padding-bottom: 1px; padding-top: 1px;"><span style="color: royalblue">SERUM LH</span>-<span style="color: firebrick">19DX00004</span></td>
-                    </tr>
-                    <tr ng-repeat="itm in patientMediTestList | filter : searchKeyword">
-                        <td style="padding-bottom: 1px; padding-top: 1px;">{{itm.dateCreated | date:'shortDate'}}</td>
+                    <tr ng-repeat="itm in scanHistortyList | filter : searchKeyword">
+                        <td style="padding-bottom: 1px; padding-top: 1px;"><i src="" ng-click="showHistory(itm);"><span style="color: royalblue">{{itm.name}}</span>-<span style="color: firebrick">{{itm.dateCreated | date:'dd-MMM-yy'}}</span></i></td>
                     </tr>
                     </tbody>
                 </table>
@@ -214,6 +194,28 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal-scan-history">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{heading}}</h4>
+                <button class="close" data-dismiss="modal" type="button">&times;</button>
+            </div>
+            <form name="form" ng-submit="save_submit();" role="form">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container rounded" style="border:1px solid blanchedalmond">
+                        {{patientTest}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 

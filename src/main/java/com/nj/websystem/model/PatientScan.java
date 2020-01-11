@@ -17,6 +17,7 @@ public class PatientScan {
     private String scanNumber;
     private String billingNumber;
     private String patientId;
+    private String testName;
     private String procedure;
     private String indication;
     private String finding;
@@ -129,6 +130,14 @@ public class PatientScan {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
     }
 
     @Override

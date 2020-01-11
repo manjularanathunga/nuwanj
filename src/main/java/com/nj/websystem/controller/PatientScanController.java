@@ -1,14 +1,26 @@
 package com.nj.websystem.controller;
 
-import com.nj.websystem.model.SystemScreen;
+import com.nj.websystem.model.PatientMedicalTest;
+import com.nj.websystem.model.PatientScan;
+import com.nj.websystem.model.PatientScan;
+import com.nj.websystem.model.PatientScan;
 import com.nj.websystem.rest.HttpResponse;
-import com.nj.websystem.service.SystemScreenService;
+import com.nj.websystem.service.PatientMedicalTestService;
+import com.nj.websystem.service.PatientScanServise;
+import com.nj.websystem.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -18,12 +30,19 @@ public class PatientScanController {
     static Logger logger = LoggerFactory.getLogger(PatientScanController.class);
 
     @Autowired
-    private SystemScreenService services;
+    private PatientScanServise services;
+
+    @Autowired
+    private PatientMedicalTestService patientMedicalTestService;
+
+    @Autowired
+    private PatientService patientService;
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
-    public List getList() {
-        List list = services.findAll();
-        logger.info("Count of PatientScan : {} " + list.size());
+    public Page<PatientScan> getList() {
+        Pageable paging = PageRequest.of(1, 25, Sort.by("id"));
+        Page<PatientScan> list = services.findAll(paging);
+        logger.info("Count of PatientScan : {} " + list.getTotalElements());
         return list;
     }
 
@@ -31,9 +50,9 @@ public class PatientScanController {
     public HttpResponse getById(@RequestParam(value = "id", required = false) String id) {
         logger.info("Request PatientScan Id : {} " + id);
         HttpResponse res = new HttpResponse();
-        SystemScreen screen = services.getOne(Long.parseLong(id));
-        if (screen != null) {
-            res.setResponse(screen);
+        PatientScan patientScan = services.findAllById(Long.parseLong(id));
+        if (patientScan != null) {
+            res.setResponse(patientScan);
             res.setSuccess(true);
             res.setRecCount(1);
         } else {
@@ -43,11 +62,33 @@ public class PatientScanController {
         return res;
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
-    public SystemScreen save(@RequestBody SystemScreen obj) {
-        logger.info("Save / PatientScan Name : {} " + obj.getScreenName());
+    @RequestMapping(value = "/getPatientByBilling", method = RequestMethod.GET, headers = "Accept=application/json")
+    public HttpResponse billingNumber(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
+        logger.info("Request PatientScan billingNumber : {} " + billingNumber);
         HttpResponse res = new HttpResponse();
-        SystemScreen result = services.save(obj);
+        List<PatientMedicalTest> patientMedicalTestList = patientMedicalTestService.findAllByBillingNumber(billingNumber);
+        if(!patientMedicalTestList.isEmpty()){
+            List uiItemMap = new ArrayList();
+            PatientMedicalTest item = patientMedicalTestList.get(0);
+            uiItemMap.add(item);
+            uiItemMap.add(patientService.findByPatientId(item.getPatientId()).get(0));
+            uiItemMap.add(patientMedicalTestService.getAllByPatientId(item.getPatientId()));
+            res.setResponse(uiItemMap);
+            res.setSuccess(true);
+            res.setRecCount(1);
+        }else{
+            res.setSuccess(false);
+            res.setException("Invalid PatientScan Id !");
+        }
+        return res;
+    }
+
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
+    public PatientScan save(@RequestBody PatientScan obj) {
+        logger.info("Save / PatientScan Name : {} " + obj.getBillingNumber());
+        HttpResponse res = new HttpResponse();
+        PatientScan result = services.save(obj);
         if (result == null) {
             res.setResponse(result);
             res.setSuccess(true);
@@ -63,9 +104,9 @@ public class PatientScanController {
     public HttpResponse delete(@RequestParam(value = "id", required = false) Long id) {
         logger.info("Delete PatientScan Name : {} " + id);
         HttpResponse response = new HttpResponse();
-        SystemScreen item = services.getOne(id);
-        if (item != null) {
-            services.delete(item);
+        PatientScan patientScan = services.findAllById(id);
+        if (patientScan != null) {
+            services.delete(patientScan);
             response.setSuccess(true);
         } else {
             response.setSuccess(false);
@@ -76,9 +117,8 @@ public class PatientScanController {
     }
 
     @RequestMapping(value = "/bulkInsert", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<SystemScreen> bulkInsert(@RequestBody List<SystemScreen> items) {
+    public void bulkInsert(@RequestBody List<PatientScan> items) {
         logger.info("PatientScan countt : {} " + items.size());
-        return services.saveAll(items);
+        services.saveAll(items);
     }
-
 }

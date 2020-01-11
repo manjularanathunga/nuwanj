@@ -34,5 +34,7 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
 
     public List<PatientMedicalTest> getAllByTestTypeOrderByIdDesc(TestType testType);
 
+    public List<PatientMedicalTest> getAllByPatientId(String patientId);
+
 
 }
