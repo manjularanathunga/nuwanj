@@ -197,7 +197,7 @@
                     </tr>
                     <tr ng-repeat="itm in scanHistortyList | filter : searchKeyword">
                         <td style="padding-bottom: 1px; padding-top: 1px;"><i src="" ng-click="showHistory(itm);"><span
-                                style="color: royalblue">{{itm.name}}</span>-<span style="color: firebrick">{{itm.dateCreated | date:'dd-MMM-yy'}}</span></i>
+                                style="color: royalblue">{{itm}}</span></i>
                         </td>
                     </tr>
                     </tbody>
@@ -211,7 +211,6 @@
 <div class="modal fade" id="modal-scan-history">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">{{heading}}</h4>
@@ -228,7 +227,7 @@
                                         <label class="font-size-sm">Patient Name</label>
                                     </div>
                                     <div class="col-sm-6">
-                                        <span>{{patient.patientName}}</span>
+                                        <span>{{uicompo.history.patientname}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +237,7 @@
                                         <label class="font-size-sm">Bill #</label>
                                     </div>
                                     <div class="col-sm-6">
-                                        <span>{{patientTest.billingNumber}}</span>
+                                        <span>{{uicompo.history.billingnumber}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +248,7 @@
                                             <label class="font-size-sm">Age: </label>
                                         </div>
                                         <div class="col-sm-6">
-                                            <span>{{patient.currentAge}}</span>
+                                            <span>{{uicompo.history.age}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -268,14 +267,17 @@
                         </div>
                         <div class="row l-raw">
                             <div class="col-4">
-                                <span>{{patientTest.name}}</span>
+                                <span>{{uicompo.history.tests}}</span>
                             </div>
                             <div class="col-4">
                                 <span>{{patient.results}}</span>
                             </div>
                         </div>
+                        <hr/>
                         <div class="row l-raw">
-
+                            <div ng-repeat="itm in uicompo.historyLst">
+                                {{itm}}
+                            </div>
                         </div>
                     </div>
                     </div>

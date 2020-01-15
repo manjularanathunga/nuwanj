@@ -34,7 +34,10 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
 
     public List<PatientMedicalTest> getAllByTestTypeOrderByIdDesc(TestType testType);
 
-    public List<PatientMedicalTest> getAllByPatientId(String patientId);
+    // public List<PatientMedicalTest> getAllByPatientId(String patientId);
+
+    @Query("Select DISTINCT(CONCAT(t.billingNumber,'-',t.dateCreated))  from PatientMedicalTest t where t.patientId like :patientId")
+    public List<String> getAllByPatientId(String patientId);
 
 
 }

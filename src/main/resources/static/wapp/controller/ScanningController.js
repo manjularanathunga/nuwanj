@@ -13,6 +13,8 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     $scope.scanList = [];
     $scope.scanHistortyList = [];
     $scope.uicompo.itemDisabled = false;
+    $scope.uicompo.history = {};
+    $scope.uicompo.historyLst = [];
 
     // $scope.patientScan.dateCreated = new Date();
 
@@ -79,8 +81,19 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
 
     $scope.showHistory = function(itm) {
         $scope.heading = 'History'
-        $scope.patientTest = itm;
-        $("#modal-scan-history").modal("show");
+        var selectedBillingNumber = itm.substr(0,itm.indexOf("-"));
+        $http.get("scan/getHistoryByPatient?billingNumber=" + selectedBillingNumber)
+            .then(function(resp) {
+                if (resp.data.success) {
+                    $scope.uicompo.history = resp.data.response.prop;
+                    $scope.uicompo.historyLst = resp.data.response.propList;
+                     $("#modal-scan-history").modal("show");
+                } else {
+                    Pop.timeMsg('error', 'SEARCH SCAN', ' SCAN NUMBER NOT FOUND ', 2000);
+                }
+            });
+        //$scope.patientTest = ;
+
     }
 
     var loadList = function () {
