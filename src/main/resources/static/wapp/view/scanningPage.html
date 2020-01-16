@@ -255,8 +255,6 @@
                             </div>
                         </div>
 
-                        <hr/>
-
                         <div class="row l-raw">
                             <div class="col-4">
                                 <label class="font-size-sm"><strong>Test Name</strong></label>
@@ -274,18 +272,26 @@
                             </div>
                         </div>
                         <hr/>
-                        <div class="row l-raw">
+                        <div class="row p-1">
                             <div ng-repeat="itm in uicompo.historyLst">
-                                {{itm}}
+                                <div class="row p-3">
+                                    <div class="col-4">
+                                        <span>{{itm.name}}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span>{{itm.units}}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span>{{itm.reference}}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
-</div>
 </div>
 
 
