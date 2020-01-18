@@ -10,6 +10,8 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
     $scope.uicompo.modalpagetitle = 'MEDICAL TEST';
     $scope.uicompo.modalScreen = 'Medical Test';
     $scope.uicompo.search = '';
+    $scope.uicompo.ref = {};
+    $scope.uicompo.refLst = [];
 
     var loggedUser = '-';
     if ($rootScope.globals && $rootScope.globals.currentUser) {
@@ -93,6 +95,14 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             $scope.medicalTestList = jsn.data.response.content;
         });
     };
+
+    $scope.addReference = function() {
+        $scope.uicompo.ref.medicalTest = $scope.mtest.id;
+        var refItem = $scope.uicompo.ref;
+        console.log(JSON.stringify(refItem))
+        $scope.uicompo.refLst.push(refItem);
+        $scope.uicompo.ref = {};
+    }
 
     $scope.loadBulkData = function () {
         $http.get("medicaltest/loadBulk").then(function (response) {

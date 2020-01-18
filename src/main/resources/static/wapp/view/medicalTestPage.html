@@ -72,7 +72,7 @@
 
 
     <div class="modal fade" id="modal-inv"  tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row pt-3">
+                        <div class="row pt-2">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row pt-3">
+                        <div class="row pt-2">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row pt-3">
+                        <div class="row pt-2">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row pt-3">
+                        <div class="row pt-2">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -162,8 +162,79 @@
                                 </div>
                             </div>
                         </div>
+                        <hr/>
+                        <div class="row pt-2">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <label class="font-size-sm">Sex</label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="font-size-sm">Min</label>
+                                        <label class="font-size-sm">Max</label>
+                                        <label class="font-size-sm">&nbsp;Unit</label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label class="font-size-sm">Reference</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        M&nbsp;<input name="sex" ng-model="uicompo.ref.gender"
+                                                      type="radio"
+                                                      value="MALE"/>&nbsp;&nbsp;
+                                        F&nbsp;<input name="sex" ng-model="uicompo.ref.gender"
+                                                      type="radio"
+                                                      value="FEMALE"/>&nbsp;&nbsp;
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="pl-0 pr-0" style="width: 40px;" ng-model="uicompo.ref.ageMin">
+                                        <input type="number" class="pl-0 pr-0" style="width: 40px;" ng-model="uicompo.ref.ageMax">
+                                        <input type="text" class="pl-0 pr-0" style="width: 70px;" ng-model="uicompo.ref.unit">
+                                        <textarea class="pl-0 pr-0" style="width: 300px;" ng-model="uicompo.ref.reference"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label class="font-size-sm"><button type="button" class="btn btn-info" ng-click="addReference()">Add</button></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row pt-3">
+                            <div class="col-12">
+                                <table class="table">
+                                    <thead class="bg-secondary text-light">
+                                    <tr>
+                                        <th width="3%">#</th>
+                                        <th width="4%">Sex</th>
+                                        <th width="3%">Min</th>
+                                        <th width="3%">Max</th>
+                                        <th width="3%">Unit</th>
+                                        <th width="50%">Reference</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-dblclick="showUI(itm,'edit')" ng-repeat="itm in uicompo.refLst">
+                                        <td>#</td>
+                                        <td>{{itm.gender}}</td>
+                                        <td>{{itm.ageMin}}</td>
+                                        <td>{{itm.ageMax}}</td>
+                                        <td>{{itm.unit}}</td>
+                                        <td>{{itm.reference}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+<!--                        <div class="row pt-3">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -189,7 +260,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
 
                     <div class="modal-footer">
