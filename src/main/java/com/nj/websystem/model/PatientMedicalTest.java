@@ -1,5 +1,6 @@
 package com.nj.websystem.model;
 
+import com.nj.websystem.enums.LabType;
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
 
@@ -26,6 +27,7 @@ public class PatientMedicalTest {
     private String units;
     private String results;
     private String seenBy;
+    private LabType labType;
     private String actionBy;
     private Date dateCreated;
     private Date lastModified;
@@ -149,5 +151,13 @@ public class PatientMedicalTest {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    public LabType getLabType() {
+        return labType;
+    }
+
+    public void setLabType(LabType labType) {
+        this.labType = labType;
     }
 }

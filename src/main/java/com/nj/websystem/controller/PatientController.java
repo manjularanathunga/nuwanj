@@ -99,7 +99,14 @@ public class PatientController {
     @RequestMapping(value = "/findByPatientListById", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse findByPatientListById(@RequestParam(value = "patientId", required = false) String patientId) {
         logger.info("Request Patient findByPatientListById : {} " + patientId);
-        Pageable paging = PageRequest.of(1, 10000, Sort.by("patientId"));
+
+/*
+        final PageRequest page1 = new PageRequest(
+                0, 20, Sort.Direction.ASC, "lastName", "salary"
+        );
+*/
+
+        // Pageable paging = PageRequest.of(1, 10000, Sort.Direction.DESC, "patientId");
         HttpResponse res = new HttpResponse();
         List<String> patientList = services.findByPatientIdContaining(patientId);
         if (patientList != null && !patientList.isEmpty()) {

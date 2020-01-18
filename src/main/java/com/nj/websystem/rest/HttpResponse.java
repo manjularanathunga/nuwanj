@@ -5,7 +5,7 @@ public class HttpResponse {
     private Object response;
     private boolean success;
     private String exception;
-    private int recCount;
+    private long recCount;
 
     public Object getResponse() {
         return response;
@@ -31,11 +31,11 @@ public class HttpResponse {
         this.exception = exception;
     }
 
-    public int getRecCount() {
+    public long getRecCount() {
         return recCount;
     }
 
-    public void setRecCount(int recCount) {
+    public void setRecCount(long recCount) {
         this.recCount = recCount;
     }
 }

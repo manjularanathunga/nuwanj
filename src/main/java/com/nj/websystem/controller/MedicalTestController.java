@@ -12,6 +12,10 @@ import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,10 +33,37 @@ public class MedicalTestController {
     private MedicalTestService services;
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
-    public List getList() {
-        List list = services.findAll();
-        logger.info("Count of UserAdmin : " + list.size());
-        return list;
+    public HttpResponse getList() {
+        HttpResponse res = new HttpResponse();
+        Pageable paging = PageRequest.of(1, 10, Sort.by("id"));
+        Page<MedicalTest> list = services.findAll(paging);
+        logger.info("Count of MedicalTest : " + list.getTotalElements());
+        if (list != null && !list.isEmpty()) {
+            res.setResponse(list);
+            res.setSuccess(true);
+            res.setRecCount(list.getTotalElements());
+        } else {
+            res.setSuccess(false);
+            res.setException("Invalid MedicalTest !");
+        }
+        return res;
+    }
+
+    @RequestMapping(value = "/getListByName", method = RequestMethod.GET, headers = "Accept=application/json")
+    public HttpResponse getListByName(@RequestParam(value = "name", required = false) String name) {
+        HttpResponse res = new HttpResponse();
+        Pageable paging = PageRequest.of(1, 10, Sort.by("name"));
+        List<MedicalTest> listOfPages = services.findByNameContaining(name);
+        logger.info("Count of MedicalTest : " + listOfPages.size());
+        if (listOfPages != null && !listOfPages.isEmpty()) {
+            res.setResponse(listOfPages);
+            res.setSuccess(true);
+            res.setRecCount(listOfPages.size());
+        } else {
+            res.setSuccess(false);
+            res.setException("Invalid MedicalTest !");
+        }
+        return res;
     }
 
     @RequestMapping(value = "/findAllByType", method = RequestMethod.GET, headers = "Accept=application/json")

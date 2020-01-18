@@ -1,11 +1,15 @@
-app.controller('MedicalTestController', function ($scope, $rootScope, $http, $location, $window) {
+app.controller('MedicalTestController', function ($scope, $rootScope, $http, $location, $window, AuthenticationService, Pop) {
     $rootScope.pageTitle = "Medical Test Setup";
+    $scope.uicompo = {};
 
     $scope.medicalTestList = [];
     $scope.mtest = {};
     $scope.heading = 'Edit Medical Test Details';
     $scope.itemDisabled = false;
     $scope.actionType = '';
+    $scope.uicompo.modalpagetitle = 'MEDICAL TEST';
+    $scope.uicompo.modalScreen = 'Medical Test';
+    $scope.uicompo.search = '';
 
     var loggedUser = '-';
     if ($rootScope.globals && $rootScope.globals.currentUser) {
@@ -47,17 +51,46 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
 
         $http.post('/medicaltest/save', $scope.mtest).then(function (response) {
             loadList();
-            //reset_screen();
-            //Pop.msgWithButton('New User <<'+ item.fistName + '>> Created','New user <<'+ item.userId + '>>has been created, Auto generated password for the first login user : <<'+item.userId+'>> is : <<' + item.passWord +'>>', 'success');
+            $("#modal-inv").modal("hide");
+            Pop.msgWithButton($scope.uicompo.modalScreen + ' Record Saved Successfully', $scope.uicompo.modalpagetitle , 'success');
         }, function (response) {
-            //Pop.msgWithButton('UPDATE','Fail User '+ item.fistName + ' Saving', 'error');
+            Pop.msgWithButton('Error Saving ' + $scope.uicompo.modalScreen, $scope.uicompo.modalpagetitle , 'error');
         });
     };
 
+    var searchByName = function(strName){
+        $http.get("medicaltest/getListByName?name=" + strName)
+            .then(function(jsn) {
+                $scope.medicalTestList = jsn.data.response;
+            }, function(response) {
+            }).catch(function() {
+            //Pop.timeMsg('error', 'ADDED PATIENT', ' PATIENT SAVING NOT SUCCESS ' + e, 3000);
+        });
+    }
+
+    $scope.keypressId = function(e) {
+        if (e.keyCode == 13) {
+
+            if ($scope.uicompo.search.length > 0) {
+                searchByName($scope.uicompo.search);
+            }
+
+            if($scope.medicalTestList.length == 0){
+                Pop.timeMsg('error', 'SEARCH MEDICAL TEST', ' TEST NOT FOUND ' + e, 2000);
+            }
+        }
+
+        if ($scope.uicompo.search.length > 2) {
+            searchByName($scope.uicompo.search);
+            if($scope.medicalTestList.length == 0){
+                Pop.timeMsg('error', 'SEARCH MEDICAL TEST', ' TEST NOT FOUND ' + e, 2000);
+            }
+        }
+    }
 
     var loadList = function () {
-        $http.get("medicaltest/getList").then(function (response) {
-            $scope.medicalTestList = response.data;
+        $http.get("medicaltest/getList").then(function (jsn) {
+            $scope.medicalTestList = jsn.data.response.content;
         });
     };
 

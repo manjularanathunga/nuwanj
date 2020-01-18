@@ -262,7 +262,6 @@ a.article, a.article:hover {
 }
 
 .delay {
-    position: fixed;
     width: 100vw;
     height: 100vh;
     color: white;
@@ -273,6 +272,7 @@ a.article, a.article:hover {
 
 .modal-backdrop {
     position: inherit;
+    background-color: red;
 }
 
 .modal-wrapper{
@@ -288,5 +288,12 @@ a.article, a.article:hover {
 }
 .l-raw {
     padding-top: 5px;
+}
+
+modal-content {
+    background-color: coral;
+    border: 1px solid red;
+    border-radius: .3rem;
+    outline: #555555;
 }
 
