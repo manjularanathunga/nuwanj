@@ -28,6 +28,8 @@ public class MedicalTest {
     private Date dateCreated;
     private Date lastModified;
     private Status status;
+    private String tmpid;
+
 
     public Long getId() {
         return id;
@@ -123,5 +125,20 @@ public class MedicalTest {
 
     public void setLabType(LabType labType) {
         this.labType = labType;
+    }
+
+    public MedicalTest() {
+    }
+    public MedicalTest(Long id) {
+        this.id = id;
+    }
+
+
+    public String getTmpid() {
+        return tmpid;
+    }
+
+    public void setTmpid(String tmpid) {
+        this.tmpid = tmpid;
     }
 }

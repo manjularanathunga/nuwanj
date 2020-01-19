@@ -1,9 +1,11 @@
 package com.nj.websystem.model;
 
 import com.nj.websystem.enums.Gender;
+import com.nj.websystem.enums.Status;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +24,9 @@ public class MedicalReference {
     private BigDecimal ageMax;
     private String unit;
     private String reference;
+    private Date dateCreated;
+    private Date lastModified;
+    private Status status;
 
     public Long getId() {
         return id;
@@ -77,6 +82,37 @@ public class MedicalReference {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public MedicalReference() {
+    }
+
+    public MedicalReference(Long id) {
+        this.id = id;
     }
 
     @Override

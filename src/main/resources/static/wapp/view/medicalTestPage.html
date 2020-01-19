@@ -219,8 +219,16 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-dblclick="showUI(itm,'edit')" ng-repeat="itm in uicompo.refLst">
-                                        <td>#</td>
+                                    <tr ng-repeat="itm in uicompo.refLst">
+                                        <td class="first-col">
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn btn-link btn-sm" data-toggle="tooltip"
+                                                        ng-click="deleteRefItem(itm)"
+                                                        title="">
+                                                    <span class="text-danger"><i class="fa fa-times"></i></span>
+                                                </button>
+                                            </div>
+                                        </td>
                                         <td>{{itm.gender}}</td>
                                         <td>{{itm.ageMin}}</td>
                                         <td>{{itm.ageMax}}</td>

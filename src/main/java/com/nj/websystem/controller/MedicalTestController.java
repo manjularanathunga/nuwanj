@@ -1,14 +1,13 @@
 package com.nj.websystem.controller;
 
-import com.nj.websystem.enums.Gender;
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
+import com.nj.websystem.model.MedicalReference;
 import com.nj.websystem.model.MedicalTest;
-import com.nj.websystem.model.Patient;
 import com.nj.websystem.rest.HttpResponse;
+import com.nj.websystem.service.MedicalReferenceService;
 import com.nj.websystem.service.MedicalTestService;
 import com.nj.websystem.util.CSVUtils;
-import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

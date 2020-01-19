@@ -12,7 +12,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
     $scope.uicompo.search = '';
     $scope.uicompo.ref = {};
     $scope.uicompo.refLst = [];
-
+    $scope.uicompo.saveObj = [];
     var loggedUser = '-';
     if ($rootScope.globals && $rootScope.globals.currentUser) {
         loggedUser = $rootScope.globals.currentUser.username;
@@ -28,7 +28,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             $scope.heading = 'Edit Medical Test Details';
             $scope.itemDisabled = false;
             $scope.mtest = itm;
-            $scope.mtest.dateOfBirth = new Date(itm.dateOfBirth);
+            loadRefList(itm.id);
         } else if ('delete' === $scope.actionType) {
             $scope.heading = 'Delete Medical Test Details';
             $scope.itemDisabled = true;
@@ -52,6 +52,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
         }
 
         $http.post('/medicaltest/save', $scope.mtest).then(function (response) {
+            saveRefList();
             loadList();
             $("#modal-inv").modal("hide");
             Pop.msgWithButton($scope.uicompo.modalScreen + ' Record Saved Successfully', $scope.uicompo.modalpagetitle , 'success');
@@ -59,6 +60,16 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             Pop.msgWithButton('Error Saving ' + $scope.uicompo.modalScreen, $scope.uicompo.modalpagetitle , 'error');
         });
     };
+
+    var saveRefList = function(){
+        $http.post('/reference/save', $scope.uicompo.refLst).then(function (response) {
+            $("#modal-inv").modal("hide");
+            Pop.msgWithButton($scope.uicompo.modalScreen + ' Record Saved Successfully', $scope.uicompo.modalpagetitle , 'success');
+        }, function (response) {
+            Pop.msgWithButton('Error Saving ' + $scope.uicompo.modalScreen, $scope.uicompo.modalpagetitle , 'error');
+        });
+    }
+
 
     var searchByName = function(strName){
         $http.get("medicaltest/getListByName?name=" + strName)
@@ -99,10 +110,41 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
     $scope.addReference = function() {
         $scope.uicompo.ref.medicalTest = $scope.mtest.id;
         var refItem = $scope.uicompo.ref;
-        console.log(JSON.stringify(refItem))
+        if(!refItem.gender){Pop.msgWithButton('Reference field SEX cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
+        if(!refItem.ageMin){Pop.msgWithButton('Reference Minimum Age Range cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
+        if(!refItem.ageMax){Pop.msgWithButton('Reference field  Maximum Age Range  cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
+        if(!refItem.unit){Pop.msgWithButton('Reference field UNIT cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
+        if(!refItem.reference){Pop.msgWithButton('Reference field Reference cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
+        refItem.tmpid = $scope.uicompo.refLst.length + 1;
         $scope.uicompo.refLst.push(refItem);
         $scope.uicompo.ref = {};
     }
+
+    $scope.deleteRefItem = function (itm) {
+        for (var i = 0; i < $scope.uicompo.refLst.length; i++) {
+            if($scope.uicompo.refLst[i].tmpid === itm.tmpid){
+                var itemid =  $scope.uicompo.refLst[i].id;
+                $scope.uicompo.refLst.splice(i, 1);
+                if(itemid){
+                    $http.delete('/reference/delete?id='+itemid)
+                    .then(function (response) {
+                    });
+                }
+            }
+        }
+    }
+
+    var loadRefList = function (testid) {
+        $scope.uicompo.refLst =[];
+        $http.get("reference/getRefList?testId=" + testid).then(function (jsn) {
+            var reftmpLst =  jsn.data.response;
+            for (var i = 0; i < reftmpLst.length; i++) {
+                var itm = reftmpLst[i];
+                itm.tmpid = i + 1;
+                $scope.uicompo.refLst.push(itm);
+            }
+        });
+    };
 
     $scope.loadBulkData = function () {
         $http.get("medicaltest/loadBulk").then(function (response) {
