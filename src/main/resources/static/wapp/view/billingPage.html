@@ -226,7 +226,7 @@
                 <table class="table" id="fixTable">
                     <thead class="bg-secondary text-light">
                     <tr>
-                        <th width="2%">#</th>
+                        <th width="2%"  ng-show="!rePrint">#</th>
                         <th width="15%">Bill #</th>
                         <th width="5%">Type</th>
                         <th width="15%">Test #</th>
@@ -237,7 +237,7 @@
                     <tbody>
                     <tr ng-dblclick="showUI(itm,'edit')"
                         ng-repeat="itm in billingList | filter : searchKeyword">
-                        <td class="first-col">
+                        <td class="first-col" ng-show="!rePrint">
                             <div class="d-flex justify-content-center">
                                 <button class="btn btn-link btn-sm" data-toggle="tooltip"
                                         ng-click="showUI(itm,'delete')"
@@ -250,7 +250,7 @@
                         <th>{{itm.testType}}</th>
                         <th>{{itm.testNumber}}</th>
                         <th>{{itm.name}}</th>
-                        <th>{{itm.price | currency:"Rs ":0}}</th>
+                        <th>{{itm.price | currency:"Rs ":2}}</th>
                     </tr>
                     </tbody>
                 </table>
@@ -377,7 +377,7 @@
                             <select class="form-control" ng-model="uicompo.selectedTest"
                                     style="width: 250px;">
                                 <option ng-repeat="item in mediTestList" value="{{item}}">{{item.name}} -
-                                    {{item.price | currency:"Rs ":0}}
+                                    {{item.price | currency:"Rs ":2}}
                                 </option>
                             </select>
                         </div>

@@ -37,6 +37,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
     $scope.disabledPrintPage = true;
     $scope.disabledResetTestList = false;
     $scope.disabledTestSelection = false;
+    $scope.rePrint = false;
 
 
 
@@ -349,10 +350,12 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
 
     $scope.showAddTest = function search() {
         $scope.uicompo.selectedTest = '';
+        $scope.rePrint = false;
         $("#modal-add-test").modal("show");
     }
 
     $scope.serchOldBillNo = function search() {
+        $scope.rePrint = true;
         $("#modal-old-billing-search").modal("show");
     }
 
@@ -415,6 +418,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         $scope.patientMediTestList = [];
         $scope.showMediTest = false;
         resetTestListButtons();
+        $scope.rePrint = false;
     }
 
     var resetTestListButtons = function() {
