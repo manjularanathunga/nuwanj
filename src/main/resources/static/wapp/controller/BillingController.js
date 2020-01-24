@@ -36,6 +36,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
     $scope.disabledLoadByBillingNum = false;
     $scope.disabledPrintPage = true;
     $scope.disabledResetTestList = false;
+    $scope.disabledTestSelection = false;
 
 
 
@@ -155,7 +156,6 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
             return;
         }
 
-        saveTest.testNumber = saveTest.testNumber;
         saveTest.patientId = $scope.patient.patientId;
         saveTest.lastDateModified = new Date();
         saveTest.dateCreated = new Date();
@@ -164,6 +164,12 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         saveTest.id = null;
         saveTest.billingNumber = $scope.uicompo.billingNumber;
         saveTest.status = "OPEN";
+
+        if(validateAlreadyAdded(saveTest)){
+            Pop.msgWithButton('ADD MEDICAL TEST', 'Test Already Added', 'error');
+            return;
+        }
+
         if($scope.billingList.length == 0){
            saveTest.tmpid = 1;
         }else{
@@ -175,6 +181,15 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
 
     };
 
+    var validateAlreadyAdded = function(itm){
+        for (var i = 0; i < $scope.billingList.length; i++) {
+            if($scope.billingList[i].testNumber === itm.testNumber){
+                return true;
+            }
+        }
+        return false;
+    }
+
     var onchangeSelectedList = function(){
         if($scope.billingList.length > 0){
             $scope.disabledSaveTestList = false;
@@ -185,11 +200,11 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
                 total = total + $scope.billingList[i].price;
             }
             $scope.uicompo.selectedTotal = total;
-            $scope.disabledAddTest = true;
+            $scope.disabledTestSelection = true;
         }else{
             $scope.disabledSaveTestList = true;
             $scope.uicompo.selectedTotal = 0.0;
-            $scope.disabledAddTest = false;
+            $scope.disabledTestSelection = false;
         }
     }
 

@@ -333,7 +333,7 @@
                             <label class="font-size-sm">SeenBy</label>
                         </div>
                         <div class="col-sm-8 input-group">
-                            <select class="form-control" ng-disabled="disabledAddTest"
+                            <select class="form-control" ng-disabled="disabledTestSelection"
                                     ng-model="patient.seenBy" style="width: 250px;">
                                 <option ng-repeat="c in seenByList">{{c.name}}</option>
                             </select>
@@ -345,7 +345,7 @@
                             <label class="font-size-sm">Type</label>
                         </div>
                         <div class="col-sm-8 input-group">
-                            <select class="form-control" ng-change="onSelectTestType()"  ng-disabled="disabledAddTest"
+                            <select class="form-control" ng-change="onSelectTestType()"  ng-disabled="disabledTestSelection"
                                     ng-model="uicompo.selectedTestType" style="width: 75px;">
                                 <option ng-repeat="c in testTypeList">{{c.value}}</option>
                             </select>
@@ -358,10 +358,10 @@
                                 <label class="font-size-sm">Billing #</label>
                             </div>
                             <div class="col-sm-6">
-                                <input ng-model="uicompo.billingNumber" type="text"  ng-disabled="disabledAddTest">
+                                <input ng-model="uicompo.billingNumber" type="text"  ng-disabled="disabledTestSelection">
                             </div>
                             <div class="col-sm-2">
-                                <button ng-click="copyBillNumber()"  ng-disabled="disabledAddTest"
+                                <button ng-click="copyBillNumber()"  ng-disabled="disabledTestSelection"
                                         type="button">
                                     <span style="color: SlateBlue">Copy</span>
                                 </button>
