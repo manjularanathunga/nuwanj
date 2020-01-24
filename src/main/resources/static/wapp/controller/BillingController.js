@@ -28,6 +28,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
     $scope.uicompo = {};
     $scope.uicompo.selectedTest = {};
     $scope.uicompo.itemDisabled = true;
+    $scope.uicompo.selectedTotal = 0.0;
 
     $scope.disabledAddTest = false;
     $scope.disabledSaveTestList = true;
@@ -78,9 +79,9 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         if ('delete' === $scope.actionType) {
             if($scope.billingList.length > 0){
                 for (var i = 0; i < $scope.billingList.length; i++) {
-                  if($scope.billingList[i].id === itm.id){
-                        //$scope.billingList.remove(i);
-                        $scope.billingList.splice(i, 1);
+                  if($scope.billingList[i].tmpid === itm.tmpid){
+                      $scope.billingList.splice(i, 1);
+                      onchangeSelectedList();
                   }
                 }
             }
@@ -163,23 +164,34 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         saveTest.id = null;
         saveTest.billingNumber = $scope.uicompo.billingNumber;
         saveTest.status = "OPEN";
-        if($scope.billingList){
-           saveTest.id = 0;
+        if($scope.billingList.length == 0){
+           saveTest.tmpid = 1;
         }else{
-          saveTest.id = $scope.billingList.length();
+          saveTest.tmpid = $scope.billingList.length + 1;
         }
-
-
         $scope.billingList.push(saveTest);
 
+        onchangeSelectedList();
+
+    };
+
+    var onchangeSelectedList = function(){
         if($scope.billingList.length > 0){
             $scope.disabledSaveTestList = false;
             $scope.disabledTxtBillingNumber = true;
             $scope.disabledLoadByBillingNum = true;
+            var total =0.0;
+            for (var i = 0; i < $scope.billingList.length; i++) {
+                total = total + $scope.billingList[i].price;
+            }
+            $scope.uicompo.selectedTotal = total;
+            $scope.disabledAddTest = true;
         }else{
             $scope.disabledSaveTestList = true;
+            $scope.uicompo.selectedTotal = 0.0;
+            $scope.disabledAddTest = false;
         }
-    };
+    }
 
     $scope.saveTestList = function() {
         if ($scope.billingList.length == 0) {
@@ -405,6 +417,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         $scope.mediTestList = [];
         $scope.patientMediTestList = [];
         resetTestListButtons();
+        onchangeSelectedList();
     }
     //function printPage() {
     $scope.printPage = function() {

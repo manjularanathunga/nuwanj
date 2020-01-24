@@ -297,3 +297,9 @@ modal-content {
     outline: #555555;
 }
 
+.btn-img{
+    width: 35px;
+    height: 35px;
+    padding-right: 0;
+}
+

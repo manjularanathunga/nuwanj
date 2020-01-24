@@ -7,8 +7,8 @@ app.controller('PatientTestController', function($scope, $rootScope, $http, $loc
 
     $scope.patientMediTestList = [];
     $scope.uicompo = {};
-    $scope.uicompo.billingNumber = "19P0001";
-    $scope.uicompo.patientId = "000001";
+    $scope.uicompo.billingNumber = "";
+    $scope.uicompo.patientId = "";
 
     $scope.loadByBillingNum = function() {
     var res = $http.get("patientmedicaltest/findAllActiveByBillingNumber?billingNumber=" + $scope.uicompo.billingNumber)
