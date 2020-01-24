@@ -47,7 +47,7 @@
                     <div class="col-sm-2">
                         <label class="font-size-sm">Patient</label>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
                         <input ng-disabled="uicompo.itemDisabled" ng-model="patient.patientName" style="width: 350px;"
                                type="text">
                     </div>
@@ -109,12 +109,12 @@
                 </div>
             </div>
             -->
-            <div class="col-4">
+            <div class="col-3">
                 <div class="row">
                     <div class="col-sm-2">
                         <label class="font-size-sm">Sex</label>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
                         Male <input name="gender" ng-disabled="uicompo.itemDisabled" ng-model="patient.gender"
                                     type="radio"
                                     value="MALE"/>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div class="row">
                     <div class="row">
                         <div class="col-sm-3">
@@ -139,7 +139,7 @@
                 </div>
             </div>
 
-            <div class="col-4">
+            <div class="col-3">
                 <div class="row">
                     <div class="col-sm-3">
                         <label class="font-size-sm">DOB</label>
@@ -151,24 +151,24 @@
                     </div>
                 </div>
             </div>
-            <div class="col-2">
+
+            <div class="col-3">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <label class="font-size-sm">Age : {{patient.currentAge}} </label>
+                    <div class="col-sm-6  text-center">
+                        <label class="font-size-sm">Age : {{patient.currentAge}}</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-success" ng-click="saveModal();" ng-disabled="isDisabledSave"
+                                style="width: 50px;"
+                                type="button"><i
+                                aria-hidden="true" class="fa fa-save"></i></button>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
-        <div class="row pb-3">
+        <div class="row pb-1">
+            <div class="col-sm-12 text-right" >
 
-            <div class="col-3">
-            </div>
-            <div class="col-1">
-                <button class="btn btn-success" ng-click="saveModal();" ng-disabled="isDisabledSave"
-                        style="width: 50px;"
-                        type="button"><i
-                        aria-hidden="true" class="fa fa-save"></i></button>
             </div>
         </div>
     </div>
@@ -213,7 +213,7 @@
             <span class="pl-sm-1" ng-show="btnReset"></span>
 
             </div>&nbsp;&nbsp;&nbsp;
-            <div class="col-sm-2 p-0 m-0" align="right">
+            <div class="col-sm-2 p-0 m-0  text-right">
                 <span ng-show="uicompo.selectedTotal > 0" class="p-0 m-0"><B>Total Amt: </B>
                     <strong class="p-0 m-0" style="color: darkred">{{uicompo.selectedTotal | currency:"Rs.":2 }}</strong>
                 </span>
