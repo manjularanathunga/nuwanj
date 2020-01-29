@@ -38,6 +38,7 @@
     <script src="wapp/controller/ScreenAccessController.js"></script>
     <script src="wapp/controller/UserScreenController.js"></script>
     <script src="wapp/controller/ScanningController.js"></script>
+    <script src="wapp/controller/DateRangeAnalysisController.js"></script>
 
     <script src="wapp/app-services/authentication.service.js"></script>
     <script src="wapp/app-services/user.service.js"></script>
@@ -110,7 +111,15 @@
                 </ul>
             </li>
             <li>
-                <a href="#dashboard">Contact</a>
+                <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#homeSubmenu3">Data Analysis</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu3">
+                    <li>
+                        <a href="#!daterange">Based on Dates</a>
+                    </li>
+                    <li>
+                        <a href="#!">-</a>
+                    </li>
+                </ul>
             </li>
         </ul>
 

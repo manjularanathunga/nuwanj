@@ -82,6 +82,10 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
                 templateUrl: 'wapp/view/scanningPage.html',
                 controller: 'ScanningController'
             })
+            .when("/daterange", {
+                templateUrl: 'wapp/view/analysis/DateRangeAnalysisPage.html',
+                controller: 'DateRangeAnalysisController'
+            })
 
     }]);
 
