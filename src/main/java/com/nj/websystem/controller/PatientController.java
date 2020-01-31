@@ -31,18 +31,13 @@ public class PatientController {
     @Autowired
     private PatientService services;
 
-    @RequestMapping(value = "/getNextPatientId", method = RequestMethod.GET, headers = "Accept=application/json")
-    public HttpResponse getNextPatientId() {
-
-        HttpResponse res = new HttpResponse();
-        //int yearlyRecordCount = services.findAll().size();
-        int yearlyRecordCount = 0;
-        String nextPatientId = StringUtility.getCustDateByPatten(StringUtility.YY)+StringUtility.getCustDateByPatten(String.format("%05d", (yearlyRecordCount + 1)));
-        logger.info("Patient - NextPatientId : {} " + nextPatientId);
-        res.setResponse(nextPatientId);
-        res.setSuccess(true);
-        res.setRecCount(1);
-        return res;
+    private static Patient logError(List<String> l, Patient p, String error) {
+        StringBuilder _sb = new StringBuilder(l.get(2));
+        _sb.append("/n/r");
+        //_sb.append("Error in DOB Years :"+ l.get(7) +"/" + l.get(8) +"/" + l.get(9) );
+        _sb.append(error);
+        p.setRemarks(_sb.toString());
+        return p;
     }
 
 /*    @GetMapping
@@ -55,6 +50,31 @@ public class PatientController {
 
         return new ResponseEntity<List<Patient>>(list, new HttpHeaders(), HttpStatus.OK);
     }*/
+
+    private static boolean get(String val) {
+        if (val != null)
+            if (!val.isEmpty() && !val.equals("?")) {
+                return true;
+            } else {
+                return false;
+            }
+        else
+            return false;
+    }
+
+    @RequestMapping(value = "/getNextPatientId", method = RequestMethod.GET, headers = "Accept=application/json")
+    public HttpResponse getNextPatientId() {
+
+        HttpResponse res = new HttpResponse();
+        //int yearlyRecordCount = services.findAll().size();
+        int yearlyRecordCount = 0;
+        String nextPatientId = StringUtility.getCustDateByPatten(StringUtility.YY) + StringUtility.getCustDateByPatten(String.format("%05d", (yearlyRecordCount + 1)));
+        logger.info("Patient - NextPatientId : {} " + nextPatientId);
+        res.setResponse(nextPatientId);
+        res.setSuccess(true);
+        res.setRecCount(1);
+        return res;
+    }
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public Page<Patient> getList() {
@@ -119,6 +139,7 @@ public class PatientController {
         }
         return res;
     }
+
     @RequestMapping(value = "/findByPatientIdContainingPages", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse findByPatientIdContainingAndStatus(@RequestParam(value = "patientId", required = false) String patientId) {
         logger.info("Request Patient findByPatientListById : {} " + patientId);
@@ -135,7 +156,6 @@ public class PatientController {
         }
         return res;
     }
-
 
     @RequestMapping(value = "/findByNicNumber", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse findByNicNumber(@RequestParam(value = "id", required = false) String nicNumber) {
@@ -184,7 +204,7 @@ public class PatientController {
         return list;
     }
 
-    private List loadBulk(){
+    private List loadBulk() {
         List<List> lineList = null;
         String csvFile = "/Users/sirimewanranathunga/Desktop/PatientData/juwan-2019/Patient-Table 1.csv";
         try {
@@ -192,145 +212,144 @@ public class PatientController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Patient> listOfPatients =new ArrayList<>();
+        List<Patient> listOfPatients = new ArrayList<>();
         Patient p;
         int count = 0;
-        for(List<String> l: lineList){
-            if(l.get(0).equals("Scan Registration No")){
+        for (List<String> l : lineList) {
+            if (l.get(0).equals("Scan Registration No")) {
                 continue;
             }
-            int j=0;
-            for(String s: l){
-                System.out.print("["+j+"]=" + s +", ");
+            int j = 0;
+            for (String s : l) {
+                System.out.print("[" + j + "]=" + s + ", ");
                 j++;
             }
-            p =new Patient();
+            p = new Patient();
 
             String nextPatientId = StringUtility.getCustDateByPatten(String.format("%05d", (count + 1)));
-            Date d =  new Date();
+            Date d = new Date();
             d.setYear(2019);
-            p.setPatientId(StringUtility.getCustDateByPatten(StringUtility.YY,d) + nextPatientId);
+            p.setPatientId(StringUtility.getCustDateByPatten(StringUtility.YY, d) + nextPatientId);
 
-            try{
+            try {
                 String data = l.get(2);
-                if(get(data)){
+                if (get(data)) {
                     p.setRemarks(data);
-                }else{
-                    logError( l, p,"Error in Remarks :"+ data);
+                } else {
+                    logError(l, p, "Error in Remarks :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in Remarks :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in Remarks :" + e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(1);
-                if(get(data)){
+                if (get(data)) {
                     p.setDateCreated(new Date(data));
-                }else{
-                    logError( l, p,"Error in DateCreated :"+ data);
+                } else {
+                    logError(l, p, "Error in DateCreated :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in DateCreated :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in DateCreated :" + e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(3);
-                if(get(data)){
+                if (get(data)) {
                     p.setPatientName(data);
-                }else{
-                    logError( l, p,"Error in PatientName :"+ data);
+                } else {
+                    logError(l, p, "Error in PatientName :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in PatientName :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in PatientName :" + e.getMessage());
             }
 
 
-
-            try{
+            try {
                 String gender = l.get(10);
-                if(get(gender)){
-                    if(gender.toUpperCase().equals("FEMALE")){
+                if (get(gender)) {
+                    if (gender.toUpperCase().equals("FEMALE")) {
                         p.setGender(Gender.FEMALE);
-                    }else{
+                    } else {
                         p.setGender(Gender.MALE);
                     }
-                }else{
-                    logError( l, p,"Error in GENDER :"+ gender);
+                } else {
+                    logError(l, p, "Error in GENDER :" + gender);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in GENDER :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in GENDER :" + e.getMessage());
             }
 
-            try{
+            try {
                 String years = l.get(7);
                 String months = l.get(8);
                 String days = l.get(9);
 
-                if(get(years)){
+                if (get(years)) {
                     Date dob = new Date();
                     int year = Integer.parseInt(l.get(7));
-                    dob.setYear(dob.getYear()-year);
+                    dob.setYear(dob.getYear() - year);
                     p.setDateOfBirth(dob);
-                }else{
-                    logError( l, p,"Error in DOB Years :"+ years +"/" + months +"/" + days);
+                } else {
+                    logError(l, p, "Error in DOB Years :" + years + "/" + months + "/" + days);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in GENDER :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in GENDER :" + e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(33);
-                if(get(data)){
+                if (get(data)) {
                     p.setNicNumber(data);
-                }else{
-                    logError( l, p,"Error in NicNumber :"+ data);
+                } else {
+                    logError(l, p, "Error in NicNumber :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in GENDER :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in GENDER :" + e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(4);
-                if(get(data)){
+                if (get(data)) {
                     p.setOther(data);
-                }else{
-                    logError( l, p,"Error in Other :"+ data);
+                } else {
+                    logError(l, p, "Error in Other :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in Other :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in Other :" + e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(6);
-                if(get(data)){
+                if (get(data)) {
                     p.setTelNumber(data);
-                }else{
-                    logError( l, p,"Error in TelNumber :"+ data);
+                } else {
+                    logError(l, p, "Error in TelNumber :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in TelNumber :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in TelNumber :" + e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(5);
-                if(get(data)){
+                if (get(data)) {
                     p.setPatientAddress(data);
-                }else{
-                    logError( l, p,"Error in PatientAddress :"+ data);
+                } else {
+                    logError(l, p, "Error in PatientAddress :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in PatientAddress :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in PatientAddress :" + e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(11);
-                if(get(data)){
+                if (get(data)) {
                     p.setBht(data);
-                }else{
-                    logError( l, p,"Error in Bht :"+ data);
+                } else {
+                    logError(l, p, "Error in Bht :" + data);
                 }
-            }catch (Exception e){
-                logError( l, p,"Error in Bht :"+ e.getMessage());
+            } catch (Exception e) {
+                logError(l, p, "Error in Bht :" + e.getMessage());
             }
 
             //p.setCityName();
@@ -344,25 +363,5 @@ public class PatientController {
             // break;
         }
         return listOfPatients;
-    }
-
-    private static Patient logError(List<String> l, Patient p,String error){
-        StringBuilder _sb =new StringBuilder(l.get(2));
-        _sb.append("/n/r");
-        //_sb.append("Error in DOB Years :"+ l.get(7) +"/" + l.get(8) +"/" + l.get(9) );
-        _sb.append(error);
-        p.setRemarks(_sb.toString());
-        return p;
-    }
-
-    private static boolean get(String val){
-        if(val != null)
-            if(!val.isEmpty() && !val.equals("?")){
-                return true;
-            }else {
-                return false;
-            }
-        else
-            return false;
     }
 }

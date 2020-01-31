@@ -1,1 +1,27 @@
-<div id="chart">sdsdsdsdsd</div>
+<div class="container pt-0">
+    <div class="row p-1">
+        <div class="col-sm-8 text-primary">
+            <label class="col-sm-2 fleft p-0" for="testLst">Test Name : </label>
+            <select class="form-control fleft"
+                    id="testLst" ng-change="onSelectAdminUser()"
+                    ng-model="statics.testLst"
+                    ng-options="pmt as pmt.name for pmt in testList" style="width: 350px;"/>
+        </div>
+        <div class="col-sm-4 form-control">
+            <input type="text" name="daterange" style="width: 100px;"/>
+            <button class="btn btn-primary" ng-click="genderStaticsByTest()" type="submit">Submit</button>
+        </div>
+    </div>
+    <div class="row p-1">
+        <div id="chart"/>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
+</script>

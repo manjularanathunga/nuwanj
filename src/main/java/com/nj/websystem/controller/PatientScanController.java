@@ -1,7 +1,7 @@
 package com.nj.websystem.controller;
 
-import com.nj.websystem.model.*;
-import com.nj.websystem.model.PatientScan;
+import com.nj.websystem.model.Patient;
+import com.nj.websystem.model.PatientMedicalTest;
 import com.nj.websystem.model.PatientScan;
 import com.nj.websystem.rest.CommonRest;
 import com.nj.websystem.rest.HttpResponse;
@@ -18,7 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -65,7 +68,7 @@ public class PatientScanController {
         logger.info("Request PatientScan billingNumber : {} " + billingNumber);
         HttpResponse res = new HttpResponse();
         List<PatientMedicalTest> patientMedicalTestList = patientMedicalTestService.findAllByBillingNumber(billingNumber);
-        if(!patientMedicalTestList.isEmpty()){
+        if (!patientMedicalTestList.isEmpty()) {
             List uiItemMap = new ArrayList();
             PatientMedicalTest item = patientMedicalTestList.get(0);
             uiItemMap.add(item);
@@ -74,42 +77,43 @@ public class PatientScanController {
             res.setResponse(uiItemMap);
             res.setSuccess(true);
             res.setRecCount(1);
-        }else{
+        } else {
             res.setSuccess(false);
             res.setException("Invalid PatientScan Id !");
         }
         return res;
     }
+
     @RequestMapping(value = "/getHistoryByPatient", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse getHistoryByPatient(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
         HttpResponse res = new HttpResponse();
         CommonRest comRest = new CommonRest();
         List<PatientMedicalTest> patientMedicalTestList = patientMedicalTestService.findAllByBillingNumber(billingNumber);
         PatientMedicalTest item = patientMedicalTestList.get(0);
-        Patient patient =patientService.findByPatientId(item.getPatientId()).get(0);
+        Patient patient = patientService.findByPatientId(item.getPatientId()).get(0);
 
         Map<String, String> props = new HashMap<>();
-        props.put("billingnumber",item.getBillingNumber()) ;
-        props.put("patientname",patient.getPatientName()) ;
-        if(patient.getDateOfBirth() != null){
-            props.put("age", DateUtility.calculateAge(patient.getDateOfBirth())+"") ;
+        props.put("billingnumber", item.getBillingNumber());
+        props.put("patientname", patient.getPatientName());
+        if (patient.getDateOfBirth() != null) {
+            props.put("age", DateUtility.calculateAge(patient.getDateOfBirth()) + "");
         }
-        props.put("sex",patient.getGender().toString()) ;
-        props.put("bth",patient.getBht()) ;
-        props.put("senby",item.getSeenBy()) ;
-        props.put("senby",item.getSeenBy()) ;
+        props.put("sex", patient.getGender().toString());
+        props.put("bth", patient.getBht());
+        props.put("senby", item.getSeenBy());
+        props.put("senby", item.getSeenBy());
         comRest.setPropList(patientMedicalTestList);
-        StringBuilder _sb =new StringBuilder();
-        patientMedicalTestList.forEach( i ->{
-            _sb.append(i.getName());_sb.append(",");
+        StringBuilder _sb = new StringBuilder();
+        patientMedicalTestList.forEach(i -> {
+            _sb.append(i.getName());
+            _sb.append(",");
         });
-        props.put("tests",(_sb.toString().substring(0,_sb.toString().length()-1)));
+        props.put("tests", (_sb.toString().substring(0, _sb.toString().length() - 1)));
         comRest.setProp(props);
         res.setResponse(comRest);
         res.setSuccess(true);
         return res;
     }
-
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")

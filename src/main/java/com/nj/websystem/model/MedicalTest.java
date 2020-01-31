@@ -31,6 +31,13 @@ public class MedicalTest {
     private String tmpid;
 
 
+    public MedicalTest() {
+    }
+
+    public MedicalTest(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -126,13 +133,6 @@ public class MedicalTest {
     public void setLabType(LabType labType) {
         this.labType = labType;
     }
-
-    public MedicalTest() {
-    }
-    public MedicalTest(Long id) {
-        this.id = id;
-    }
-
 
     public String getTmpid() {
         return tmpid;

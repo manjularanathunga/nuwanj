@@ -25,7 +25,7 @@ public class LoggingController {
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public List getList() {
-        List list = services.findAll(Sort.by(Sort.Direction.ASC,"id"));
+        List list = services.findAll(Sort.by(Sort.Direction.ASC, "id"));
         logger.info("Count of UserAdmin : {} " + list.size());
         return list;
     }

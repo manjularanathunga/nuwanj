@@ -2,17 +2,15 @@ package com.nj.websystem.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.function.DoubleUnaryOperator;
 
 public class DateUtility {
 
-    private static Date currentDate =new Date();
+    private static Date currentDate = new Date();
 
     public static Date getTomorrowDate() {
         Date utilDate = new Date();
-        int tomorrow = currentDate.getDate()+1;
+        int tomorrow = currentDate.getDate() + 1;
         utilDate.setDate(tomorrow);
         return utilDate;
     }

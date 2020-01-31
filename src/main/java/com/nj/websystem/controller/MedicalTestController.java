@@ -2,10 +2,8 @@ package com.nj.websystem.controller;
 
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
-import com.nj.websystem.model.MedicalReference;
 import com.nj.websystem.model.MedicalTest;
 import com.nj.websystem.rest.HttpResponse;
-import com.nj.websystem.service.MedicalReferenceService;
 import com.nj.websystem.service.MedicalTestService;
 import com.nj.websystem.util.CSVUtils;
 import org.slf4j.Logger;
@@ -122,7 +120,7 @@ public class MedicalTestController {
     }
 
 
-    private List loadBulk(){
+    private List loadBulk() {
         List<List> lineList = null;
         String csvFile = "/Users/sirimewanranathunga/Desktop/PatientData/juwan-2019/Hospital Test.csv";
         try {
@@ -130,54 +128,53 @@ public class MedicalTestController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<MedicalTest> listOfPatients =new ArrayList<>();
+        List<MedicalTest> listOfPatients = new ArrayList<>();
         MedicalTest p;
         int count = 0;
-        for(List<String> l: lineList){
-            if(l.get(0).equals("ID Test")){
+        for (List<String> l : lineList) {
+            if (l.get(0).equals("ID Test")) {
                 continue;
             }
-            int j=0;
-            for(String s: l){
-                System.out.print("["+j+"]=" + s +", ");
+            int j = 0;
+            for (String s : l) {
+                System.out.print("[" + j + "]=" + s + ", ");
                 j++;
             }
 
-            p =new MedicalTest();
+            p = new MedicalTest();
 
-            try{
+            try {
                 String data = l.get(0);
-                if(CSVUtils.get(data)){
+                if (CSVUtils.get(data)) {
                     p.setTestNumber(data);
-                }else{
+                } else {
                     //CSVUtils.logError( l, p,"Error in Remarks :"+ data);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 //CSVUtils.logError( l, p,"Error in Remarks :"+ e.getMessage());
             }
             p.setDateCreated(new Date());
-            try{
+            try {
                 String data = l.get(2);
-                if(CSVUtils.get(data)){
-                   p.setName(data);
-                }else{
+                if (CSVUtils.get(data)) {
+                    p.setName(data);
+                } else {
                     //CSVUtils.logError( l, p,"Error in DateCreated :"+ data);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 //CSVUtils.logError( l, p,"Error in DateCreated :"+ e.getMessage());
             }
 
-            try{
+            try {
                 String data = l.get(3);
-                if(CSVUtils.get(data)){
+                if (CSVUtils.get(data)) {
                     p.setPrice(new Double(data));
-                }else{
+                } else {
                     //CSVUtils.logError( l, p,"Error in PatientName :"+ data);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 //CSVUtils.logError( l, p,"Error in PatientName :"+ e.getMessage());
             }
-
 
 
             p.setActionBy("admin");

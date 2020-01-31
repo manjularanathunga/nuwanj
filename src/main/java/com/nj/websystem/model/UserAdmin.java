@@ -33,7 +33,7 @@ public class UserAdmin {
     public UserAdmin() {
     }
 
-    public UserAdmin(Long id,String userId, String fistName, String lastName, String passWord, UserRoles role, String userPFNumber, Date dateCreated, String actionBy) {
+    public UserAdmin(Long id, String userId, String fistName, String lastName, String passWord, UserRoles role, String userPFNumber, Date dateCreated, String actionBy) {
         this.id = id;
         this.userId = userId;
         this.fistName = fistName;

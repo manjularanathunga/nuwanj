@@ -19,12 +19,12 @@ public class StringUtility {
     }
 
     public static String getFilledNumber(int number, Long filCount) {
-        String format = "%0"+""+filCount+"d";
+        String format = "%0" + "" + filCount + "d";
         return String.format(format, (number));
     }
 
-    public static boolean isEmpty(String value){
-        if(value != null){
+    public static boolean isEmpty(String value) {
+        if (value != null) {
             return value.isEmpty();
         }
         return false;

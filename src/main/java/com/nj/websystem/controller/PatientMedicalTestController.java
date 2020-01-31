@@ -70,22 +70,22 @@ public class PatientMedicalTestController {
 
     @RequestMapping(value = "/getAllByTestTypeOrderByIdDesc", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse getAllByTestTypeOrderByIdDesc(@RequestParam(value = "type", required = false) TestType type) {
-        logger.info("Request findAllByPatientIdAndType Id : {type} "  + " | " + type);
+        logger.info("Request findAllByPatientIdAndType Id : {type} " + " | " + type);
         HttpResponse res = new HttpResponse();
         List<PatientMedicalTest> patientList = services.getAllByTestTypeOrderByIdDesc(type);
         PatientMedicalTest medicalTest = null;
 
-        if(patientList.size() > 0){
+        if (patientList.size() > 0) {
             medicalTest = patientList.get(0);
         }
 
         String nextNumber = "";
-        if(medicalTest != null){
-            String exitsingNumber =  medicalTest.getBillingNumber().substring(3,medicalTest.getBillingNumber().length());
+        if (medicalTest != null) {
+            String exitsingNumber = medicalTest.getBillingNumber().substring(3, medicalTest.getBillingNumber().length());
             logger.info("Patient - NextPatientId : {} " + exitsingNumber);
-            nextNumber = StringUtility.getCustDateByPatten(StringUtility.YY) + type + StringUtility.getFilledNumber((Integer.parseInt(exitsingNumber)+1),4L);
-        }else{
-            nextNumber = StringUtility.getCustDateByPatten(StringUtility.YY) + type +StringUtility.getFilledNumber((1),4L);
+            nextNumber = StringUtility.getCustDateByPatten(StringUtility.YY) + type + StringUtility.getFilledNumber((Integer.parseInt(exitsingNumber) + 1), 4L);
+        } else {
+            nextNumber = StringUtility.getCustDateByPatten(StringUtility.YY) + type + StringUtility.getFilledNumber((1), 4L);
         }
 
         if (!StringUtility.isEmpty(nextNumber)) {
@@ -106,7 +106,7 @@ public class PatientMedicalTestController {
         HttpResponse res = new HttpResponse();
         logger.info("Saving TestName : " + obj.getName());
         List<PatientMedicalTest> testsList = services.getAllByTestType(obj.getTestType());
-        String testNumber = StringUtility.getCustDateByPatten(StringUtility.YY)+obj.getTestType() + String.format("%05d", (testsList.size()+ 1));
+        String testNumber = StringUtility.getCustDateByPatten(StringUtility.YY) + obj.getTestType() + String.format("%05d", (testsList.size() + 1));
         obj.setTestNumber(testNumber.toUpperCase());
         PatientMedicalTest savedMedicalTest = services.save(obj);
 
@@ -158,8 +158,8 @@ public class PatientMedicalTestController {
     public HttpResponse findAllByPatientIdAndBillingNumber(@RequestParam(value = "patientid", required = false) String patientid, @RequestParam(value = "billingNumber", required = false) String billingNumber) {
         logger.info("Delete OfficeRoom Name : {} " + billingNumber);
         HttpResponse response = new HttpResponse();
-        List <PatientMedicalTest> itemList = services.findAllByPatientIdAndBillingNumber(patientid , billingNumber);
-        if (itemList != null && itemList.size() >0 ) {
+        List<PatientMedicalTest> itemList = services.findAllByPatientIdAndBillingNumber(patientid, billingNumber);
+        if (itemList != null && itemList.size() > 0) {
             response.setResponse(itemList);
             response.setRecCount(itemList.size());
             response.setSuccess(true);
@@ -175,9 +175,9 @@ public class PatientMedicalTestController {
     public HttpResponse findAllByBillingNumber(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
         logger.info("findAllByBillingNumber : {} " + billingNumber);
         HttpResponse response = new HttpResponse();
-        List <PatientMedicalTest> itemList = services.findAllByBillingNumberAndStatus(billingNumber, Status.OPEN);
-        if (itemList != null && itemList.size() >0 ) {
-            if(itemList.size() > 0){
+        List<PatientMedicalTest> itemList = services.findAllByBillingNumberAndStatus(billingNumber, Status.OPEN);
+        if (itemList != null && itemList.size() > 0) {
+            if (itemList.size() > 0) {
                 Patient patient = patientService.findByPatientId(itemList.get(0).getPatientId()).get(0);
                 List test = new ArrayList();
                 test.add(patient);
@@ -197,9 +197,9 @@ public class PatientMedicalTestController {
     public HttpResponse findAllActiveByBillingNumber(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
         logger.info("findAllActiveByBillingNumber : {} " + billingNumber);
         HttpResponse response = new HttpResponse();
-        List <PatientMedicalTest> itemList = services.findAllByBillingNumber(billingNumber);
-        if (itemList != null && itemList.size() >0 ) {
-            if(itemList.size() > 0){
+        List<PatientMedicalTest> itemList = services.findAllByBillingNumber(billingNumber);
+        if (itemList != null && itemList.size() > 0) {
+            if (itemList.size() > 0) {
                 Patient patient = patientService.findByPatientId(itemList.get(0).getPatientId()).get(0);
                 List test = new ArrayList();
                 test.add(patient);
@@ -219,7 +219,7 @@ public class PatientMedicalTestController {
     public HttpResponse bulkInsert(@RequestBody List<PatientMedicalTest> items) {
         logger.info("PatientMedicalTest count : {} " + items.size());
         HttpResponse response = new HttpResponse();
-        items.forEach( i ->
+        items.forEach(i ->
                 i.setId(null)
         );
         List result = services.saveAll(items);

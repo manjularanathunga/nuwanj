@@ -1,8 +1,37 @@
-app.controller('DateRangeAnalysisController', function($scope, $rootScope, $http, $location, $window, AuthenticationService, Pop) {
+app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $http, $location, $window, AuthenticationService, Pop) {
     $rootScope.pageTitle = "Data Analysis Based on Date Range";
 
-    var onLoad = function(){
-        c3.generate({
+    $scope.statics = {};
+    $scope.statics.genderbytest = [];
+    $scope.testList = [];
+    $scope.statics.testLst = [];
+
+    var onLoad = function () {
+        var chart = c3.generate({
+            bindto: '#chart',
+            data: {
+                columns: $scope.statics.genderbytest,
+                type: 'pie'
+            }
+        });
+    }
+
+    $scope.genderStaticsByTest = function () {
+        var res = $http.get("analysis/genderStaticsByTest?testid=12")
+            .then(function (response) {
+                $scope.statics.genderbytest = response.data;
+                onLoad();
+            }, function (response) {
+
+            }).catch(function () {
+
+            });
+    }
+
+});
+
+
+/*        c3.generate({
             bindto: '#chart',
             data: {
                 columns: [
@@ -28,7 +57,4 @@ app.controller('DateRangeAnalysisController', function($scope, $rootScope, $http
                     }
                 }
             }
-        });
-    }
-    onLoad();
-});
+        });*/

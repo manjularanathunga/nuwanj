@@ -20,9 +20,9 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
 
     public List<PatientMedicalTest> getAllByTestType(TestType testType);
 
-    public List<PatientMedicalTest> getAllByTestTypeAndDateCreatedBetween(TestType testType,Date startDate,Date endDate);
+    public List<PatientMedicalTest> getAllByTestTypeAndDateCreatedBetween(TestType testType, Date startDate, Date endDate);
 
-    public List<PatientMedicalTest> findAllByDateCreatedBetweenAndTestType(Date startDate, Date endDate,TestType testType);
+    public List<PatientMedicalTest> findAllByDateCreatedBetweenAndTestType(Date startDate, Date endDate, TestType testType);
 
     List<PatientMedicalTest> findAllByPatientIdAndTestType(String patientId, TestType testType);
 

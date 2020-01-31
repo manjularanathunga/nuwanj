@@ -28,6 +28,13 @@ public class MedicalReference {
     private Date lastModified;
     private Status status;
 
+    public MedicalReference() {
+    }
+
+    public MedicalReference(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -106,13 +113,6 @@ public class MedicalReference {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public MedicalReference() {
-    }
-
-    public MedicalReference(Long id) {
-        this.id = id;
     }
 
     @Override
