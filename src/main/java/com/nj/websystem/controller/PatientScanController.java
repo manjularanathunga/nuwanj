@@ -39,6 +39,9 @@ public class PatientScanController {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private PatientScanServise patientScanServise;
+
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public Page<PatientScan> getList() {
         Pageable paging = PageRequest.of(1, 25, Sort.by("id"));
@@ -69,11 +72,19 @@ public class PatientScanController {
         HttpResponse res = new HttpResponse();
         List<PatientMedicalTest> patientMedicalTestList = patientMedicalTestService.findAllByBillingNumber(billingNumber);
         if (!patientMedicalTestList.isEmpty()) {
-            List uiItemMap = new ArrayList();
+            Map<String, Object> uiItemMap = new HashMap<>();
             PatientMedicalTest item = patientMedicalTestList.get(0);
-            uiItemMap.add(item);
-            uiItemMap.add(patientService.findByPatientId(item.getPatientId()).get(0));
-            uiItemMap.add(patientMedicalTestService.getAllByPatientId(item.getPatientId()));
+            uiItemMap.put("patientmedicaltest",item);
+            uiItemMap.put("patient",patientService.findByPatientId(item.getPatientId()).get(0));
+            uiItemMap.put("bypatientidlist",patientMedicalTestService.getAllByPatientId(item.getPatientId()));
+            List<PatientScan> patientScanList = patientScanServise.getAllByBillingNumber(billingNumber);
+            PatientScan patientScan = null;
+            if(patientScanList.isEmpty()){
+                patientScan = new PatientScan();
+            }else{
+                patientScan =patientScanList.get(0);
+            }
+            uiItemMap.put("patientscan",patientScan);
             res.setResponse(uiItemMap);
             res.setSuccess(true);
             res.setRecCount(1);

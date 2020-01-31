@@ -15,4 +15,6 @@ public interface PatientScanServise extends PagingAndSortingRepository<PatientSc
 
     @Query("From PatientScan ORDER BY dateCreated DESC")
     public List<PatientScan> getAllByPatientId(String patientId);
+
+    public List<PatientScan> getAllByBillingNumber(String billingNumber);
 }

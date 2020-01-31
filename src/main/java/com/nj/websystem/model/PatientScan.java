@@ -1,6 +1,7 @@
 package com.nj.websystem.model;
 
 import com.nj.websystem.enums.Status;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,10 +19,15 @@ public class PatientScan {
     private String billingNumber;
     private String patientId;
     private String testName;
+    @Column(length = 2000)
     private String procedure;
+    @Column(length = 2000)
     private String indication;
+    @Column(length = 2000)
     private String finding;
+    @Column(length = 2000)
     private String impression;
+    @Column(length = 2000)
     private String remarks;
     private String actionBy;
     private Date dateCreated;

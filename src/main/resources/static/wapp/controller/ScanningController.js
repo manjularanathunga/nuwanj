@@ -15,6 +15,10 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     $scope.uicompo.itemDisabled = false;
     $scope.uicompo.history = {};
     $scope.uicompo.historyLst = [];
+    $scope.currentAge  = 0;
+    $scope.uicompo.showItem  = false;
+    $scope.uicompo.showSave  = false;
+
 
     // $scope.patientScan.dateCreated = new Date();
 
@@ -24,6 +28,8 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $scope.patientScan = {};
         $scope.scanList = [];
         $scope.scanHistortyList = [];
+        $scope.uicompo.showItem  = false;
+        $scope.uicompo.showSave  = false;
     }
 
     $scope.searchBilling = function () {
@@ -37,27 +43,34 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $http.get("scan/getPatientByBilling?billingNumber=" + billingNumber)
             .then(function(resp) {
                 if (resp.data.success) {
-                    var resLst = resp.data.response;
-                    $scope.patientTest = resLst[0];
-                    $scope.patient = resLst[1];
-                    $scope.scanHistortyList = resLst[2];
+                    var obj = resp.data.response;
+                    $scope.patientTest = obj.patientmedicaltest;
+                    $scope.patient = obj.patient;
+                    $scope.scanHistortyList = obj.bypatientidlist;
+                    $scope.patientScan = obj.patientscan;
+                    if($scope.patient.dateOfBirth){
+                        $scope.currentAge = (new Date().getFullYear() - new Date($scope.patient.dateOfBirth).getFullYear());
+                    }
                     $scope.patientScan.scanNumber = $scope.patientScan.scanNumber;
                     $scope.patientScan.billingNumber = billingNumber;
                     $scope.patientScan.patientId = $scope.patient.patientId;
-                    if(!$scope.patient.dateOfBirth){
-                        $scope.patient.currentAge = (new Date().getFullYear() - $scope.patient.dateOfBirth.getFullYear());
-                    }
-                    //$scope.patientScan.procedure;
-                    //$scope.patientScan.indication;
-                    //$scope.patientScan.finding;
-                    //$scope.patientScan.impression;
-                    //$scope.patientScan.remarks;
-
+                    $scope.uicompo.showItem  = true;
+                    $scope.uicompo.showSave  = false;
                 } else {
                     Pop.timeMsg('error', 'SEARCH SCAN', ' SCAN NUMMBER NOT FOUND ', 2000);
                 }
             });
 
+    }
+
+    $scope.clearScreen = function() {
+        $scope.uicompo = {};
+        $scope.patientTest = {};
+        $scope.patient = {};
+        $scope.scanHistortyList = [];
+        $scope.patientScan = {};
+        $scope.uicompo.showItem  = false;
+        $scope.uicompo.showSave  = false;
     }
 
     $scope.saveModal = function() {
@@ -68,6 +81,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $http.post('/scan/save', $scope.patientScan)
             .then(function(resp) {
                 Pop.timeMsg('success', 'SAVE SCAN', ' SCAN HAS BEEN SAVED SUCCESSFULLY ', 2000);
+                $scope.uicompo.showSave  = false;
             }, function(resp) {
                 Pop.timeMsg('error', 'SAVE SCAN', ' SCAN SAVING NOT SUCCESS', 2000);
             }).catch(function(e) {
@@ -107,5 +121,10 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
             $scope.scanList = response.data;
         });
     };
+
+    $scope.enableSave = function(itm) {
+        $scope.uicompo.showSave  = true;
+    }
+
     loadList();
 });
