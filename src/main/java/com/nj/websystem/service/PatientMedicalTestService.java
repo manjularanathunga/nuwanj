@@ -39,5 +39,10 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
     @Query("Select DISTINCT(CONCAT(t.billingNumber,'-',t.dateCreated))  from PatientMedicalTest t where t.patientId like :patientId")
     public List<String> getAllByPatientId(String patientId);
 
+    //findFirst5ByOrderByPublicationDateDesc();
+    //List<User> findTop10ByLastname(String lastname, Pageable pageable);
+    //findTopByOrderByIdDesc()
+    //List<PatientMedicalTest>  findTop15ByDateCreatedByIdDesc();
+    List<PatientMedicalTest>  findFirst15ByOrderByDateCreatedDesc();
 
 }
