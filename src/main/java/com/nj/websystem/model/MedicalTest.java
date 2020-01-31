@@ -28,8 +28,9 @@ public class MedicalTest {
     private Date dateCreated;
     private Date lastModified;
     private Status status;
+    @Transient
     private String tmpid;
-
+    private Long financeId;
 
     public MedicalTest() {
     }
@@ -140,5 +141,13 @@ public class MedicalTest {
 
     public void setTmpid(String tmpid) {
         this.tmpid = tmpid;
+    }
+
+    public Long getFinanceId() {
+        return financeId;
+    }
+
+    public void setFinanceId(Long financeId) {
+        this.financeId = financeId;
     }
 }

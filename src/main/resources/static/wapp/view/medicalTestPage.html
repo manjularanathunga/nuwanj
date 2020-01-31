@@ -39,6 +39,7 @@
                     <th width="3%">TYPE</th>
                     <th width="5%">Price</th>
                     <th width="5%">Lab</th>
+                    <th width="5%">Finance Ref</th>
                     <th>ACTIONBY</th>
                     <th>DATECREATED</th>
                     <th>LASTMODIFIED</th>
@@ -60,6 +61,7 @@
                     <td>{{itm.testType}}</td>
                     <td>{{itm.price}}</td>
                     <td>{{itm.labType}}</td>
+                    <td>{{itm.financeId}}</td>
                     <td>{{itm.actionBy}}</td>
                     <td>{{itm.dateCreated | date:'medium'}}</td>
                     <td>{{itm.lastModified | date:'medium'}}</td>
@@ -158,6 +160,19 @@
                                     <div class="col-sm-9">
                                         <input forma ng-disabled="itemDisabled" ng-model="mtest.price" step=".01"
                                                style="width: 75px;" type="billingNumber">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="font-size-sm">Finance Reference #</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input ng-disabled="itemDisabled" ng-model="mtest.financeId" style="width: 350px;"
+                                               type="text">
                                     </div>
                                 </div>
                             </div>
