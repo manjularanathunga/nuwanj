@@ -12,7 +12,7 @@ app.controller('PatientTestController', function($scope, $rootScope, $http, $loc
     $scope.uicompo.patientId = "";
     $scope.uicompo.showPatient = false;
 
-    var loadInitList = function() {
+    $scope.loadInitList = function() {
         $scope.uicompo.showPatient = false;
         var res = $http.get("patientmedicaltest/getList")
             .then(function(resp) {
@@ -54,6 +54,6 @@ app.controller('PatientTestController', function($scope, $rootScope, $http, $loc
             });
     }
 
-    loadInitList();
+    $scope.loadInitList();
 });
 

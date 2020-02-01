@@ -1,23 +1,25 @@
-<div class="container">
-    <div class="col-8 pt-0 pb-1">
-        <div class="row">
-            <div class="col-sm-3">
-                <label class="font-size-sm">Patient Billing # : </label>
-            </div>
-            <div class="col-sm-3">
-                <input ng-model="uicompo.billingNumber" type="text">
-            </div>
-            <div class="col-sm-1 pl-3">
-                <button class="btn btn-warning btn-img" ng-click="loadByBillingNum();"
-                        style="width: 45px;" type="button">
-                    <i aria-hidden="true" class="fa fa-search"></i></button>
-                <span class="pl-sm-1"></span>
-            </div>
+<div>
+    <div class="row p-0">
+        <div class="col-sm-2">
+            <label class="font-size-sm">Patient Billing # : </label>
+        </div>
+        <div class="col-sm-2">
+            <input ng-model="uicompo.billingNumber" type="text" style="width: 150px;">
+        </div>
+        <div class="col-sm-4">
+            <button class="btn btn-warning mr-1" ng-click="loadByBillingNum();"
+                    type="button">
+                <i aria-hidden="true" class="fa fa-search"></i></button>
+            <button class="btn btn-danger" ng-click="loadInitList();"
+                    type="button">
+                <i aria-hidden="true" class="fa fa-broom"></i></button>
+        </div>
+        <div class="col-sm-3 content-right">
+            <input class="form-control" ng-model="searchKeyword" placeholder="Search" type="text">
         </div>
     </div>
 </div>
-<div ng-show = "uicompo.showPatient" class="container rounded  pt-1" style="border:1px solid darkgreen">
-
+<div ng-show ="uicompo.showPatient" class="container rounded " style="border:1px solid darkgreen">
     <div class="col-12 pt-1">
         <div class="row form-group">
             <div class="col-sm-4">
@@ -47,18 +49,7 @@
         </div>
     </div>
 </div>
-<hr/>
-<div class="container-fluid">
-    <div class="raw">
-        <div class="col-sm-12">
-            <div class="d-flex justify-content-sm-end">
-                <div class="input-group col-md-4 input-group-sm form-inline" ng-init="searchKeyword=''">
-                    Search : <input class="form-control" ng-model="searchKeyword" placeholder="Search" type="text">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="raw view">
     <div class="wrapper table table-sm table-hover table-bordered" id="parent">
         <table class="table" id="fixTable">
