@@ -206,7 +206,7 @@ public class PatientController {
 
     private List loadBulk() {
         List<List> lineList = null;
-        String csvFile = "/Users/sirimewanranathunga/Desktop/PatientData/juwan-2019/Patient-Table 1.csv";
+        String csvFile = "/Users/sirimewanranathunga/Desktop/projects/PatientData/juwan-2019/PatientTable1.csv";
         try {
             lineList = CSVUtils.LoadFile(csvFile);
         } catch (Exception e) {
