@@ -18,6 +18,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
         loggedUser = $rootScope.globals.currentUser.username;
     }
 
+
     $scope.showUI = function (itm, opType) {
         $scope.actionType = opType;
         if ('add' === $scope.actionType) {
@@ -34,6 +35,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             $scope.itemDisabled = true;
             $scope.mtest = itm;
         }
+        $scope.mtest.optTests ="FSH,TSH";
         $("#modal-inv").modal("show");
     };
 

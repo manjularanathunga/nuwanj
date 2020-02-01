@@ -31,6 +31,7 @@ public class MedicalTest {
     @Transient
     private String tmpid;
     private Long financeId;
+    private String optTests;
 
     public MedicalTest() {
     }
@@ -149,5 +150,13 @@ public class MedicalTest {
 
     public void setFinanceId(Long financeId) {
         this.financeId = financeId;
+    }
+
+    public String getOptTests() {
+        return optTests;
+    }
+
+    public void setOptTests(String optTests) {
+        this.optTests = optTests;
     }
 }
