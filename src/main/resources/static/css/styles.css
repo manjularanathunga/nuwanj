@@ -339,6 +339,27 @@ a.article, a.article:hover {
     border: solid darkgreen;
 }
 
+label{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 3px;
+    color: #4682b4;
+    margin: 1px;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 
 
 

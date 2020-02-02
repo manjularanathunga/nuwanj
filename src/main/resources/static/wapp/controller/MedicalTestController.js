@@ -105,7 +105,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
 
     var loadList = function () {
         $http.get("medicaltest/getList").then(function (jsn) {
-            $scope.medicalTestList = jsn.data.response.content;
+            $scope.medicalTestList = jsn.data.response;
         });
     };
 

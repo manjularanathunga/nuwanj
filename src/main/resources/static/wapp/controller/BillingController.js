@@ -222,6 +222,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
                 $scope.disabledAddTest = true;
                 $scope.disabledTxtBillingNumber = true;
                 $scope.disabledLoadByBillingNum = true;
+                $scope.disabledTestSelection = false;
                 Pop.timeMsg('success', 'MEDICAL TEST ADDED ', ' TEST HAS BEEN ADDED TO PATIENT ', 2000);
             });
     };
@@ -419,6 +420,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         $scope.showMediTest = false;
         resetTestListButtons();
         $scope.rePrint = false;
+        $scope.disabledTestSelection = false;
     }
 
     var resetTestListButtons = function() {

@@ -32,7 +32,7 @@
                     <th width="3%">TYPE</th>
                     <th width="5%">Price</th>
                     <th width="5%">Lab</th>
-                    <th width="5%">Finance Ref</th>
+                    <th width="5%">Fin/Ref</th>
                     <th>ACTIONBY</th>
                     <th>DATECREATED</th>
                     <th>LASTMODIFIED</th>
@@ -56,8 +56,8 @@
                     <td>{{itm.labType}}</td>
                     <td>{{itm.financeId}}</td>
                     <td>{{itm.actionBy}}</td>
-                    <td>{{itm.dateCreated | date:'medium'}}</td>
-                    <td>{{itm.lastModified | date:'medium'}}</td>
+                    <td>{{itm.dateCreated | date:'shortDate'}}</td>
+                    <td>{{itm.lastModified | date:'shortDate'}}</td>
                     <td>{{itm.status}}</td>
                 </tr>
                 </tbody>
