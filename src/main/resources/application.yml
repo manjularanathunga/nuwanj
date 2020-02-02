@@ -13,6 +13,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/njsysdb
     username: postgres
     password: 123456
+    initialization-mode: always
   # JPA properties
   jpa:
     hibernate:

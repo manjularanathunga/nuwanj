@@ -2,6 +2,7 @@ package com.nj.websystem.service;
 
 import com.nj.websystem.enums.TestType;
 import com.nj.websystem.model.MedicalTest;
+import com.nj.websystem.model.PatientMedicalTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,5 +25,7 @@ public interface MedicalTestService extends JpaRepository<MedicalTest, Long> {
     List<MedicalTest> findAll();
 
     List<MedicalTest> findAllByTestType(TestType testType);
+
+    List<MedicalTest>  findFirst15ByOrderByDateCreatedDesc();
 
 }

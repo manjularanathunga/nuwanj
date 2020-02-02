@@ -3,15 +3,36 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
 
     $scope.statics = {};
     $scope.statics.genderbytest = [];
+    $scope.statics.genderbypatient = [];
     $scope.testList = [];
     $scope.statics.testLst = [];
 
-    var onLoad = function () {
-        var chart = c3.generate({
-            bindto: '#chart',
+    var testStatics = function () {
+        c3.generate({
+            bindto: '#testChart',
             data: {
                 columns: $scope.statics.genderbytest,
                 type: 'pie'
+            }
+        });
+    }
+
+    var patientStatics = function () {
+        c3.generate({
+            bindto: '#patientChart',
+            data: {
+                columns: $scope.statics.genderbypatient,
+                type: 'pie'
+            },
+            pie: {
+                label: {
+                    format: function(value, ratio, id) {
+                        ratio = d3.format("%")(ratio); // format ratio
+                        //return [id, value, ratio].join(); // used to pass values to the onrender function
+                        return value + " - " + ratio;
+
+                    }
+                }
             }
         });
     }
@@ -20,13 +41,29 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
         var res = $http.get("analysis/genderStaticsByTest?testid=12")
             .then(function (response) {
                 $scope.statics.genderbytest = response.data;
-                onLoad();
+                testStatics();
             }, function (response) {
 
             }).catch(function () {
 
             });
     }
+
+    $scope.genderStaticsByPatient = function () {
+        var res = $http.get("analysis/genderStaticsByPatient?testid=12")
+            .then(function (response) {
+                $scope.statics.genderbypatient = response.data;
+                patientStatics();
+            }, function (response) {
+
+            }).catch(function () {
+
+            });
+    }
+
+    $scope.genderStaticsByTest();
+    $scope.genderStaticsByPatient();
+
 
 });
 
@@ -58,3 +95,42 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
                 }
             }
         });*/
+
+/*var charThree = c3.generate({
+    bindto: "#chartThree",
+    size: {
+        width: 500,
+        height: 300
+    },
+    data: {
+        colors: {
+            A: 'yellow',
+            B: 'red',
+            C: 'green',
+            D: 'orange',
+            E: 'blue'
+        },
+        columns: [
+            ['A',20],
+            ['B',40],
+            ['C',20],
+            ['D',10],
+            ['E',9]
+        ],
+        type: 'pie'
+    },
+    pie: {
+        labels: {
+            show: true,
+            threshold: 0.1,
+            format: {
+                A: function (value, ratio, id) {
+                    if(value=20) {
+                        return "A<br/>9item<br/>20.2%";
+                    }
+                }
+            }
+        }
+    }
+
+});*/

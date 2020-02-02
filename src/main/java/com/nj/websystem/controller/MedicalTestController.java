@@ -32,13 +32,13 @@ public class MedicalTestController {
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse getList() {
         HttpResponse res = new HttpResponse();
-        Pageable paging = PageRequest.of(1, 10, Sort.by("id"));
-        Page<MedicalTest> list = services.findAll(paging);
-        logger.info("Count of MedicalTest : " + list.getTotalElements());
+        //Pageable paging = PageRequest.of(1, 10, Sort.by("id"));
+        List<MedicalTest> list = services.findFirst15ByOrderByDateCreatedDesc();
+        logger.info("Count of MedicalTest : " + list.size());
         if (list != null && !list.isEmpty()) {
             res.setResponse(list);
             res.setSuccess(true);
-            res.setRecCount(list.getTotalElements());
+            res.setRecCount(list.size());
         } else {
             res.setSuccess(false);
             res.setException("Invalid MedicalTest !");

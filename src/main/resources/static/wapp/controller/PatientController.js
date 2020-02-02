@@ -94,13 +94,6 @@ app.controller('PatientController', function ($scope, $rootScope, $http, $locati
         loadList();
     };
 
-
-    $scope.loadBulkData = function () {
-        $http.get("patient/loadPatient").then(function (response) {
-            loadList();
-        });
-    };
-
     var loadList = function () {
         $http.get("patient/getList").then(function (response) {
             $scope.patientList = response.data.content;
