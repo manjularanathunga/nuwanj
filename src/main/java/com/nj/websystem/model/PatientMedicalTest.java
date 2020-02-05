@@ -32,6 +32,7 @@ public class PatientMedicalTest {
     private Date dateCreated;
     private Date lastModified;
     private Status status;
+    private String remarks;
 
     public Long getId() {
         return id;
@@ -159,5 +160,13 @@ public class PatientMedicalTest {
 
     public void setLabType(LabType labType) {
         this.labType = labType;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

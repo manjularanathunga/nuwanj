@@ -6,6 +6,7 @@ import com.nj.websystem.enums.TestType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "TBL_MEDICAL_TEST")
@@ -21,8 +22,6 @@ public class MedicalTest {
     private String name;
     @Column(precision = 2, scale = 0)
     private Double price;
-    private String reference;
-    private String units;
     private String actionBy;
     private LabType labType;
     private Date dateCreated;
@@ -30,10 +29,15 @@ public class MedicalTest {
     private Status status;
     @Transient
     private String tmpid;
-    private Long financeId;
     private String optTests;
+    private String remarks;
 
     public MedicalTest() {
+    }
+
+    public MedicalTest(TestType testType, String name) {
+        this.testType = testType;
+        this.name = name;
     }
 
     public MedicalTest(Long id) {
@@ -88,6 +92,14 @@ public class MedicalTest {
         this.actionBy = actionBy;
     }
 
+    public LabType getLabType() {
+        return labType;
+    }
+
+    public void setLabType(LabType labType) {
+        this.labType = labType;
+    }
+
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -112,44 +124,12 @@ public class MedicalTest {
         this.status = status;
     }
 
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
-    public String getUnits() {
-        return units;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
-    }
-
-    public LabType getLabType() {
-        return labType;
-    }
-
-    public void setLabType(LabType labType) {
-        this.labType = labType;
-    }
-
     public String getTmpid() {
         return tmpid;
     }
 
     public void setTmpid(String tmpid) {
         this.tmpid = tmpid;
-    }
-
-    public Long getFinanceId() {
-        return financeId;
-    }
-
-    public void setFinanceId(Long financeId) {
-        this.financeId = financeId;
     }
 
     public String getOptTests() {
@@ -159,4 +139,27 @@ public class MedicalTest {
     public void setOptTests(String optTests) {
         this.optTests = optTests;
     }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MedicalTest)) return false;
+        MedicalTest that = (MedicalTest) o;
+        return Objects.equals(getTestType(), that.getTestType()) &&
+                Objects.equals(getName(), that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getName());
+    }
+
 }

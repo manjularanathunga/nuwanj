@@ -32,6 +32,7 @@ public class Patient {
     private Date dateCreated;
     private Date lastModified;
     private Status status;
+    private String billingNumber;
 
 
     public String getPatientAddress() {
@@ -168,5 +169,13 @@ public class Patient {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getBillingNumber() {
+        return billingNumber;
+    }
+
+    public void setBillingNumber(String billingNumber) {
+        this.billingNumber = billingNumber;
     }
 }

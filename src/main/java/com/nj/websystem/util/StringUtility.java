@@ -29,4 +29,15 @@ public class StringUtility {
         }
         return false;
     }
+
+    public static boolean get(String val) {
+        if (val != null)
+            if (!val.isEmpty() && !val.equals("?")) {
+                return true;
+            } else {
+                return false;
+            }
+        else
+            return false;
+    }
 }

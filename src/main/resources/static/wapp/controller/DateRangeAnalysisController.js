@@ -13,7 +13,17 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
             data: {
                 columns: $scope.statics.genderbytest,
                 type: 'pie'
+            },
+            pie: {
+            label: {
+                format: function(value, ratio, id) {
+                    ratio = d3.format("%")(ratio); // format ratio
+                    //return [id, value, ratio].join(); // used to pass values to the onrender function
+                    return value + " - " + ratio;
+
+                }
             }
+        }
         });
     }
 

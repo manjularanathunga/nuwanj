@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.cache.CacheManager;
@@ -15,7 +16,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -25,10 +28,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+@EnableJpaRepositories("com.nj.websystem.service")
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableScheduling
 @Configuration
+
 public class WebSystemApplication {
 
     static Logger logger = LoggerFactory.getLogger(WebSystemApplication.class);
