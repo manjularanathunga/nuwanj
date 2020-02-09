@@ -15,9 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -44,6 +42,17 @@ public class MedicalTestController {
             res.setException("Invalid MedicalTest !");
         }
         return res;
+    }
+
+    @RequestMapping(value = "/getIdNameList", method = RequestMethod.GET, headers = "Accept=application/json")
+    public Map getListName() {
+        HttpResponse res = new HttpResponse();
+        Map rex = new HashMap();
+        List<MedicalTest> list = services.findAll();
+        for(MedicalTest m:list){
+            rex.put(m.getTestNumber(),m.getName());
+        }
+        return rex;
     }
 
     @RequestMapping(value = "/getListByName", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -187,3 +196,25 @@ public class MedicalTestController {
         return listOfPatients;
     }
 }
+
+class Compo{
+    String id;
+    String name;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+

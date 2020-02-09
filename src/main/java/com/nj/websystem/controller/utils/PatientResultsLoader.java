@@ -1,7 +1,6 @@
 package com.nj.websystem.controller.utils;
 
 import com.nj.websystem.enums.Status;
-import com.nj.websystem.enums.TestType;
 import com.nj.websystem.model.MedicalTest;
 import com.nj.websystem.model.Patient;
 import com.nj.websystem.model.PatientMedicalTest;
@@ -15,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class PatientResultsLoader {
 
@@ -36,7 +32,7 @@ public class PatientResultsLoader {
         return p;
     }
 
-    public void executeLoader(PatientMedicalTestService services, PatientService servicesp) {
+    public void executeLoader(PatientMedicalTestService services, PatientService servicesp, MedicalTestService medicalTestService) {
 
         myservices = services;
 
@@ -47,10 +43,10 @@ public class PatientResultsLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        run(lineList, servicesp);
+        run(lineList, servicesp, medicalTestService);
     }
 
-    private void run(List<List> lineList, PatientService servicesp){
+    private void run(List<List> lineList, PatientService servicesp, MedicalTestService medicalTestService){
         List<PatientMedicalTest> listOfPatients = new ArrayList<>();
         PatientMedicalTest p;
         int count = 0;
@@ -96,6 +92,11 @@ public class PatientResultsLoader {
                 String data = l.get(3);
                 if (StringUtility.get(data)) {
                     p.setName(data);
+                    List<MedicalTest> lst = medicalTestService.findAllByName(data);
+                    if(lst.size() > 0){
+                        p.setTestNumber(lst.get(0).getTestNumber());
+                    }
+
                 } else {
                     logError(l, p, "Error in PatientName :" + data);
                 }
@@ -146,4 +147,25 @@ public class PatientResultsLoader {
         myservices.saveAll(listOfPatients);
         logger.info("Count of loadBulk : {} " + listOfPatients.size());
     }
+
+    private Map<String,Integer> oldTestMap = new HashMap<>();
+
+    private void loadOldTest(){
+        oldTestMap.put("SERUM FSH:",0);
+        oldTestMap.put("SERUM TOTAL THYROXIN:",0);
+        oldTestMap.put("Iodine 131 Ablation & Whole body Scintigraphy",5);
+        oldTestMap.put("SERUM TESTOSTERON:",0);
+        oldTestMap.put("SERUM PROGESTERON:",0);
+        oldTestMap.put("SERUM THYROGLOBULIN:",0);
+        oldTestMap.put("SERUM FREE TRIIODOTHYRONINE:",0);
+        oldTestMap.put("SERUM LH:",9);
+        oldTestMap.put("SERUM TSH:",0);
+        oldTestMap.put("SERUM PROLACTIN :",0);
+        oldTestMap.put("SERUM OESTRADIOL:",0);
+        oldTestMap.put("SERUM FREE THYROXIN:",0);
+        oldTestMap.put("Prolactin ",0);
+        oldTestMap.put("Testosterone ",0);
+        oldTestMap.put("SERUM CORTISOL:",2);
+    }
+
 }

@@ -61,7 +61,11 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         });
 
         $scope.seenByList.push({
-            name: "Dr.XXXX"
+            name: "Dr.D.K.K Nanayakkara"
+        });
+
+        $scope.seenByList.push({
+            name: "Dr.L Watawana"
         });
 
         $scope.districtByList.push({
@@ -230,13 +234,14 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
 
     $scope.clearCurrentPatient = function() {
         console.log('clearCurrentPatient');
-        $scope.patient = {};
         $scope.medicalTest = {};
         $scope.patientMediTestList = [];
         $scope.mediTestList = [];
         $scope.showMediTest = false;
         $scope.uicompo.itemDisabled = true;
         $scope.isDisabledSave = true;
+        $scope.patient = {};
+        $scope.patient.patientId = null;
     };
 
     $scope.loadPatientList = function() {

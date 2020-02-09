@@ -28,4 +28,6 @@ public interface MedicalTestService extends JpaRepository<MedicalTest, Long> {
 
     List<MedicalTest>  findFirst15ByOrderByDateCreatedDesc();
 
+    List<MedicalTest> findAllByName(String testName);
+
 }

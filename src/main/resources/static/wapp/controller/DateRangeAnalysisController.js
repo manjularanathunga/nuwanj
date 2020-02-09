@@ -6,6 +6,9 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
     $scope.statics.genderbypatient = [];
     $scope.testList = [];
     $scope.statics.testLst = [];
+    $scope.medicalTestList = [];
+    $scope.uicompo = {};
+    $scope.uicompo.selectedTestId = "";
 
     var testStatics = function () {
         c3.generate({
@@ -47,8 +50,8 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
         });
     }
 
-    $scope.genderStaticsByTest = function () {
-        var res = $http.get("analysis/genderStaticsByTest?testid=12")
+    $scope.genderStatics = function () {
+        var res = $http.get("analysis/genderStatics")
             .then(function (response) {
                 $scope.statics.genderbytest = response.data;
                 testStatics();
@@ -71,8 +74,29 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
             });
     }
 
-    $scope.genderStaticsByTest();
+    $scope.onChangeTestName = function (key) {
+        var res = $http.get("analysis/genderStaticsByTest?testid=" + $scope.uicompo.selectedTestId)
+        .then(function (response) {
+            $scope.statics.genderbypatient = response.data;
+            patientStatics();
+        }, function (response) {
+
+        }).catch(function () {
+
+        });
+    }
+
+
+
+    var loadList = function () {
+        $http.get("medicaltest/getIdNameList").then(function (jsn) {
+            $scope.medicalTestList = jsn.data;
+        });
+    };
+
+    $scope.genderStatics();
     $scope.genderStaticsByPatient();
+    loadList();
 
 
 });

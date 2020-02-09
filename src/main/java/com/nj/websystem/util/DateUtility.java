@@ -23,7 +23,7 @@ public class DateUtility {
         utilDate.setHours(23);
         utilDate.setMinutes(59);
         utilDate.setSeconds(59);
-        return currentDate;
+        return utilDate;
     }
 
     public static Date getFistDayOfYear() {
@@ -34,7 +34,7 @@ public class DateUtility {
         utilDate.setHours(0);
         utilDate.setMinutes(1);
         utilDate.setSeconds(1);
-        return currentDate;
+        return utilDate;
     }
 
     public static Date getCuttentYear() {
@@ -46,6 +46,28 @@ public class DateUtility {
         utilDate.setMinutes(1);
         utilDate.setSeconds(1);
         return currentDate;
+    }
+
+    public static Date getMonthEnd() {
+        Date utilDate = new Date();
+        utilDate.setYear(currentDate.getYear());
+        utilDate.setMonth(currentDate.getMonth());
+        utilDate.setDate(31);
+        utilDate.setHours(23);
+        utilDate.setMinutes(59);
+        utilDate.setSeconds(59);
+        return utilDate;
+    }
+
+    public static Date getFistDayOfMonth() {
+        Date utilDate = new Date();
+        utilDate.setYear(currentDate.getYear());
+        utilDate.setMonth(currentDate.getMonth());
+        utilDate.setDate(1);
+        utilDate.setHours(0);
+        utilDate.setMinutes(1);
+        utilDate.setSeconds(1);
+        return utilDate;
     }
 
     public static int calculateAge(Date birthDate) {

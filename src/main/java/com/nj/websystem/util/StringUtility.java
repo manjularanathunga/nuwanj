@@ -6,6 +6,8 @@ import java.util.Date;
 public class StringUtility {
 
     final static public String YY = "yy";
+    final static public String MM = "MM";
+    final static public String DD = "dd";
     private static SimpleDateFormat simpleDateFormat = null;
 
     public static String getCustDateByPatten(String pattern) {

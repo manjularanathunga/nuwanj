@@ -22,8 +22,8 @@ public class DataAnalysisController {
     @Autowired
     JDBCUtility jdbcUtility;
 
-    @RequestMapping(value = "/genderStaticsByTest", method = RequestMethod.GET, headers = "Accept=application/json")
-    public List genderStaticsByTest(@RequestParam(value = "testid", required = false) long testid) {
+    @RequestMapping(value = "/genderStatics", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List genderStatics() {
 
         StringBuilder _sb=new StringBuilder("select  p.gender,count(p.gender) as recCount ");
         _sb.append("from tbl_patient_medical_test t, tbl_patient p ");
@@ -48,8 +48,35 @@ public class DataAnalysisController {
                 list.add(resLst);
             }
         }
+        return list;
+    }
 
-
+    @RequestMapping(value = "/genderStaticsByTest", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List genderStaticsByTest(@RequestParam(value = "testid", required = false) String testid) {
+        StringBuilder _sb=new StringBuilder("select  p.gender,count(p.gender) as recCount ");
+        _sb.append(" from tbl_patient_medical_test t, tbl_patient p ");
+        _sb.append(" where t.patient_id = p.patient_id ");
+        _sb.append(" and t.test_number = '" + testid + "'");
+        _sb.append(" group by p.gender");
+        SqlRowSet rowSet = jdbcUtility.run(_sb.toString());
+        List list = new ArrayList();
+        int rowCount = 0;
+        List resLst = null;
+        while (rowSet.next()) {
+            int gender = rowSet.getInt("gender");
+            int recCount = rowSet.getInt("recCount");
+            if(Gender.FEMALE.ordinal() == gender){
+                resLst = new ArrayList();
+                resLst.add(Gender.FEMALE.name());
+                resLst.add(recCount);
+                list.add(resLst);
+            }else{
+                resLst = new ArrayList();
+                resLst.add(Gender.MALE.name());
+                resLst.add(recCount);
+                list.add(resLst);
+            }
+        }
         return list;
     }
 

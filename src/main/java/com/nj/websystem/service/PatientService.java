@@ -41,6 +41,8 @@ public interface PatientService extends PagingAndSortingRepository<Patient, Long
 
     public List<Patient> getAllByDateCreatedBetween(Date startDate, Date endDate);
 
+    public List<Patient> getAllByDateCreated(Date startDate);
+
     //long countByDateCreatedBetween(Date startDate, Date endDate);
 
     //long countByAll();

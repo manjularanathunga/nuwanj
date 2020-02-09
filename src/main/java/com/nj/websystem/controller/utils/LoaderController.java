@@ -47,7 +47,7 @@ public class LoaderController {
     @RequestMapping(value = "/resultsLoader", method = RequestMethod.GET, headers = "Accept=application/json")
     public void resultsLoader() throws Exception {
         PatientResultsLoader loader = new PatientResultsLoader();
-        loader.executeLoader(patientMedicalTestService, services);
+        loader.executeLoader(patientMedicalTestService, services , medicalTestService);
     }
 
     @RequestMapping(value = "/scanLoader", method = RequestMethod.GET, headers = "Accept=application/json")

@@ -12,6 +12,26 @@
         </div>-->
     </div>
 
+    <div class="row pt-5">
+        <div class="col-sm-4 tcenter">
+            <div class="alert alert-primary" role="alert">
+                <h4>Patients by Tests</h4>
+            </div>
+            <div class="col-sm-8 input-group">
+                <select class="form-control"
+                        ng-model="uicompo.selectedTestId" style="width: 250px;" ng-change="onChangeTestName();">
+                    <option ng-repeat="(key, value) in  medicalTestList"  value="{{key}}">{{value}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-5">
+        <div class="col-sm-4 tcenter">
+            <div id="patientByTest"></div>
+        </div>
+    </div>
+
 
     <div class="row pt-5">
         <div class="col-sm-4 tcenter">
