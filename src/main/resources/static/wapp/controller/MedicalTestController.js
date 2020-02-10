@@ -39,6 +39,10 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
         $("#modal-inv").modal("show");
     };
 
+    $scope.addScanType = function() {
+        $("#modal-scan-types").modal("show");
+    }
+
     $scope.saveModal = function () {
         $scope.mtest.lastModified = new Date();
         $scope.mtest.actionBy = loggedUser;

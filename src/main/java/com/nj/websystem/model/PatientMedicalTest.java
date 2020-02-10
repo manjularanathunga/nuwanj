@@ -169,4 +169,27 @@ public class PatientMedicalTest {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
+
+    @Override
+    public String toString() {
+        return "PatientMedicalTest{" +
+                "id=" + id +
+                ", testNumber='" + testNumber + '\'' +
+                ", patientId='" + patientId + '\'' +
+                ", testType=" + testType +
+                ", billingNumber='" + billingNumber + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", reference='" + reference + '\'' +
+                ", units='" + units + '\'' +
+                ", results='" + results + '\'' +
+                ", seenBy='" + seenBy + '\'' +
+                ", labType=" + labType +
+                ", actionBy='" + actionBy + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", lastModified=" + lastModified +
+                ", status=" + status +
+                ", remarks='" + remarks + '\'' +
+                '}';
+    }
 }

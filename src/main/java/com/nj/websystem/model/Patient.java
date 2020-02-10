@@ -33,6 +33,8 @@ public class Patient {
     private Date lastModified;
     private Status status;
     private String billingNumber;
+    @Column(columnDefinition="TEXT")
+    private String oldValues;
 
 
     public String getPatientAddress() {
@@ -177,5 +179,13 @@ public class Patient {
 
     public void setBillingNumber(String billingNumber) {
         this.billingNumber = billingNumber;
+    }
+
+    public String getOldValues() {
+        return oldValues;
+    }
+
+    public void setOldValues(String oldValues) {
+        this.oldValues = oldValues;
     }
 }

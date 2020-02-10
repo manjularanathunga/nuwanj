@@ -94,10 +94,6 @@
                                      type="radio"
                                      value="H"/>&nbsp;&nbsp;
                         </div>
-                        <div class="col-sm-3 left-content">
-                            <button class="btn btn-primary" ng-click="saveModal()" type="button">Save</button>
-                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                        </div>
                     </div>
                     <div class="row pt-1">
                         <div class="col-12">
@@ -105,13 +101,23 @@
                                 <div class="col-sm-3">
                                     <label class="font-size-sm">Lab</label>
                                 </div>
-                                <div class="col-sm-9">
-                                    B <input name="labType" ng-disabled="itemDisabled" ng-model="mtest.labType"
+                                <div class="col-sm-6">
+                                    BLOOD <input name="labType" ng-disabled="itemDisabled" ng-model="mtest.labType"
                                              type="radio"
                                              value="BLOOD"/>&nbsp;&nbsp;
-                                    S <input name="labType" ng-disabled="itemDisabled" ng-model="mtest.labType"
+                                    SCAN <input name="labType" ng-disabled="itemDisabled" ng-model="mtest.labType"
                                              type="radio"
                                              value="SCAN"/>&nbsp;&nbsp;
+                                </div>
+                                <div class="col-sm-2 left-content" ng-show="mtest.labType == 'SCAN'">
+                                    <label class="font-size-sm">Lab</label>
+                                </div>
+                                <div class="col-sm-1 left-content" ng-show="mtest.labType == 'SCAN'">
+                                    <button class="btn btn-secondary" data-toggle="tooltip"
+                                            ng-click="addScanType()"
+                                            title="Add Scan Type">
+                                        <i class="text-warning fa fa-upload"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +150,7 @@
                         </div>
                     </div>
                     <div class="row pt-1">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-3">
                                     <label class="font-size-sm">Price</label>
@@ -155,43 +161,50 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+
+                    </div>
+                    <div class="row pt-1">
+                        <div class="col-sm-9">&nbsp;</div>
+                        <div class="col-sm-3 left-content">
+                            <button class="btn btn-primary" ng-click="saveModal()" type="button">Save</button>
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div aria-hidden="true" class="modal fade" id="modal-scan-types" role="dialog" tabindex="-1">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h4 class="modal-title">{{heading}}</h4>
+                <button class="close" data-dismiss="modal" type="button">&times;</button>
+            </div>
+            <form name="form" ng-submit="save_submit();" role="form">
+                <div class="modal-body">
+                    <div class="row pt-1">
+                        <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-4">Optional Test</div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4">Scan#1</div>
+                                <div class="col-sm-6">
                                     <input ng-disabled="itemDisabled" ng-model="mtest.financeId"
                                            style="width: 100px;"
                                            type="text">
                                 </div>
-                                <div class="col-sm-2">
-                                    <button class="btn btn-warning" data-toggle="tooltip"
+                                <div class="col-sm-2 left-content">
+                                    <button class="btn btn-secondary" data-toggle="tooltip"
                                             ng-click=""
                                             title="">
-                                        <i class="fa fa-history"></i>
+                                        <i class="text-success fa fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label class="font-size-sm">Finance Reference #</label>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input ng-disabled="itemDisabled" ng-model="mtest.financeId"
-                                           style="width: 50px;"
-                                           type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-sm-3">Opt</div>
-                                <div class="col-sm-9"><span class="disp-value">{{mtest.optTests}}</span></div>
-                            </div>
-                        </div>
+                        <div class="col-sm-6"><span class="disp-value">{{mtest.optTests}}</span></div>
                     </div>
                     <hr/>
                     <div class="row pt-2">
@@ -279,8 +292,10 @@
                             </table>
                         </div>
                     </div>
+
                 </div>
             </form>
         </div>
     </div>
 </div>
+

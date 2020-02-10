@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 @RestController
 public class PatientLoader {
@@ -52,16 +49,20 @@ public class PatientLoader {
         Patient p;
         int count = 0;
         for (List<String> l : lineList) {
+
             if (l.get(0).equals("Scan Registration No")) {
                 continue;
             }
             int j = 0;
+            Map patientMap =new HashMap();
             for (String s : l) {
-                System.out.print("[" + j + "]=" + s + ", ");
+                String key = "R"+j;
+                patientMap.put(String.valueOf(key).trim(),  String.valueOf(s).trim());
                 j++;
             }
             p = new Patient();
-
+            System.out.print(patientMap);
+            p.setOldValues(patientMap.toString());
             String nextPatientId = StringUtility.getCustDateByPatten(String.format("%05d", (count + 1)));
             Date d = new Date();
             d.setYear(2019);
