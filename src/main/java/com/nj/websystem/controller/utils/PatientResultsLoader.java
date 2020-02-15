@@ -13,16 +13,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PatientResultsLoader {
 
-    static Logger logger = LoggerFactory.getLogger(PatientResultsLoader.class);
+    private static Logger logger = LoggerFactory.getLogger(PatientResultsLoader.class);
 
     @Autowired
-    private PatientMedicalTestService myservices;
+    private static PatientMedicalTestService myservices;
+
+
 
     private static PatientMedicalTest logError(List<String> l, PatientMedicalTest p, String error) {
         StringBuilder _sb = new StringBuilder(l.get(2));
@@ -47,7 +48,7 @@ public class PatientResultsLoader {
         run(lineList, servicesp, medicalTestService);
     }
 
-    private void run(List<List> lineList, PatientService servicesp, MedicalTestService medicalTestService){
+    private void run(List<List> lineList, PatientService servicesp, MedicalTestService medicalTestService) {
         List<PatientMedicalTest> listOfPatients = new ArrayList<>();
         PatientMedicalTest p;
         int count = 0;
@@ -57,7 +58,7 @@ public class PatientResultsLoader {
             }
             int j = 0;
             for (String s : l) {
-                System.out.print("[" + j + "]=" + s + ", ");
+                //System.out.print("[" + j + "]=" + s + ", ");
                 j++;
             }
             p = new PatientMedicalTest();
@@ -79,27 +80,36 @@ public class PatientResultsLoader {
                 if (StringUtility.get(data)) {
                     p.setBillingNumber(data);
                     List<Patient> lst = servicesp.findAllByBillingNumber(data);
-                    if(lst.size() > 0){
+                    if (lst.size() > 0) {
                         patient = lst.get(0);
                     }
                 } else {
                     logError(l, p, "Error in DateCreated :" + data);
                 }
 
-                p = updateFromPatient(p, patient);
+                p = updateFromPatient(p, patient, medicalTestService);
 
 
             } catch (Exception e) {
                 logError(l, p, "Error in DateCreated :" + e.getMessage());
             }
 
-/*            try {
+            try {
                 String data = l.get(3);
                 if (StringUtility.get(data)) {
-                    p.setName(data);
-                    List<MedicalTest> lst = medicalTestService.findAllByName(data);
+                    //String strNamer = stringMap.get(data);
+/*                    if(strNamer.contains("-")){
+
+                    }*/
+                    //p.setName(strNamer);
+                    //System.out.println("strNamer >" + data);
+                    List<MedicalTest> lst = medicalTestService.findAllByOldTestName(data);
+
+                    //System.out.println("isPresent >" + lst.size());
+
                     if(lst.size() > 0){
                         p.setTestNumber(lst.get(0).getTestNumber());
+                        p.setName(lst.get(0).getName());
                     }
 
                 } else {
@@ -107,16 +117,16 @@ public class PatientResultsLoader {
                 }
             } catch (Exception e) {
                 logError(l, p, "Error in PatientName :" + e.getMessage());
-            }*/
+            }
 
             try {
                 String data = l.get(4);
                 if (StringUtility.get(data)) {
-                    StringTokenizer _st =new StringTokenizer(data,"/");
+                    StringTokenizer _st = new StringTokenizer(data, "/");
                     String date = _st.nextToken();
                     String month = _st.nextToken();
                     String year = _st.nextToken();
-                    String appDate = year+ "-" + month + "-" + date ;
+                    String appDate = year + "-" + month + "-" + date;
                     SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
                     p.setDateCreated(formatter.parse(appDate));
                 } else {
@@ -143,40 +153,64 @@ public class PatientResultsLoader {
 
             p.setActionBy("admin");
             p.setStatus(Status.ACTIVE);
-            System.out.println(p.toString());
+            //System.out.println(p.toString());
             listOfPatients.add(p);
             count++;
-            // break;
+            //break;
         }
 
         myservices.saveAll(listOfPatients);
         logger.info("Count of loadBulk : {} " + listOfPatients.size());
     }
 
-    private PatientMedicalTest updateFromPatient(PatientMedicalTest p, Patient patient) {
-        if(patient  != null){
+/*    private PatientMedicalTest updateTestData(PatientMedicalTest p, Patient patient, MedicalTestService medicalTestService) {
+
+
+        p.setName(patVals.get("R14"));
+        p.setTestNumber(lst.get(0).getTestNumber());
+
+        return p;
+    }*/
+
+    private PatientMedicalTest updateFromPatient(PatientMedicalTest p, Patient patient, MedicalTestService medicalTestService) {
+        if (patient != null) {
+            Map<String, String> patVals = new HashMap<>();
             p.setPatientId(patient.getPatientId());
-            Properties prop = new Properties();
-            try {
-                StringReader reader = new StringReader(patient.getOldValues());
-                prop.load(reader);
-            } catch (IOException e) {
-                e.printStackTrace();
+            StringTokenizer _st = new StringTokenizer(patient.getOldValues(), ",");
+            String key = "";
+            String value = "";
+            while (_st.hasMoreTokens()) {
+                StringTokenizer _st1 = new StringTokenizer(_st.nextToken(), "=");
+                try {
+                    key = _st1.nextToken();
+                } catch (Exception e) {
+                }
+                try {
+                    value = _st1.nextToken();
+                } catch (Exception e) {
+                }
+                patVals.put(key, value);
+
             }
 
-            // {R21=FALSE, R20=FALSE, R23=FALSE, R22=FALSE, R25=FALSE, R24=FALSE, R27=FALSE, R26=FALSE, R29=FALSE, R28=FALSE, R0=, R1=1/1/19, R2=19H00025, R3=W.B.N.S.WIJEKON, R4=, R5=?, R6=, R7=34, R8=, R9=, R30=FALSE, R10=Female, R32=0, R31=, R12=Hospital, R34=FALSE, R11=, R33=000000000V, R14="TSH , FT4 , R36=, R13=T.H.P, R35=, R16=07-Jan-19, R15="Dr.D.Nanayakkara, MBBS, M Phil. (U.K)PhD,FANMB, R18=TRUE, R17=TRUE, R19=FALSE}
-            p.setSeenBy(prop.getProperty("R15"));
-            p.setName(prop.getProperty("R14"));
+            //System.out.println("patVals -> " + patVals);
+            //            PatientMedicalTest{id=null, testNumber='null', patientId='1906909', testType=null, billingNumber='19S02493', name='Bone Mineral Density Test (DXA)', price=null, reference='null', units='mU/L', results='20', seenBy='"Dr.D.Nanayakkara- MBBS- M Phil. (U.K)PhD-FANMB', labType=null, actionBy='admin', dateCreated=Tue Jan 12 00:00:00 SGT 2021, lastModified=null, status=ACTIVE, remarks='null'}
+            //[0]=9897, [1]=20, [2]=19S02493, [3]=SERUM FREE THYROXIN:, [4]=12/25/19, [5]=mU/L,
+            // patVals -> {R21=FALSE, R20=FALSE, R23=FALSE, R22=FALSE, R25=FALSE, R24=FALSE, R27=FALSE, R26=FALSE, R29=FALSE, R28=FALSE, R0=, R1=12/23/19, R2=19S02493, R3=A.L.S.MADEENA, R4=A.L.S.MADEENA, R5=A.L.S.MADEENA, R6=A.L.S.MADEENA, R7=39, R8=39, R9=39, R30=FALSE, R10=Female, R32=0, R31=FALSE, R12=NMU Clinic, R34=FALSE, R11=GHK, R33=000000000V, R14=Bone Mineral Density Test (DXA), R36=FALSE, R13=Dr.A.J.Hilmi(MD), R35=FALSE, R16=17-Dec-19, R15="Dr.D.Nanayakkara- MBBS- M Phil. (U.K)PhD-FANMB, R18=TRUE, R17=FALSE, R19=FALSE}
+            //PatientMedicalTest{id=null, testNumber='null', patientId='1906909', testType=null, billingNumber='19S02493', name='Bone Mineral Density Test (DXA)', price=null, reference='null', units='mU/L', results='20', seenBy='"Dr.D.Nanayakkara- MBBS- M Phil. (U.K)PhD-FANMB', labType=null, actionBy='admin', dateCreated=Tue Jan 12 00:00:00 SGT 2021, lastModified=null, status=ACTIVE, remarks='null'}
 
 
-
-
-
-
-
+            p.setSeenBy(patVals.get("R15"));
+            // p.setName(patVals.get("R14"));
+/*            List<MedicalTest> lst = medicalTestService.findAllByName(p.getName());
+            if (lst.size() > 0) {
+                p.setTestNumber(lst.get(0).getTestNumber());
+            }
+            p.setTestNumber(patVals.get("R14"));*/
         }
         return p;
     }
+
 
 
 }

@@ -9,7 +9,6 @@ import com.nj.websystem.util.CSVUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -49,8 +48,8 @@ public class MedicalTestController {
         HttpResponse res = new HttpResponse();
         Map rex = new HashMap();
         List<MedicalTest> list = services.findAll();
-        for(MedicalTest m:list){
-            rex.put(m.getTestNumber(),m.getName());
+        for (MedicalTest m : list) {
+            rex.put(m.getTestNumber(), m.getName());
         }
         return rex;
     }
@@ -197,7 +196,7 @@ public class MedicalTestController {
     }
 }
 
-class Compo{
+class Compo {
     String id;
     String name;
 

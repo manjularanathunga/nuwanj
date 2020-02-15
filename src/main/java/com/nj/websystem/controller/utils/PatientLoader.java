@@ -9,11 +9,13 @@ import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.StringTokenizer;
 
 @RestController
 public class PatientLoader {
@@ -34,7 +36,7 @@ public class PatientLoader {
 
     public void executeLoader(PatientService services) throws Exception {
 
-        if(services == null){
+        if (services == null) {
             throw new Exception("Null PatientService ");
         }
 
@@ -54,15 +56,17 @@ public class PatientLoader {
                 continue;
             }
             int j = 0;
-            Map patientMap =new HashMap();
+            StringBuilder _sb = new StringBuilder();
             for (String s : l) {
-                String key = "R"+j;
-                patientMap.put(String.valueOf(key).trim(),  String.valueOf(s).trim());
+                _sb.append(",");
+                _sb.append(String.valueOf("R" + j).trim());
+                _sb.append("=");
+                _sb.append(String.valueOf(s).trim().replace(",", "-"));
                 j++;
             }
             p = new Patient();
-            System.out.print(patientMap);
-            p.setOldValues(patientMap.toString());
+            p.setOldValues(_sb.toString().substring(1, _sb.length()));
+            System.out.print(p.getOldValues());
             String nextPatientId = StringUtility.getCustDateByPatten(String.format("%05d", (count + 1)));
             Date d = new Date();
             d.setYear(2019);
@@ -82,11 +86,11 @@ public class PatientLoader {
             try {
                 String data = l.get(1);
                 if (StringUtility.get(data)) {
-                    StringTokenizer _st =new StringTokenizer(data,"/");
+                    StringTokenizer _st = new StringTokenizer(data, "/");
                     String date = _st.nextToken();
                     String month = _st.nextToken();
                     String year = _st.nextToken();
-                    String appDate = year+ "-" + month + "-" + date ;
+                    String appDate = year + "-" + month + "-" + date;
                     SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
                     p.setDateCreated(formatter.parse(appDate));
                 } else {

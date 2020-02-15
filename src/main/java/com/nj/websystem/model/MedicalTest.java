@@ -31,6 +31,7 @@ public class MedicalTest {
     private String tmpid;
     private String optTests;
     private String remarks;
+    private String oldTestName;
 
     public MedicalTest() {
     }
@@ -146,6 +147,15 @@ public class MedicalTest {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+
+    public String getOldTestName() {
+        return oldTestName;
+    }
+
+    public void setOldTestName(String oldTestName) {
+        this.oldTestName = oldTestName;
     }
 
     @Override

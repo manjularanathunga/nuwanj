@@ -1,11 +1,9 @@
 package com.nj.websystem.controller;
 
-import com.nj.websystem.enums.Gender;
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.model.Patient;
 import com.nj.websystem.rest.HttpResponse;
 import com.nj.websystem.service.PatientService;
-import com.nj.websystem.util.CSVUtils;
 import com.nj.websystem.util.DateUtility;
 import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
@@ -17,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +64,8 @@ public class PatientController {
 
         HttpResponse res = new HttpResponse();
         // logger.info("getFistDayOfMonth > " +DateUtility.getFistDayOfMonth() +" | DateUtility.getMonthEnd() > " + DateUtility.getMonthEnd());
-        int yearlyRecordCount = services.getAllByDateCreatedBetween(DateUtility.getFistDayOfMonth(),DateUtility.getMonthEnd()).size();
-        String nextPatientId = StringUtility.getCustDateByPatten(StringUtility.YY) + StringUtility.getCustDateByPatten(StringUtility.MM) + StringUtility.getCustDateByPatten(StringUtility.DD)+StringUtility.getCustDateByPatten(String.format("%03d", (yearlyRecordCount + 1)));
+        int yearlyRecordCount = services.getAllByDateCreatedBetween(DateUtility.getFistDayOfMonth(), DateUtility.getMonthEnd()).size();
+        String nextPatientId = StringUtility.getCustDateByPatten(StringUtility.YY) + StringUtility.getCustDateByPatten(StringUtility.MM) + StringUtility.getCustDateByPatten(StringUtility.DD) + StringUtility.getCustDateByPatten(String.format("%03d", (yearlyRecordCount + 1)));
         logger.info("Patient - NextPatientId : {} " + nextPatientId);
         res.setResponse(nextPatientId);
         res.setSuccess(true);

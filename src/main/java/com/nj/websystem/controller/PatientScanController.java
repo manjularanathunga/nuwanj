@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,17 +73,17 @@ public class PatientScanController {
         if (!patientMedicalTestList.isEmpty()) {
             Map<String, Object> uiItemMap = new HashMap<>();
             PatientMedicalTest item = patientMedicalTestList.get(0);
-            uiItemMap.put("patientmedicaltest",item);
-            uiItemMap.put("patient",patientService.findByPatientId(item.getPatientId()).get(0));
-            uiItemMap.put("bypatientidlist",patientMedicalTestService.getAllByPatientId(item.getPatientId()));
+            uiItemMap.put("patientmedicaltest", item);
+            uiItemMap.put("patient", patientService.findByPatientId(item.getPatientId()).get(0));
+            uiItemMap.put("bypatientidlist", patientMedicalTestService.getAllByPatientId(item.getPatientId()));
             List<PatientScan> patientScanList = patientScanServise.getAllByBillingNumber(billingNumber);
             PatientScan patientScan = null;
-            if(patientScanList.isEmpty()){
+            if (patientScanList.isEmpty()) {
                 patientScan = new PatientScan();
-            }else{
-                patientScan =patientScanList.get(0);
+            } else {
+                patientScan = patientScanList.get(0);
             }
-            uiItemMap.put("patientscan",patientScan);
+            uiItemMap.put("patientscan", patientScan);
             res.setResponse(uiItemMap);
             res.setSuccess(true);
             res.setRecCount(1);

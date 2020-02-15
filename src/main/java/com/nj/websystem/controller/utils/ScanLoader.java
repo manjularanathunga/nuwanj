@@ -43,7 +43,7 @@ public class ScanLoader {
         run(lineList);
     }
 
-    private void run(List<List> lineList){
+    private void run(List<List> lineList) {
         List<MedicalTest> listOfPatients = new ArrayList<>();
         MedicalTest p;
         int count = 0;

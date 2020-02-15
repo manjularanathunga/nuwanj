@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MedicalTestService extends JpaRepository<MedicalTest, Long> {
 
@@ -29,5 +30,7 @@ public interface MedicalTestService extends JpaRepository<MedicalTest, Long> {
     List<MedicalTest>  findFirst15ByOrderByDateCreatedDesc();
 
     List<MedicalTest> findAllByName(String testName);
+
+    List<MedicalTest> findAllByOldTestName(String oldTestName);
 
 }
