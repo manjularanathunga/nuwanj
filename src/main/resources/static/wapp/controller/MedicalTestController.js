@@ -13,6 +13,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
     $scope.uicompo.ref = {};
     $scope.uicompo.refLst = [];
     $scope.uicompo.saveObj = [];
+    $scope.uicompo.pros = {};
     var loggedUser = '-';
     if ($rootScope.globals && $rootScope.globals.currentUser) {
         loggedUser = $rootScope.globals.currentUser.username;
@@ -35,12 +36,19 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             $scope.itemDisabled = true;
             $scope.mtest = itm;
         }
+        $scope.uicompo.pros = itm.scanOpsionProps;
         $scope.mtest.optTests ="FSH,TSH";
         $("#modal-inv").modal("show");
     };
 
-    $scope.addScanType = function() {
+    $scope.showScanType = function() {
+        $scope.heading = 'Add Scan Type';
         $("#modal-scan-types").modal("show");
+    }
+
+    $scope.showReference = function() {
+        $scope.heading = 'Add References';
+        $("#modal-add-reference").modal("show");
     }
 
     $scope.saveModal = function () {
@@ -117,7 +125,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
         $scope.uicompo.ref.medicalTest = $scope.mtest.id;
         var refItem = $scope.uicompo.ref;
         if(!refItem.gender){Pop.msgWithButton('Reference field SEX cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
-        if(!refItem.ageMin){Pop.msgWithButton('Reference Minimum Age Range cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
+        if(refItem.ageMin >= 0){Pop.msgWithButton('Reference Minimum Age Range cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
         if(!refItem.ageMax){Pop.msgWithButton('Reference field  Maximum Age Range  cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
         if(!refItem.unit){Pop.msgWithButton('Reference field UNIT cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
         if(!refItem.reference){Pop.msgWithButton('Reference field Reference cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
@@ -157,5 +165,8 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             loadList();
         });
     };
+
+
+
     loadList();
 });

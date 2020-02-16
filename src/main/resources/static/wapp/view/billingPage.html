@@ -365,7 +365,7 @@
                             <select class="form-control" ng-model="uicompo.selectedTest"
                                     style="width: 250px;">
                                 <option ng-repeat="item in mediTestList" value="{{item}}">{{item.name}} -
-                                    {{item.price | currency:"Rs ":2}}
+                                    {{item.price | currency:"Rs ":2}} - {{item.labType}}
                                 </option>
                             </select>
                         </div>

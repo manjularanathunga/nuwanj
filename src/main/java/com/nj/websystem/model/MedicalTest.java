@@ -30,6 +30,8 @@ public class MedicalTest {
     @Transient
     private String tmpid;
     private String optTests;
+    @Column(columnDefinition="TEXT")
+    private String scanOpsionProps;
     private String remarks;
     private String oldTestName;
 
@@ -152,6 +154,14 @@ public class MedicalTest {
 
     public String getOldTestName() {
         return oldTestName;
+    }
+
+    public String getScanOpsionProps() {
+        return scanOpsionProps;
+    }
+
+    public void setScanOpsionProps(String scanOpsionProps) {
+        this.scanOpsionProps = scanOpsionProps;
     }
 
     public void setOldTestName(String oldTestName) {

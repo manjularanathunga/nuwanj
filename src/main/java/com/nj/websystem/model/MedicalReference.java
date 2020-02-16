@@ -17,7 +17,7 @@ public class MedicalReference {
     @SequenceGenerator(name = "TBL_MEDICAL_REFERENCE_SEQ", sequenceName = "TBL_MEDICAL_REFERENCE_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TBL_MEDICAL_REFERENCE_SEQ")
     private Long id;
-    @OneToOne
+    @ManyToOne
     private MedicalTest medicalTest;
     private Gender gender;
     private BigDecimal ageMin;

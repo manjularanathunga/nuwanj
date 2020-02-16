@@ -1,8 +1,12 @@
 package com.nj.websystem.controller.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nj.websystem.enums.LabType;
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
+import com.nj.websystem.model.Finding;
+import com.nj.websystem.model.Indication;
 import com.nj.websystem.model.MedicalTest;
 import com.nj.websystem.service.MedicalTestService;
 import com.nj.websystem.util.CSVUtils;
@@ -21,35 +25,7 @@ public class TestLoader {
     private MedicalTestService services;
 
     private static Map<String, String> stringMap = new HashMap<>();
-/*    static  {
-        stringMap.put("VQ","VQ Scintigraphy");
-        stringMap.put("SERUM TSH:", "TSH");
-        stringMap.put("BO","Three Phase Bone Scintigraphy");
-        stringMap.put("SERUM TRIIODOTHYRONINE:", "TG");
-        stringMap.put("SERUM TRIIODOTHYRONINE:", "Testosterone");
-        stringMap.put("TH", "Technetium Thyroid Scintigraphy");
-        stringMap.put("RBC","Technetium Red Blood Cell Tagging");
-        stringMap.put("MI","Technetium Mikels Scintigraphy");
-        stringMap.put("LY","Technetium LYMPHO Scintigraphy");
-        stringMap.put("HI","Technetium HIDA Scintigraphy");
-        stringMap.put("DT","Technetium DTPA Scintigraphy");
-        stringMap.put("DM","Technetium DMSA Scintigraphy");
-        stringMap.put("BO","Technetium Bone Scintigraphy");
-        stringMap.put("SERUM TRIIODOTHYRONINE:", "T3");
-        stringMap.put("SERUM PROLACTIN :", "Prolactin");
-        stringMap.put("SERUM PROGESTERON:", "Progesterone");
-        stringMap.put("SERUM OESTRADIOL:", "Oesterdiol");
-        stringMap.put("MY","Myocardial Perfusion");
-        stringMap.put("SERUM LH:", "LH");
-        stringMap.put("WB","Iodine 131 Whole body Scintigraphy");//-3mCi
-        stringMap.put("Iodine 131 Thyroid", "TH");
-        stringMap.put("Thyroid Scintigraphy-10mCi ","Iodine 131 Therapy For Thyrotoxicosis");
-        stringMap.put("WB","Iodine 131 Ablation & Whole body Scintigraphy");//-30mCi
-        stringMap.put("SERUM FREE THYROXIN:", "FT4");
-        stringMap.put("SERUM FSH:", "FSH");
-        stringMap.put("SERUM CORTISOL:", "Cortisol");
-        stringMap.put("DX", "Bone Mineral Density Test (DXA)");
-    }*/
+    private static Map<String, List<Indication>> listMap = new HashMap<>();
 
     static  {
         stringMap.put("VQ Scintigraphy","VQ");
@@ -80,6 +56,24 @@ public class TestLoader {
         stringMap.put("FSH","SERUM FSH:");
         stringMap.put("Cortisol","SERUM CORTISOL:");
         stringMap.put("Bone Mineral Density Test (DXA)","DX");
+
+        List<Indication> fiindingList = new ArrayList();
+        Indication ind1 = new Indication(1L,"No bone metastases",Status.ACTIVE);
+        fiindingList.add(ind1);
+
+        Indication ind2 = new Indication(1L,"Papillary carcinoma",Status.ACTIVE);
+        ind2.getFindingList().add(new Finding(1L,"Succsessful ablation",Status.ACTIVE));
+        fiindingList.add(ind2);
+
+        Indication ind3 = new Indication(1L,"post thyroidectomy ",Status.ACTIVE);
+        ind3.getFindingList().add(new Finding(1L,"Minimal residual tissues",Status.ACTIVE));
+        fiindingList.add(ind3);
+
+        Indication ind4 = new Indication(1L,"opst ablation",Status.ACTIVE);
+        fiindingList.add(ind4);
+
+
+        listMap.put("8",fiindingList);
     }
 
     private static MedicalTest logError(List<String> l, MedicalTest p, String error) {
@@ -180,6 +174,7 @@ public class TestLoader {
 
             //p.setCityName();
             // p.setDistrictName();
+            p = loadScanList(p);
 
             p.setActionBy("admin");
             p.setStatus(Status.ACTIVE);
@@ -193,4 +188,20 @@ public class TestLoader {
         services.saveAll(listOfPatients);
         logger.info("Count of loadBulk : {} " + listOfPatients.size());
     }
+
+    private MedicalTest loadScanList(MedicalTest p){
+        ObjectMapper Obj = new ObjectMapper();
+        List<Indication> indicationList= listMap.get(p.getTestNumber());
+        if(indicationList != null){
+            try {
+                String jsonStr = Obj.writeValueAsString(indicationList);
+                p.setScanOpsionProps(jsonStr);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return p;
+    }
+
+
 }
