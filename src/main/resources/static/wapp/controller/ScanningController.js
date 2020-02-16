@@ -18,6 +18,8 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     $scope.currentAge  = 0;
     $scope.uicompo.showItem  = false;
     $scope.uicompo.showSave  = false;
+    $scope.uicompo.selectIndicationList = [];
+    $scope.uicompo.selectFindingList = [];
 
 
     // $scope.patientScan.dateCreated = new Date();
@@ -72,6 +74,15 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
                         $scope.patientScan = {};
                     }
 
+                    try{
+                        var selected = JSON.parse(obj.ScanOpsionProps);
+                        $scope.uicompo.selectIndicationList = selected;
+                    }catch (e) {
+                        console.log('error retreving patientScan');
+                        $scope.patientScan = {};
+                    }
+
+
                     $scope.patientScan.scanNumber = $scope.patientScan.scanNumber;
                     $scope.patientScan.billingNumber = billingNumber;
                     $scope.patientScan.patientId = $scope.patient.patientId;
@@ -93,6 +104,12 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $scope.patientScan = {};
         $scope.uicompo.showItem  = false;
         $scope.uicompo.showSave  = false;
+    }
+
+    $scope.onChangeIndication = function() {
+        if($scope.uicompo.selectIndication.findingList){
+            $scope.uicompo.selectFindingList = val.findingList;
+        }
     }
 
     $scope.saveModal = function() {

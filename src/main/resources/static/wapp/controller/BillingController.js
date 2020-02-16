@@ -130,16 +130,32 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
 
     $scope.addSelectedTest = function() {
 
-        var selected = $scope.uicompo.selectedTest;
-
+        var selected = JSON.parse($scope.uicompo.selectedTest);
         var saveTest = {};
+        saveTest.patientId = $scope.patient.patientId;
+        saveTest.lastDateModified = new Date();
+        saveTest.actionBy = loggedUser;
+        saveTest.seenBy = $scope.patient.seenBy;
+        saveTest.id = null;
+        saveTest.billingNumber = $scope.uicompo.billingNumber;
+        saveTest.dateCreated = new Date();
+        saveTest.testNumber = selected.testNumber;
+        saveTest.status = "OPEN";
+        saveTest.price = selected.price;
+        saveTest.name = selected.name;
+        saveTest.testType = selected.testType;
+        saveTest.labType = selected.labType;
+
+        console.log('saveTest > ' + JSON.stringify(selected));
+
+        console.log('saveTest > ' + JSON.stringify(saveTest));
 
         if (!selected) {
             Pop.timeMsg('error', 'MEDICAL TEST ADDED ', ' PLEASE SELECT THE TEST ', 2000);
             return;
         }
 
-        saveTest = JSON.parse(selected);
+        // saveTest = JSON.parse(selected);
 
         if (!$scope.patient) {
             Pop.msgWithButton('ADD MEDICAL TEST', 'Patient not selected', 'error');
@@ -161,14 +177,16 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
             return;
         }
 
-        saveTest.patientId = $scope.patient.patientId;
-        saveTest.lastDateModified = new Date();
-        saveTest.dateCreated = new Date();
-        saveTest.actionBy = loggedUser;
-        saveTest.seenBy = $scope.patient.seenBy;
-        saveTest.id = null;
-        saveTest.billingNumber = $scope.uicompo.billingNumber;
-        saveTest.status = "OPEN";
+
+
+       //private String reference;
+        //private String units;
+        //private String results;
+        //private String remarks;
+
+
+
+        console.log('saveTest > ' + JSON.stringify(saveTest));
 
         if(validateAlreadyAdded(saveTest)){
             Pop.msgWithButton('ADD MEDICAL TEST', 'Test Already Added', 'error');

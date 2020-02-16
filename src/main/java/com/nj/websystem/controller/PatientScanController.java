@@ -1,10 +1,12 @@
 package com.nj.websystem.controller;
 
+import com.nj.websystem.model.MedicalTest;
 import com.nj.websystem.model.Patient;
 import com.nj.websystem.model.PatientMedicalTest;
 import com.nj.websystem.model.PatientScan;
 import com.nj.websystem.rest.CommonRest;
 import com.nj.websystem.rest.HttpResponse;
+import com.nj.websystem.service.MedicalTestService;
 import com.nj.websystem.service.PatientMedicalTestService;
 import com.nj.websystem.service.PatientScanServise;
 import com.nj.websystem.service.PatientService;
@@ -39,7 +41,7 @@ public class PatientScanController {
     private PatientService patientService;
 
     @Autowired
-    private PatientScanServise patientScanServise;
+    private MedicalTestService testService;
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public Page<PatientScan> getList() {
@@ -76,7 +78,7 @@ public class PatientScanController {
             uiItemMap.put("patientmedicaltest", item);
             uiItemMap.put("patient", patientService.findByPatientId(item.getPatientId()).get(0));
             uiItemMap.put("bypatientidlist", patientMedicalTestService.getAllByPatientId(item.getPatientId()));
-            List<PatientScan> patientScanList = patientScanServise.getAllByBillingNumber(billingNumber);
+            List<PatientScan> patientScanList = services.getAllByBillingNumber(billingNumber);
             PatientScan patientScan = null;
             if (patientScanList.isEmpty()) {
                 patientScan = new PatientScan();
@@ -84,6 +86,8 @@ public class PatientScanController {
                 patientScan = patientScanList.get(0);
             }
             uiItemMap.put("patientscan", patientScan);
+            MedicalTest medicalTest = testService.findAllByTestNumber(item.getTestNumber()).get(0);
+            uiItemMap.put("ScanOpsionProps", medicalTest.getScanOpsionProps());
             res.setResponse(uiItemMap);
             res.setSuccess(true);
             res.setRecCount(1);

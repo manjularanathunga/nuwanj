@@ -33,6 +33,42 @@ public class PatientMedicalTest {
     private Date lastModified;
     private Status status;
     private String remarks;
+    private String dose;
+    private String dosevalue;
+    private String selectIndication;
+    private String selectFinding;
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
+    }
+
+    public String getDosevalue() {
+        return dosevalue;
+    }
+
+    public void setDosevalue(String dosevalue) {
+        this.dosevalue = dosevalue;
+    }
+
+    public String getSelectIndication() {
+        return selectIndication;
+    }
+
+    public void setSelectIndication(String selectIndication) {
+        this.selectIndication = selectIndication;
+    }
+
+    public String getSelectFinding() {
+        return selectFinding;
+    }
+
+    public void setSelectFinding(String selectFinding) {
+        this.selectFinding = selectFinding;
+    }
 
     public Long getId() {
         return id;

@@ -33,4 +33,6 @@ public interface MedicalTestService extends JpaRepository<MedicalTest, Long> {
 
     List<MedicalTest> findAllByOldTestName(String oldTestName);
 
+    List<MedicalTest> findAllByTestNumber(String testNumber);
+
 }

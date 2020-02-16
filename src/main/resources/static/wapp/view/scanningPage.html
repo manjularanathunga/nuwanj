@@ -100,19 +100,19 @@
 
     <div class="row p-1" ng-show="uicompo.showItem">
         <div class="p-1"><label>Dose :</label></div>
-        <div class="p-1"><input name="input" ng-model="patientTest.name" type="text" style="width: 60px;" class="form-control"/></div>
+        <div class="p-1"><input name="input" ng-model="patientTest.dose" type="text" style="width: 60px;" class="form-control"/></div>
         <div class="p-1"><label>Value :</label></div>
-        <div class="p-1"><input name="input" ng-model="patientTest.name" type="text" style="width: 60px;" class="form-control"/></div>
+        <div class="p-1"><input name="input" ng-model="patientTest.dosevalue" type="text" style="width: 60px;" class="form-control"/></div>
         <div class="p-1">
-            <select ng-change="onSelectTestType()" ng-disabled="disabledTestSelection"
-                    ng-model="uicompo.selectedTestType" style="width: 275px;">
-                <option ng-repeat="c in testTypeList">{{c.value}}</option>
+            <select ng-change="onChangeIndication()" ng-disabled="disabledTestSelection" class="form-control"
+                    ng-model="patientTest.selectIndication" style="width: 275px;">
+                <option ng-repeat="c in uicompo.selectIndicationList" value="c">{{c.indName}}</option>
             </select>
         </div>
         <div class="p-1">
-            <select ng-change="onSelectTestType()" ng-disabled="disabledTestSelection"
-                    ng-model="uicompo.selectedTestType" style="width: 275px;">
-                <option ng-repeat="c in testTypeList">{{c.value}}</option>
+            <select ng-disabled="disabledTestSelection" class="form-control"
+                    ng-model="patientTest.selectFinding" style="width: 275px;">
+                <option ng-repeat="c in selectFindingList">{{c.findingName}}</option>
             </select>
         </div>
     </div>
