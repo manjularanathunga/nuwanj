@@ -7,6 +7,7 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
     $scope.testList = [];
     $scope.statics.testLst = [];
     $scope.medicalTestList = [];
+    $scope.medicalTestGraphList = [];
     $scope.uicompo = {};
     $scope.uicompo.selectedTestId = "";
 
@@ -50,6 +51,24 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
         });
     }
 
+    var patientGraph = function () {
+
+        var chart = c3.generate({
+            bindto: '#patientGraph',
+            data: {
+                columns:  $scope.medicalTestGraphList,
+                type: 'bar'
+            },
+            bar: {
+                width: {
+                    ratio: 0.5 // this makes bar width 50% of length between ticks
+                }
+                // or
+                //width: 100 // this makes bar width 100px
+            }
+        });
+    }
+
     $scope.genderStatics = function () {
         var res = $http.get("analysis/genderStatics")
             .then(function (response) {
@@ -86,49 +105,30 @@ app.controller('DateRangeAnalysisController', function ($scope, $rootScope, $htt
         });
     }
 
-
-
     var loadList = function () {
         $http.get("medicaltest/getIdNameList").then(function (jsn) {
             $scope.medicalTestList = jsn.data;
         });
     };
 
+    var loadGraph = function () {
+        $http.get("analysis/staticGraph").then(function (jsn) {
+            $scope.medicalTestGraphList = jsn.data;
+            patientGraph();
+        });
+    };
+
+
     $scope.genderStatics();
     $scope.genderStaticsByPatient();
+    loadGraph();
     loadList();
 
 
 });
 
 
-/*        c3.generate({
-            bindto: '#chart',
-            data: {
-                columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 50, 20, 10, 40, 15, 25]
-                ],
-                axes: {
-                    data2: 'y2'
-                }
-            },
-            axis: {
-                y: {
-                    label: { // ADD
-                        text: 'Y Label',
-                        position: 'outer-middle'
-                    }
-                },
-                y2: {
-                    show: true,
-                    label: { // ADD
-                        text: 'Y2 Label',
-                        position: 'outer-middle'
-                    }
-                }
-            }
-        });*/
+/*        */
 
 /*var charThree = c3.generate({
     bindto: "#chartThree",

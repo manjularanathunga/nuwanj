@@ -1,5 +1,6 @@
 package com.nj.websystem.controller.utils;
 
+import com.nj.websystem.enums.LabType;
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.model.MedicalTest;
 import com.nj.websystem.model.Patient;
@@ -63,6 +64,7 @@ public class PatientResultsLoader {
             }
             p = new PatientMedicalTest();
 
+            p.setLabType(LabType.Blood);
 
             try {
                 String data = l.get(1);

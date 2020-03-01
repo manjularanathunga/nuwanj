@@ -37,6 +37,16 @@ public class PatientMedicalTest {
     private String dosevalue;
     private String selectIndication;
     private String selectFinding;
+    private String bhtClinicNo;
+    @Column(length = 2000)
+    private String procedure;
+    @Column(length = 2000)
+    private String indication;
+    @Column(length = 2000)
+    private String finding;
+    @Column(length = 2000)
+    private String impression;
+    private String scanNumber;
 
     public String getDose() {
         return dose;
@@ -204,6 +214,54 @@ public class PatientMedicalTest {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getBhtClinicNo() {
+        return bhtClinicNo;
+    }
+
+    public void setBhtClinicNo(String bhtClinicNo) {
+        this.bhtClinicNo = bhtClinicNo;
+    }
+
+    public String getProcedure() {
+        return procedure;
+    }
+
+    public void setProcedure(String procedure) {
+        this.procedure = procedure;
+    }
+
+    public String getIndication() {
+        return indication;
+    }
+
+    public void setIndication(String indication) {
+        this.indication = indication;
+    }
+
+    public String getFinding() {
+        return finding;
+    }
+
+    public void setFinding(String finding) {
+        this.finding = finding;
+    }
+
+    public String getImpression() {
+        return impression;
+    }
+
+    public void setImpression(String impression) {
+        this.impression = impression;
+    }
+
+    public String getScanNumber() {
+        return scanNumber;
+    }
+
+    public void setScanNumber(String scanNumber) {
+        this.scanNumber = scanNumber;
     }
 
     @Override

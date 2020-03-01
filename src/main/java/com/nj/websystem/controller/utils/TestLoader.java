@@ -58,22 +58,134 @@ public class TestLoader {
         stringMap.put("Bone Mineral Density Test (DXA)","DX");
 
         List<Indication> fiindingList = new ArrayList();
-        Indication ind1 = new Indication(1L,"No bone metastases",Status.ACTIVE);
-        fiindingList.add(ind1);
-
-        Indication ind2 = new Indication(1L,"Papillary carcinoma",Status.ACTIVE);
-        ind2.getFindingList().add(new Finding(1L,"Succsessful ablation",Status.ACTIVE));
-        fiindingList.add(ind2);
-
-        Indication ind3 = new Indication(1L,"post thyroidectomy ",Status.ACTIVE);
-        ind3.getFindingList().add(new Finding(1L,"Minimal residual tissues",Status.ACTIVE));
-        fiindingList.add(ind3);
-
-        Indication ind4 = new Indication(1L,"opst ablation",Status.ACTIVE);
-        fiindingList.add(ind4);
-
-
+        fiindingList.add(new Indication(1L,"No bone metastases",Status.ACTIVE));
+        fiindingList.add(new Indication(2L,"Papillary carcinoma",Status.ACTIVE));
+        fiindingList.add(new Indication(3L,"post thyroidectomy",Status.ACTIVE));
+        fiindingList.add(new Indication(4L,"opst ablation",Status.ACTIVE));
         listMap.put("8",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(5L,"No bone metastases",Status.ACTIVE));
+        fiindingList.add(new Indication(6L,"Papillary carcinoma",Status.ACTIVE));
+        fiindingList.add(new Indication(7L,"post thyroidectomy",Status.ACTIVE));
+        fiindingList.add(new Indication(8L,"opst ablation",Status.ACTIVE));
+        listMap.put("7",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(9L,"No bone metastases",Status.ACTIVE));
+        fiindingList.add(new Indication(10L,"Papillary carcinoma",Status.ACTIVE));
+        fiindingList.add(new Indication(11L,"post thyroidectomy",Status.ACTIVE));
+        fiindingList.add(new Indication(12L,"opst ablation",Status.ACTIVE));
+        listMap.put("5",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(13L,"No bone metastases",Status.ACTIVE));
+        fiindingList.add(new Indication(14L,"Papillary carcinoma",Status.ACTIVE));
+        fiindingList.add(new Indication(15L,"post thyroidectomy",Status.ACTIVE));
+        fiindingList.add(new Indication(16L,"opst ablation",Status.ACTIVE));
+        listMap.put("22",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(17L,"carcinoma of the left Breast",Status.ACTIVE));
+        fiindingList.add(new Indication(18L,"carcinoma of the right Breast",Status.ACTIVE));
+        fiindingList.add(new Indication(19L,"carcinoma of the prostate",Status.ACTIVE));
+        fiindingList.add(new Indication(20L,"Renal cell carcinoma",Status.ACTIVE));
+        fiindingList.add(new Indication(21L,"facial asymmetry",Status.ACTIVE));
+        listMap.put("15",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(22L,"Both kidneys show normal perfusion and function",Status.ACTIVE));
+        fiindingList.add(new Indication(23L,"Right PUJ obstruction",Status.ACTIVE));
+        fiindingList.add(new Indication(24L,"Left side partial PUJO",Status.ACTIVE));
+        fiindingList.add(new Indication(25L,"Prospective donor",Status.ACTIVE));
+        fiindingList.add(new Indication(26L,"Post renal transplant",Status.ACTIVE));
+        fiindingList.add(new Indication(27L,"Non functonal right kidney",Status.ACTIVE));
+        fiindingList.add(new Indication(28L,"Non functonal Leftt kidney",Status.ACTIVE));
+        fiindingList.add(new Indication(29L,"PROSPECTIVE RENAL DONOR",Status.ACTIVE));
+        fiindingList.add(new Indication(30L,"left kiddddney gross hydronephrosis",Status.ACTIVE));
+        fiindingList.add(new Indication(31L,"Right kiddddney gross hydronephrosis",Status.ACTIVE));
+        listMap.put("17",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(32L,"Normal DMSA scan",Status.ACTIVE));
+        fiindingList.add(new Indication(33L,"UTI",Status.ACTIVE));
+        fiindingList.add(new Indication(34L,"Absent left kidney",Status.ACTIVE));
+        fiindingList.add(new Indication(35L,"Absent Right kidney",Status.ACTIVE));
+        fiindingList.add(new Indication(36L,"Right PUJ obstruction",Status.ACTIVE));
+        fiindingList.add(new Indication(37L,"Left side partial PUJO",Status.ACTIVE));
+        fiindingList.add(new Indication(38L,"Ectopic kidney",Status.ACTIVE));
+        fiindingList.add(new Indication(39L,"Duplex kidney",Status.ACTIVE));
+        listMap.put("16",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(40L,"Normal HIDA scan",Status.ACTIVE));
+        fiindingList.add(new Indication(41L,"Biliary atresia",Status.ACTIVE));
+        fiindingList.add(new Indication(42L,"Direct hyperbilirubinemi",Status.ACTIVE));
+        fiindingList.add(new Indication(43L,"Symptamatic cholicystitis",Status.ACTIVE));
+        fiindingList.add(new Indication(44L,"obstructive jaundice",Status.ACTIVE));
+        fiindingList.add(new Indication(45L,"Renal stone.",Status.ACTIVE));
+        fiindingList.add(new Indication(46L,"",Status.ACTIVE));
+        listMap.put("18",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(47L,"Normal Milk study",Status.ACTIVE));
+        fiindingList.add(new Indication(48L,"Gastrooesopahgial reflux",Status.ACTIVE));
+        listMap.put("20",fiindingList);
+
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(49L,"Normal lymphoscintigraphy",Status.ACTIVE));
+        fiindingList.add(new Indication(50L,"Left lower limb oedema",Status.ACTIVE));
+        fiindingList.add(new Indication(51L,"Right lower limb oedema",Status.ACTIVE));
+        fiindingList.add(new Indication(52L,"OEDEMA OF THE LEFT ARM",Status.ACTIVE));
+        fiindingList.add(new Indication(52L,"OEDEMA OF THE Right ARM",Status.ACTIVE));
+        fiindingList.add(new Indication(53L,"Bilateral significant lympahtic",Status.ACTIVE));
+        listMap.put("19",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(54L,"carcinoma of the left Breast",Status.ACTIVE));
+        fiindingList.add(new Indication(55L,"carcinoma of the right Breast",Status.ACTIVE));
+        fiindingList.add(new Indication(56L,"carcinoma of the prostate",Status.ACTIVE));
+        fiindingList.add(new Indication(57L,"Renal cell carcinoma",Status.ACTIVE));
+        fiindingList.add(new Indication(58L,"facial asymmetry",Status.ACTIVE));
+        listMap.put("25",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(59L,"Normal RBC scan",Status.ACTIVE));
+        fiindingList.add(new Indication(60L,"PR bleeding",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"GI bleeding",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"Angiodysplasia",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"Hyperspeism",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"Malena",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"sclerotherapy",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"hemarroidectomy",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"occult blood",Status.ACTIVE));
+        listMap.put("21",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(1L,"Normal VQ  scan",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"prednisolone",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"pulmonary embolism",Status.ACTIVE));
+        listMap.put("27",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(1L,"Normal Myocardial Perfusion  scan",Status.ACTIVE));
+        listMap.put("10",fiindingList);
+
+        fiindingList = new ArrayList();
+        fiindingList.add(new Indication(1L,"Normal BMI",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"Arthritis",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"patient is on HRT",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"menopaused",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"long term prednisolone",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"postmenopausal",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"carcinoma",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"joint disease",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"hypothyroidism",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"chronic back pain.",Status.ACTIVE));
+        fiindingList.add(new Indication(1L,"multiple fracture",Status.ACTIVE));
+        listMap.put("1",fiindingList);
+
     }
 
     private static MedicalTest logError(List<String> l, MedicalTest p, String error) {
@@ -186,6 +298,7 @@ public class TestLoader {
         }
 
         services.saveAll(listOfPatients);
+
         logger.info("Count of loadBulk : {} " + listOfPatients.size());
     }
 
@@ -205,3 +318,5 @@ public class TestLoader {
 
 
 }
+
+

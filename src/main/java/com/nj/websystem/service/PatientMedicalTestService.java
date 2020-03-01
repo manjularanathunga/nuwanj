@@ -43,6 +43,6 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
     //List<User> findTop10ByLastname(String lastname, Pageable pageable);
     //findTopByOrderByIdDesc()
     //List<PatientMedicalTest>  findTop15ByDateCreatedByIdDesc();
-    List<PatientMedicalTest>  findFirst15ByOrderByDateCreatedDesc();
+    List<PatientMedicalTest>  findFirst25ByOrderByDateCreatedDesc();
 
 }

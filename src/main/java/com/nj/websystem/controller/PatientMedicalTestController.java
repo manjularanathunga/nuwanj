@@ -31,7 +31,7 @@ public class PatientMedicalTestController {
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public List getList() {
-        List list = services.findFirst15ByOrderByDateCreatedDesc();
+        List list = services.findFirst25ByOrderByDateCreatedDesc();
         logger.info("Count of UserAdmin : " + list.size());
         return list;
     }

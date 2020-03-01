@@ -8,7 +8,6 @@ import java.util.List;
 public class Indication {
     private Long id;
     private String indName;
-    private List<Finding> findingList;
     private Status status;
 
     public Indication(Long id, String indName, Status status) {
@@ -31,17 +30,6 @@ public class Indication {
 
     public void setIndName(String indName) {
         this.indName = indName;
-    }
-
-    public List<Finding> getFindingList() {
-        if(findingList == null){
-            findingList = new ArrayList<>();
-        }
-        return findingList;
-    }
-
-    public void setFindingList(List<Finding> findingList) {
-        this.findingList = findingList;
     }
 
     public Status getStatus() {

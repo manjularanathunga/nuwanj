@@ -88,7 +88,6 @@ public class DataAnalysisController {
 
         SqlRowSet rowSet = jdbcUtility.run(_sb.toString());
         List list = new ArrayList();
-        int rowCount = 0;
         List resLst = null;
         while (rowSet.next()) {
             int gender = rowSet.getInt("gender");
@@ -105,8 +104,25 @@ public class DataAnalysisController {
                 list.add(resLst);
             }
         }
+        return list;
+    }
 
+    @RequestMapping(value = "/staticGraph", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List staticGraph() {
 
+        StringBuilder _sb = new StringBuilder("select name, count(name) as recCount from TBL_PATIENT_MEDICAL_TEST group by name");
+
+        SqlRowSet rowSet = jdbcUtility.run(_sb.toString());
+        List list = new ArrayList();
+        List resLst = null;
+        while (rowSet.next()) {
+            String name = rowSet.getString("name");
+            int recCount = rowSet.getInt("recCount");
+            resLst =  new ArrayList();
+            resLst.add(name);
+            resLst.add(recCount);
+            list.add(resLst);
+        }
         return list;
     }
 
