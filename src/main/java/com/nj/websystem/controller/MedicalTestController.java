@@ -89,7 +89,17 @@ public class MedicalTestController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public MedicalTest save(@RequestBody MedicalTest obj) {
-        logger.info("TestName : " + obj.getName());
+        logger.info("TestName : " + obj.toString());
+        HttpResponse res = new HttpResponse();
+        // obj = services.save(obj);
+        if (obj != null) {
+            res.setResponse(obj);
+            res.setSuccess(true);
+            res.setRecCount(1);
+        } else {
+            res.setSuccess(false);
+            res.setException(obj.getName() + " Test Saving fail");
+        }
         return services.save(obj);
     }
 

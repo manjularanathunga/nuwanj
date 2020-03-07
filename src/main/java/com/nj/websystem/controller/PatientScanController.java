@@ -1,5 +1,6 @@
 package com.nj.websystem.controller;
 
+import com.nj.websystem.enums.LabType;
 import com.nj.websystem.model.MedicalTest;
 import com.nj.websystem.model.Patient;
 import com.nj.websystem.model.PatientMedicalTest;
@@ -8,7 +9,6 @@ import com.nj.websystem.rest.CommonRest;
 import com.nj.websystem.rest.HttpResponse;
 import com.nj.websystem.service.MedicalTestService;
 import com.nj.websystem.service.PatientMedicalTestService;
-import com.nj.websystem.service.PatientScanServise;
 import com.nj.websystem.service.PatientService;
 import com.nj.websystem.util.DateUtility;
 import org.slf4j.Logger;
@@ -32,9 +32,6 @@ public class PatientScanController {
     static Logger logger = LoggerFactory.getLogger(PatientScanController.class);
 
     @Autowired
-    private PatientScanServise services;
-
-    @Autowired
     private PatientMedicalTestService patientMedicalTestService;
 
     @Autowired
@@ -46,8 +43,9 @@ public class PatientScanController {
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public Page<PatientScan> getList() {
         Pageable paging = PageRequest.of(1, 25, Sort.by("id"));
-        Page<PatientScan> list = services.findAll(paging);
-        logger.info("Count of PatientScan : {} " + list.getTotalElements());
+        Page<PatientScan>  list = null;
+/*        list = services.findAll(paging);
+        logger.info("Count of PatientScan : {} " + list.getTotalElements());*/
         return list;
     }
 
@@ -55,7 +53,7 @@ public class PatientScanController {
     public HttpResponse getById(@RequestParam(value = "id", required = false) String id) {
         logger.info("Request PatientScan Id : {} " + id);
         HttpResponse res = new HttpResponse();
-        PatientScan patientScan = services.findAllById(Long.parseLong(id));
+/*        PatientScan patientScan = services.findAllById(Long.parseLong(id));
         if (patientScan != null) {
             res.setResponse(patientScan);
             res.setSuccess(true);
@@ -63,7 +61,7 @@ public class PatientScanController {
         } else {
             res.setSuccess(false);
             res.setException("Invalid User !");
-        }
+        }*/
         return res;
     }
 
@@ -71,14 +69,14 @@ public class PatientScanController {
     public HttpResponse billingNumber(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
         logger.info("Request PatientScan billingNumber : {} " + billingNumber);
         HttpResponse res = new HttpResponse();
-        List<PatientMedicalTest> patientMedicalTestList = patientMedicalTestService.findAllByBillingNumber(billingNumber);
+        List<PatientMedicalTest> patientMedicalTestList = patientMedicalTestService.findAllByBillingNumberAndLabType(billingNumber, LabType.Scan);
         if (!patientMedicalTestList.isEmpty()) {
             Map<String, Object> uiItemMap = new HashMap<>();
             PatientMedicalTest item = patientMedicalTestList.get(0);
-            uiItemMap.put("patientmedicaltest", item);
+            uiItemMap.put("patientTest", item);
             uiItemMap.put("patient", patientService.findByPatientId(item.getPatientId()).get(0));
-            uiItemMap.put("bypatientidlist", patientMedicalTestService.getAllByPatientId(item.getPatientId()));
-            List<PatientScan> patientScanList = services.getAllByBillingNumber(billingNumber);
+            uiItemMap.put("scanHistortyList", patientMedicalTestService.getAllByPatientId(item.getPatientId()));
+/*            List<PatientScan> patientScanList = services.getAllByBillingNumber(billingNumber);
             PatientScan patientScan = null;
             if (patientScanList.isEmpty()) {
                 patientScan = new PatientScan();
@@ -87,13 +85,13 @@ public class PatientScanController {
             }
             uiItemMap.put("patientscan", patientScan);
             MedicalTest medicalTest = testService.findAllByTestNumber(item.getTestNumber()).get(0);
-            uiItemMap.put("ScanOpsionProps", medicalTest.getScanOpsionProps());
+            uiItemMap.put("ScanOpsionProps", medicalTest.getScanOpsionProps());*/
             res.setResponse(uiItemMap);
             res.setSuccess(true);
             res.setRecCount(1);
         } else {
             res.setSuccess(false);
-            res.setException("Invalid PatientScan Id !");
+            res.setException("Invalid Test Scan Id " + billingNumber);
         }
         return res;
     }
@@ -132,9 +130,10 @@ public class PatientScanController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public PatientScan save(@RequestBody PatientScan obj) {
-        logger.info("Save / PatientScan Name : {} " + obj.getBillingNumber());
+        logger.info("Save / PatientScan Name : {} " + obj.toString());
         HttpResponse res = new HttpResponse();
-        PatientScan result = services.save(obj);
+        PatientScan result = new PatientScan ();
+/*        services.save(obj);
         if (result == null) {
             res.setResponse(result);
             res.setSuccess(true);
@@ -143,14 +142,15 @@ public class PatientScanController {
             res.setSuccess(false);
             res.setException("Invalid User !");
         }
-        return services.save(obj);
+        result = services.save(obj);*/
+        return result;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public HttpResponse delete(@RequestParam(value = "id", required = false) Long id) {
         logger.info("Delete PatientScan Name : {} " + id);
         HttpResponse response = new HttpResponse();
-        PatientScan patientScan = services.findAllById(id);
+/*        PatientScan patientScan = services.findAllById(id);
         if (patientScan != null) {
             services.delete(patientScan);
             response.setSuccess(true);
@@ -158,13 +158,7 @@ public class PatientScanController {
             response.setSuccess(false);
             logger.info("Record has been already deleted : {} " + id);
             response.setException("Record has been already deleted");
-        }
+        }*/
         return response;
-    }
-
-    @RequestMapping(value = "/bulkInsert", method = RequestMethod.POST, headers = "Accept=application/json")
-    public void bulkInsert(@RequestBody List<PatientScan> items) {
-        logger.info("PatientScan countt : {} " + items.size());
-        services.saveAll(items);
     }
 }

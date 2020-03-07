@@ -52,6 +52,22 @@ public class PatientMedicalTestController {
         return res;
     }
 
+    @RequestMapping(value = "/findAllByPatientId", method = RequestMethod.GET, headers = "Accept=application/json")
+    public HttpResponse findAllByPatientId(@RequestParam(value = "patientId", required = false) String patientId) {
+        logger.info("Request MedicalTest Patient Id : {} " + patientId);
+        HttpResponse res = new HttpResponse();
+        List<PatientMedicalTest> patientList = services.findAllByPatientId(patientId);
+        if (patientList != null && !patientList.isEmpty()) {
+            res.setResponse(patientList);
+            res.setSuccess(true);
+            res.setRecCount(1);
+        } else {
+            res.setSuccess(false);
+            res.setException("Invalid Patient Medical Test !");
+        }
+        return res;
+    }
+
     @RequestMapping(value = "/findAllByPatientIdAndType", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse findAllByPatientIdAndType(@RequestParam(value = "patientid", required = false) String patientid, @RequestParam(value = "type", required = false) TestType type) {
         logger.info("Request findAllByPatientIdAndType Id : {patientId, type} " + patientid + " | " + type);

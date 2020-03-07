@@ -284,6 +284,16 @@ public class PatientMedicalTest {
                 ", lastModified=" + lastModified +
                 ", status=" + status +
                 ", remarks='" + remarks + '\'' +
+                ", dose='" + dose + '\'' +
+                ", dosevalue='" + dosevalue + '\'' +
+                ", selectIndication='" + selectIndication + '\'' +
+                ", selectFinding='" + selectFinding + '\'' +
+                ", bhtClinicNo='" + bhtClinicNo + '\'' +
+                ", procedure='" + procedure + '\'' +
+                ", indication='" + indication + '\'' +
+                ", finding='" + finding + '\'' +
+                ", impression='" + impression + '\'' +
+                ", scanNumber='" + scanNumber + '\'' +
                 '}';
     }
 }

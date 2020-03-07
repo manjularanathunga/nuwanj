@@ -153,6 +153,7 @@ public class PatientScan {
                 ", scanNumber='" + scanNumber + '\'' +
                 ", billingNumber='" + billingNumber + '\'' +
                 ", patientId='" + patientId + '\'' +
+                ", testName='" + testName + '\'' +
                 ", procedure='" + procedure + '\'' +
                 ", indication='" + indication + '\'' +
                 ", finding='" + finding + '\'' +

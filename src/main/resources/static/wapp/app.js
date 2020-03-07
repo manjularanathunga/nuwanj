@@ -90,6 +90,10 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
                 templateUrl: 'wapp/view/utils/dataLoader.html',
                 controller: 'DataLoaderController'
             })
+            .when("/patientMedicalHistoryReport", {
+                templateUrl: 'wapp/view/reports/patientMedicalHistory.html',
+                controller: 'PatientMedicalHistory'
+            })
 
     }]);
 

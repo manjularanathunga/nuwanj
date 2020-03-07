@@ -9,7 +9,6 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     $scope.uicompo = {};
     $scope.patient = {};
     $scope.patientTest = {};
-    $scope.patientScan = {};
     $scope.scanList = [];
     $scope.scanHistortyList = [];
     $scope.uicompo.itemDisabled = false;
@@ -21,13 +20,9 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     $scope.uicompo.selectIndicationList = [];
     $scope.uicompo.selectFindingList = [];
 
-
-    // $scope.patientScan.dateCreated = new Date();
-
     var resetComponent = function(){
         $scope.patient = {};
         $scope.patientTest = {};
-        $scope.patientScan = {};
         $scope.scanList = [];
         $scope.scanHistortyList = [];
         $scope.uicompo.showItem  = false;
@@ -47,7 +42,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
                 if (resp.data.success) {
                     var obj = resp.data.response;
                   try{
-                        $scope.patientTest = obj.patientmedicaltest;
+                        $scope.patientTest = obj.patientTest;
                     }catch (e) {
                         console.log('error retreving patientTest');
                       $scope.patientTest = {};
@@ -62,30 +57,21 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
                         $scope.patient = {};
                     }
                     try{
-                        $scope.scanHistortyList = obj.bypatientidlist;
+                        $scope.scanHistortyList = obj.scanHistortyList;
                     }catch (e) {
                         console.log('error retreving scanHistortyList');
-                        $scope.patientScan = [];
+                        $scope.scanHistortyList = [];
                     }
-                    try{
-                        $scope.patientScan = obj.patientscan;
-                    }catch (e) {
-                        console.log('error retreving patientScan');
-                        $scope.patientScan = {};
-                    }
+
 
                     try{
                         var selected = JSON.parse(obj.ScanOpsionProps);
                         $scope.uicompo.selectIndicationList = selected;
                     }catch (e) {
-                        console.log('error retreving patientScan');
-                        $scope.patientScan = {};
+                        console.log('error retreving ScanOpsionProps');
+                        $scope.ScanOpsionProps = {};
                     }
 
-
-                    $scope.patientScan.scanNumber = $scope.patientScan.scanNumber;
-                    $scope.patientScan.billingNumber = billingNumber;
-                    $scope.patientScan.patientId = $scope.patient.patientId;
                     $scope.uicompo.showItem  = true;
                     $scope.uicompo.showSave  = false;
 
@@ -101,7 +87,6 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $scope.patientTest = {};
         $scope.patient = {};
         $scope.scanHistortyList = [];
-        $scope.patientScan = {};
         $scope.uicompo.showItem  = false;
         $scope.uicompo.showSave  = false;
     }
@@ -113,18 +98,17 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     }
 
     $scope.saveModal = function() {
-        $scope.patientScan.actionBy= loggedUser;
-        $scope.patientScan.lastDateModified = new Date();
-        $scope.patientScan.dateCreated = new Date();
-        $scope.patientScan.status = 'ACTIVE';
-        $http.post('/scan/save', $scope.patientScan)
+        $scope.patientTest.actionBy= loggedUser;
+        $scope.patientTest.lastModified = new Date();
+        //console.log('patientTest > ' + JSON.stringify($scope.patientTest));
+        $http.post('/patientmedicaltest/save', $scope.patientTest)
             .then(function(resp) {
                 Pop.timeMsg('success', 'SAVE SCAN', ' SCAN HAS BEEN SAVED SUCCESSFULLY ', 2000);
                 $scope.uicompo.showSave  = false;
             }, function(resp) {
                 Pop.timeMsg('error', 'SAVE SCAN', ' SCAN SAVING NOT SUCCESS', 2000);
             }).catch(function(e) {
-            Pop.timeMsg('error', 'SAVE SCAN', ' SCAN SAVING NOT SUCCESS ' + e, 5000);
+                Pop.timeMsg('error', 'SAVE SCAN', ' SCAN SAVING NOT SUCCESS ' + e, 5000);
         });
     };
 

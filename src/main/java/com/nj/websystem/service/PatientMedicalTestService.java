@@ -1,5 +1,6 @@
 package com.nj.websystem.service;
 
+import com.nj.websystem.enums.LabType;
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
 import com.nj.websystem.model.PatientMedicalTest;
@@ -16,6 +17,8 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
     @Query("From PatientMedicalTest ORDER BY dateCreated DESC")
     List<PatientMedicalTest> findAll();
 
+    List<PatientMedicalTest> findAllByPatientId(String patientId);
+
     List<PatientMedicalTest> findAllByTestTypeAndDateCreated(TestType testType, Date dateCreated);
 
     public List<PatientMedicalTest> getAllByTestType(TestType testType);
@@ -29,6 +32,8 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
     List<PatientMedicalTest> findAllByPatientIdAndBillingNumber(String patientId, String billingNumber);
 
     List<PatientMedicalTest> findAllByBillingNumber(String billingNumber);
+
+    List<PatientMedicalTest> findAllByBillingNumberAndLabType(String billingNumber, LabType labType);
 
     List<PatientMedicalTest> findAllByBillingNumberAndStatus(String billingNumber, Status status);
 
