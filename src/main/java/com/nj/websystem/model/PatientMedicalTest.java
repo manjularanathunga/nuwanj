@@ -27,6 +27,7 @@ public class PatientMedicalTest {
     private String units;
     private String results;
     private String seenBy;
+    private String referBy;
     private LabType labType;
     private String actionBy;
     private Date dateCreated;
@@ -264,6 +265,14 @@ public class PatientMedicalTest {
         this.scanNumber = scanNumber;
     }
 
+    public String getReferBy() {
+        return referBy;
+    }
+
+    public void setReferBy(String referBy) {
+        this.referBy = referBy;
+    }
+
     @Override
     public String toString() {
         return "PatientMedicalTest{" +
@@ -278,6 +287,7 @@ public class PatientMedicalTest {
                 ", units='" + units + '\'' +
                 ", results='" + results + '\'' +
                 ", seenBy='" + seenBy + '\'' +
+                ", referBy='" + referBy + '\'' +
                 ", labType=" + labType +
                 ", actionBy='" + actionBy + '\'' +
                 ", dateCreated=" + dateCreated +

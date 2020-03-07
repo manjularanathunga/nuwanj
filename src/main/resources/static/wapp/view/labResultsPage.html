@@ -71,7 +71,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="itm in patientMediTestList | filter : searchKeyword">
+                    <tr ng-repeat="itm in patientMediTestList | filter : searchKeyword" ng-style="getRandomColor(itm)"> <!--getRandomColor(itm)-->
                         <td>{{itm.dateCreated | date:'shortDate'}}</td>
                         <td>{{itm.testNumber}}</td>
                         <td>{{itm.name}}</td>

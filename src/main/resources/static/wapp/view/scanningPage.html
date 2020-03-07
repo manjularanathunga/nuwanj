@@ -1,5 +1,63 @@
 <div class="container rounded" style="border:0px solid blanchedalmond">
     <div class="row p-1">
+
+        <div class="row p-1" ng-show="!uicompo.showItem">
+            <div class="col-sm-6">
+                <div class="form-group row pt-0 pb-0">
+
+                    <div>
+                        <label class="font-size-sm">Billing #</label>
+                    </div>
+                    <div class="pr-2 pl-1">
+                        <input class="form-control" ng-model="uicompo.billingNumber" placeholder="20Pxxxx" style="width: 150px;"
+                               type="text">
+                    </div>
+                    <div class="p-1">
+                        <button class="btn btn-warning" ng-click="searchBilling('BILLING');"
+                                style="width: 40px;"
+                                title="Re - Print"
+                                type="button"><i
+                                class="fa fa-search"></i></button>
+                    </div>
+                    <div class="p-1">
+                        <button class="btn btn-danger" ng-click="clearScreen();" ng-show="uicompo.showItem"
+                                style="width: 40px;"
+                                type="button"><i aria-hidden="true" class="fa fa-broom"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group row pt-0 pb-0">
+
+                    <div>
+                        <label class="font-size-sm">Scan #</label>
+                    </div>
+                    <div class="pr-2 pl-1">
+                        <input class="form-control" ng-model="uicompo.scanNumber" placeholder="" style="width: 150px;"
+                               type="text">
+                    </div>
+                    <div class="p-1">
+                        <button class="btn btn-warning" ng-click="searchBilling('SCAN');"
+                                style="width: 40px;"
+                                title="Re - Print"
+                                type="button"><i
+                                class="fa fa-search"></i></button>
+                    </div>
+                    <div class="p-1">
+                        <button class="btn btn-danger" ng-click="clearScreen();" ng-show="uicompo.showItem"
+                                style="width: 40px;"
+                                type="button"><i aria-hidden="true" class="fa fa-broom"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+
+    <div class="row p-1" ng-show="uicompo.showItem">
         <div class="col-sm-4">
             <div class="form-group row pt-0 pb-0">
 

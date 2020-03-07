@@ -29,16 +29,27 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $scope.uicompo.showSave  = false;
     }
 
-    $scope.searchBilling = function () {
+    $scope.searchBilling = function (type) {
         resetComponent();
-        var billingNumber = $scope.uicompo.billingNumber;
-        if(!billingNumber){
-            Pop.timeMsg('success', 'SEARCH SCAN', ' SCAN NUMMBER NOT FOUND ', 2000);
-            return;
+        var searchNum ='';
+        if("BILLING" == type){
+            var billingNumber = $scope.uicompo.billingNumber.trim();
+            if(!billingNumber){
+                Pop.timeMsg('error', ' SCAN NUMMBER NOT FOUND ', 'SEARCH SCAN', 2000);
+                return;
+            }
+            searchNum = billingNumber;
+        }else{
+            var scanNumber = $scope.uicompo.scanNumber.trim();
+            if(!scanNumber){
+                Pop.timeMsg('error', ' SCAN NUMMBER NOT FOUND ', 'SEARCH SCAN', 2000);
+                return;
+            }
+            searchNum = scanNumber;
         }
 
-        $http.get("scan/getPatientByBilling?billingNumber=" + billingNumber)
-            .then(function(resp) {
+        var res = $http.get("scan/getPatientByBilling?searchNum=" + searchNum+"&type="+type);
+        res.then(function(resp) {
                 if (resp.data.success) {
                     var obj = resp.data.response;
                   try{
@@ -76,7 +87,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
                     $scope.uicompo.showSave  = false;
 
                 } else {
-                    Pop.timeMsg('error', 'SEARCH SCAN', ' SCAN NUMMBER NOT FOUND ', 2000);
+                    Pop.timeMsg('error', 'SEARCH SCAN', obj.exception, 2000);
                 }
             });
 
@@ -98,13 +109,23 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     }
 
     $scope.saveModal = function() {
+
+        if($scope.patientTest.scanNumber.includes('#')){
+            Pop.timeMsg('warning', 'SAVE SCAN', 'Scan # cannot containg #', 5000);
+            return;
+        }
+
         $scope.patientTest.actionBy= loggedUser;
         $scope.patientTest.lastModified = new Date();
         //console.log('patientTest > ' + JSON.stringify($scope.patientTest));
-        $http.post('/patientmedicaltest/save', $scope.patientTest)
+        $http.post('/patientmedicaltest/SaveScan', $scope.patientTest)
             .then(function(resp) {
-                Pop.timeMsg('success', 'SAVE SCAN', ' SCAN HAS BEEN SAVED SUCCESSFULLY ', 2000);
-                $scope.uicompo.showSave  = false;
+                if(resp.data.success){
+                    Pop.timeMsg('success', 'SAVE SCAN', ' SCAN HAS BEEN SAVED SUCCESSFULLY ', 2000);
+                    $scope.uicompo.showSave  = false;
+                }else{
+                    Pop.timeMsg('error', resp.data.exception, 'SAVE SCAN', 2000);
+                }
             }, function(resp) {
                 Pop.timeMsg('error', 'SAVE SCAN', ' SCAN SAVING NOT SUCCESS', 2000);
             }).catch(function(e) {

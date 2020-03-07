@@ -29,6 +29,19 @@ app.controller('LabResultsController', function($scope, $rootScope, $http, $loca
             });
     }
 
+    $scope.getRandomColor = function(item) {
+        if(item.status == 'OPEN'){
+            return {
+                "color" : "white",
+                "background-color" : "red"
+            };
+        }else{
+            return {
+
+            };
+        }
+    }
+
     $scope.upDateResult = function(itm) {
         if(!itm.results){
             Pop.timeMsg('error', 'UPDATE RESULTS', 'Results cannot be empty !', 2000);

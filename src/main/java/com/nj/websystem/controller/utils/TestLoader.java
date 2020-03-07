@@ -34,11 +34,11 @@ public class TestLoader {
         stringMap.put("TG","SERUM TRIIODOTHYRONINE:");
         stringMap.put("Testosterone","SERUM TRIIODOTHYRONINE:");
         stringMap.put("Technetium Thyroid Scintigraphy","TH");
-        stringMap.put("Technetium Red Blood Cell Tagging","RBC");
+        stringMap.put("Technetium Red Blood Cell Tagging","RB");
         stringMap.put("Technetium Mikels Scintigraphy","MI");
-        stringMap.put("Technetium LYMPHO Scintigraphy","LY");
+        stringMap.put("Technetium LYMPHO Scintigraphy","LP");
         stringMap.put("Technetium HIDA Scintigraphy","HI");
-        stringMap.put("Technetium DTPA Scintigraphy","DT");
+        stringMap.put("Technetium DTPA Scintigraphy","KI");
         stringMap.put("Technetium DMSA Scintigraphy","DM");
         stringMap.put("Technetium Bone Scintigraphy","BO");
         stringMap.put("T3","SERUM TRIIODOTHYRONINE:");
@@ -56,6 +56,7 @@ public class TestLoader {
         stringMap.put("FSH","SERUM FSH:");
         stringMap.put("Cortisol","SERUM CORTISOL:");
         stringMap.put("Bone Mineral Density Test (DXA)","DX");
+        stringMap.put("Technetium Mikels Scintigraphy","ME");
 
         List<Indication> fiindingList = new ArrayList();
         fiindingList.add(new Indication(1L,"No bone metastases",Status.ACTIVE));

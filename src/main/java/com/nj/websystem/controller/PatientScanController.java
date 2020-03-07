@@ -11,6 +11,7 @@ import com.nj.websystem.service.MedicalTestService;
 import com.nj.websystem.service.PatientMedicalTestService;
 import com.nj.websystem.service.PatientService;
 import com.nj.websystem.util.DateUtility;
+import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,13 +68,25 @@ public class PatientScanController {
     }
 
     @RequestMapping(value = "/getPatientByBilling", method = RequestMethod.GET, headers = "Accept=application/json")
-    public HttpResponse billingNumber(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
-        logger.info("Request PatientScan billingNumber : {} " + billingNumber);
+    public HttpResponse billingNumber(@RequestParam(value = "searchNum", required = false) String searchNum, @RequestParam(value = "type", required = false) String type) {
+        logger.info("Request PatientScan billingNumber : {} " + searchNum);
         HttpResponse res = new HttpResponse();
-        List<PatientMedicalTest> patientMedicalTestList = patientMedicalTestService.findAllByBillingNumberAndLabType(billingNumber, LabType.Scan);
-        if (!patientMedicalTestList.isEmpty()) {
+
+        List<PatientMedicalTest> patientMedicalTestList = new ArrayList<>();
+
+        if(type.equalsIgnoreCase("BILLING")){
+            patientMedicalTestList = patientMedicalTestService.findAllByBillingNumberAndLabType(searchNum, LabType.Scan);
+        }else{
+            patientMedicalTestList = patientMedicalTestService.findAllByScanNumberAndLabType(searchNum, LabType.Scan);
+        }
+
+        if (patientMedicalTestList.size() > 0) {
             Map<String, Object> uiItemMap = new HashMap<>();
             PatientMedicalTest item = patientMedicalTestList.get(0);
+            if(item.getScanNumber() == null || (item.getScanNumber() != null && item.getScanNumber().length() == 0)){
+                List<MedicalTest> mt =testService.findAllByTestNumber(item.getTestNumber());
+                item.setScanNumber(StringUtility.getCustDateByPatten(StringUtility.YY) +mt.get(0).getOldTestName()+"####");
+            }
             uiItemMap.put("patientTest", item);
             uiItemMap.put("patient", patientService.findByPatientId(item.getPatientId()).get(0));
             uiItemMap.put("scanHistortyList", patientMedicalTestService.getAllByPatientId(item.getPatientId()));
@@ -91,7 +105,7 @@ public class PatientScanController {
             res.setRecCount(1);
         } else {
             res.setSuccess(false);
-            res.setException("Invalid Test Scan Id " + billingNumber);
+            res.setException("Invalid Test Scan " + searchNum);
         }
         return res;
     }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -137,6 +138,35 @@ public class PatientMedicalTestController {
         return res;
     }
 
+    @RequestMapping(value = "/SaveScan", method = RequestMethod.POST, headers = "Accept=application/json")
+    public HttpResponse SaveScan(@RequestBody PatientMedicalTest obj) {
+        HttpResponse res = new HttpResponse();
+        logger.info("Saving TestName : " + obj.getName());
+
+        logger.info("toString " + obj.toString());
+
+        PatientMedicalTest savedMedicalTest = services.save(obj);
+
+/*        Optional<PatientMedicalTest> dbobj = services.findAllByScanNumber(obj.getScanNumber());
+        if(dbobj.isPresent()){
+            res.setSuccess(false);
+            res.setException("Scan Id : " + obj.getScanNumber() + "  already exist");
+            return res;
+        }*/
+
+
+        if (savedMedicalTest != null) {
+            res.setResponse(savedMedicalTest);
+            res.setSuccess(true);
+            res.setRecCount(1);
+        } else {
+            res.setSuccess(false);
+            res.setException("Fail to save Medical Test : " + obj.getTestNumber());
+        }
+        return res;
+    }
+
+
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public HttpResponse delete(@RequestParam(value = "id", required = false) Long id) {
         logger.info("Delete OfficeRoom Name : {} " + id);
@@ -191,7 +221,7 @@ public class PatientMedicalTestController {
     public HttpResponse findAllByBillingNumber(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
         logger.info("findAllByBillingNumber : {} " + billingNumber);
         HttpResponse response = new HttpResponse();
-        List<PatientMedicalTest> itemList = services.findAllByBillingNumberAndStatus(billingNumber, Status.OPEN);
+        List<PatientMedicalTest> itemList = services.findAllByBillingNumber(billingNumber);
         if (itemList != null && itemList.size() > 0) {
             if (itemList.size() > 0) {
                 Patient patient = patientService.findByPatientId(itemList.get(0).getPatientId()).get(0);

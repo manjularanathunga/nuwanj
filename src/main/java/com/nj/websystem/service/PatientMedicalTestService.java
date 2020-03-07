@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface PatientMedicalTestService extends JpaRepository<PatientMedicalTest, Long> {
 
@@ -33,7 +34,11 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
 
     List<PatientMedicalTest> findAllByBillingNumber(String billingNumber);
 
+    Optional<PatientMedicalTest> findAllByScanNumber(String scanNumber);
+
     List<PatientMedicalTest> findAllByBillingNumberAndLabType(String billingNumber, LabType labType);
+
+    List<PatientMedicalTest> findAllByScanNumberAndLabType(String scanNumber, LabType labType);
 
     List<PatientMedicalTest> findAllByBillingNumberAndStatus(String billingNumber, Status status);
 
