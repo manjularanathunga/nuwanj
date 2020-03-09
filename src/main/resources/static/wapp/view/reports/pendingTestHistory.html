@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2 left">
+            Select Medical Test
+        </div>
+        <div class="col-sm-4 tcenter">
+            <div class="input-group">
+                <select class="form-control"
+                        ng-change="onChangeTestName();" ng-model="uicompo.selectedTestId" style="width: 250px;">
+                    <option ng-repeat="(key, value) in  medicalTestList" value="{{key}}">{{value}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

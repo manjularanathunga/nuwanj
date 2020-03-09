@@ -30,22 +30,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.js"></script>
 
     <script src="wapp/app.js"></script>
-    <script src="wapp/controller/LoginController.js"></script>
-    <script src="wapp/controller/UserAdminController.js"></script>
-    <script src="wapp/controller/PatientController.js"></script>
+    <script src="wapp/controller/admin/LoginController.js"></script>
+    <script src="wapp/controller/admin/UserAdminController.js"></script>
+    <script src="wapp/controller/medical/PatientController.js"></script>
     <script src="wapp/controller/DashboardController.js"></script>
-    <script src="wapp/controller/LogoutController.js"></script>
+    <script src="wapp/controller/admin/LogoutController.js"></script>
     <script src="wapp/controller/BillingController.js"></script>
-    <script src="wapp/controller/MedicalTestController.js"></script>
-    <script src="wapp/controller/LabResultsController.js"></script>
-    <script src="wapp/controller/PatientTestController.js"></script>
-    <script src="wapp/controller/DailyPatientController.js"></script>
-    <script src="wapp/controller/ScreenAccessController.js"></script>
-    <script src="wapp/controller/UserScreenController.js"></script>
-    <script src="wapp/controller/ScanningController.js"></script>
-    <script src="wapp/controller/DateRangeAnalysisController.js"></script>
+    <script src="wapp/controller/medical/MedicalTestController.js"></script>
+    <script src="wapp/controller/lab/LabResultsController.js"></script>
+    <script src="wapp/controller/reports/PatientTestController.js"></script>
+    <script src="wapp/controller/reports/DailyPatientController.js"></script>
+    <script src="wapp/controller/admin/ScreenAccessController.js"></script>
+    <script src="wapp/controller/admin/UserScreenController.js"></script>
+    <script src="wapp/controller/medical/ScanningController.js"></script>
+    <script src="wapp/controller/analysis/DateRangeAnalysisController.js"></script>
     <script src="wapp/controller/utils/DataLoaderController.js"></script>
     <script src="wapp/controller/reports/PatientMedicalHistory.js"></script>
+    <script src="wapp/controller/reports/PendingTestHistory.js"></script>
 
     <script src="wapp/app-services/authentication.service.js"></script>
     <script src="wapp/app-services/user.service.js"></script>
@@ -98,6 +99,9 @@
                 <ul class="collapse list-unstyled" id="homeSubmenu2">
                     <li>
                         <a href="#!patientMedicalHistoryReport">Patient History Report</a>
+                    </li>
+                    <li>
+                        <a href="#!pendingTestHistory">Pending Test History</a>
                     </li>
                     <li>
                         <a href="#!dailypatientreport">Daily Patient Report</a>

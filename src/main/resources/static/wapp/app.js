@@ -31,7 +31,7 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when("/login", {
-                templateUrl: 'wapp/view/loginPage.html',
+                templateUrl: 'wapp/view/admin/loginPage.html',
                 controller: 'LoginController'
             })
             .when("/dashboard", {
@@ -39,15 +39,15 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
                 controller: 'DashboardController'
             })
             .when("/useradmin", {
-                templateUrl: 'wapp/view/userAdminPage.html',
+                templateUrl: 'wapp/view/admin/userAdminPage.html',
                 controller: 'UserAdminController'
             })
             .when("/patient", {
-                templateUrl: 'wapp/view/patientPage.html',
+                templateUrl: 'wapp/view/medical/patientPage.html',
                 controller: 'PatientController'
             })
             .when("/logout", {
-                templateUrl: 'wapp/view/logoutPage.html',
+                templateUrl: 'wapp/view/admin/logoutPage.html',
                 controller: 'LogoutController'
             })
             .when("/billing", {
@@ -55,31 +55,31 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
                 controller: 'BillingController'
             })
             .when("/meditest", {
-                templateUrl: 'wapp/view/medicalTestPage.html',
+                templateUrl: 'wapp/view/medical/medicalTestPage.html',
                 controller: 'MedicalTestController'
             })
             .when("/labresults", {
-                templateUrl: 'wapp/view/labResultsPage.html',
+                templateUrl: 'wapp/view/lab/labResultsPage.html',
                 controller: 'LabResultsController'
             })
             .when("/patienttest", {
-                templateUrl: 'wapp/view/patientTestPage.html',
+                templateUrl: 'wapp/view/reports/patientTestPage.html',
                 controller: 'PatientTestController'
             })
             .when("/dailypatientreport", {
-                templateUrl: 'wapp/view/dailyPatientPage.html',
+                templateUrl: 'wapp/view/reports/dailyPatientPage.html',
                 controller: 'DailyPatientController'
             })
             .when("/screenaccess", {
-                templateUrl: 'wapp/view/screenAccessPage.html',
+                templateUrl: 'wapp/view/admin/screenAccessPage.html',
                 controller: 'ScreenAccessController'
             })
             .when("/userscreen", {
-                templateUrl: 'wapp/view/userScreenPage.html',
+                templateUrl: 'wapp/view/admin/userScreenPage.html',
                 controller: 'UserScreenController'
             })
             .when("/scanning", {
-                templateUrl: 'wapp/view/scanningPage.html',
+                templateUrl: 'wapp/view/medical/scanningPage.html',
                 controller: 'ScanningController'
             })
             .when("/daterange", {
@@ -94,6 +94,12 @@ var app = angular.module('app', ['ngRoute', 'ngCookies'])
                 templateUrl: 'wapp/view/reports/patientMedicalHistory.html',
                 controller: 'PatientMedicalHistory'
             })
+            .when("/pendingTestHistory", {
+                templateUrl: 'wapp/view/reports/pendingTestHistory.html',
+                controller: 'PendingTestHistory'
+            })
+
+
 
     }]);
 
