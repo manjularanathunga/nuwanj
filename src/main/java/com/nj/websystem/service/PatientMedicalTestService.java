@@ -4,8 +4,10 @@ import com.nj.websystem.enums.LabType;
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
 import com.nj.websystem.model.PatientMedicalTest;
+import com.nj.websystem.rest.Rest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -43,6 +45,11 @@ public interface PatientMedicalTestService extends JpaRepository<PatientMedicalT
     List<PatientMedicalTest> findAllByBillingNumberAndStatus(String billingNumber, Status status);
 
     public List<PatientMedicalTest> getAllByTestTypeOrderByIdDesc(TestType testType);
+
+    //public static final String FIND_PROJECTS = "SELECT test_number, billing_Number, patient_Id, results, seen_By FROM TBL_PATIENT_MEDICAL_TEST where test_number=:testNumber";
+    //@Query(value = FIND_PROJECTS, nativeQuery = true)
+    //public List<PatientMedicalTest> getAllByTestNumberOrderByPriority(@Param("testNumber") String testNumber);
+    public List<PatientMedicalTest> getAllByTestNumberOrderByPriority(String testNumber);
 
     // public List<PatientMedicalTest> getAllByPatientId(String patientId);
 

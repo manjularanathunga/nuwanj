@@ -5,8 +5,10 @@ import com.nj.websystem.enums.TestType;
 import com.nj.websystem.model.Patient;
 import com.nj.websystem.model.PatientMedicalTest;
 import com.nj.websystem.rest.HttpResponse;
+import com.nj.websystem.rest.Rest;
 import com.nj.websystem.service.PatientMedicalTestService;
 import com.nj.websystem.service.PatientService;
+import com.nj.websystem.util.DateUtility;
 import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,6 +118,30 @@ public class PatientMedicalTestController {
 
         return res;
     }
+
+    @RequestMapping(value = "/getAllByTestNumberOrderByPriority", method = RequestMethod.GET, headers = "Accept=application/json")
+    public HttpResponse getAllByTestNumberOrderByPriority(@RequestParam(value = "testNumber", required = false) String testNumber) {
+        logger.info("Request getAllByTestNumberOrderByPriority testNumber : {} " ,  testNumber);
+        HttpResponse res = new HttpResponse();
+        List<PatientMedicalTest> result = new ArrayList<>();
+        List<PatientMedicalTest> patientMedicalTest = services.getAllByTestNumberOrderByPriority(testNumber);
+        patientMedicalTest.forEach(i ->{
+            if(i.getDateCreated().after(DateUtility.getCuttentYear())){
+                result.add(i);
+            }
+        });
+        logger.info("result.size()  > " + result.size());
+        if (patientMedicalTest.size() > 0) {
+            res.setResponse(result);
+            res.setSuccess(true);
+            res.setRecCount(result.size());
+        } else {
+            res.setSuccess(false);
+            res.setException("Records not found !");
+        }
+        return res;
+    }
+
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")

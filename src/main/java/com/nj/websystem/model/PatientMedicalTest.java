@@ -48,6 +48,7 @@ public class PatientMedicalTest {
     @Column(length = 2000)
     private String impression;
     private String scanNumber;
+    private Boolean priority;
 
     public String getDose() {
         return dose;
@@ -271,6 +272,14 @@ public class PatientMedicalTest {
 
     public void setReferBy(String referBy) {
         this.referBy = referBy;
+    }
+
+    public Boolean getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Boolean priority) {
+        this.priority = priority;
     }
 
     @Override

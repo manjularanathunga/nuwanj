@@ -6,10 +6,35 @@
         <div class="col-sm-4 tcenter">
             <div class="input-group">
                 <select class="form-control"
-                        ng-change="onChangeTestName();" ng-model="uicompo.selectedTestId" style="width: 250px;">
+                        ng-change="loadByTest();" ng-model="uicompo.selectedTestId" style="width: 250px;">
                     <option ng-repeat="(key, value) in  medicalTestList" value="{{key}}">{{value}}</option>
                 </select>
             </div>
+        </div>
+    </div>
+
+    <div class="raw view">
+        <div class="wrapper table table-sm table-hover table-bordered" id="parent">
+            <table class="table" id="fixTable">
+                <thead class="bg-secondary text-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Billing #</th>
+                    <th>Patient #</th>
+                    <th>Test Name</th>
+                    <th>Results</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="itm in patientMediTestList | filter : searchKeyword" ng-style="getRandomColor(itm)">
+                    <td>{{itm.dateCreated | date:'shortDate'}}</td>
+                    <td>{{itm.billingNumber}}</td>
+                    <td>{{itm.patientId}}</td>
+                    <td>{{itm.name}}</td>
+                    <td>{{itm.results}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
