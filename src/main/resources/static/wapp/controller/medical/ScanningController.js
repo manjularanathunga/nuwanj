@@ -19,6 +19,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     $scope.uicompo.showSave  = false;
     $scope.uicompo.selectIndicationList = [];
     $scope.uicompo.selectFindingList = [];
+    $scope.uicompo.imageurl  = '';
 
     var resetComponent = function(){
         $scope.patient = {};
@@ -133,8 +134,11 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         });
     };
 
-    $scope.showImage = function() {
-        Pop.timeMsg('success', 'SAVE SCAN', 'showImage', 2000);
+    $scope.showImage = function(item) {
+        var img_home ='images';//20WB123.jpg
+        //var img_home ='/Users/sirimewanranathunga/Desktop/projects/Images';//20WB123.jpg
+        $scope.uicompo.imageurl = img_home + '/' + $scope.patientTest.scanNumber+".jpg";
+        $("#modal-image").modal("show");
     }
 
     $scope.showHistory = function(itm) {

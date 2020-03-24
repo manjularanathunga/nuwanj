@@ -365,6 +365,39 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-image">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Image</h4>
+                <button class="close" data-dismiss="modal" type="button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <img ng-src="{{uicompo.imageurl}}" class="img-responsive">
+                    <br><br>
+                    <label>Brightness</label>
+                    <input type="range" min="0" max="200" value="100" step="1" onchange="applyFilter()" data-filter="brightness" data-scalt="%"><br><br>
+                    <label>Contrast</label>
+                    <input type="range" min="0" max="200" value="100" step="1" onchange="applyFilter()" data-filter="Contrast" data-scalt="%"><br>
+                    <script type="text/javascript">
+                        var image = document.querySelector('img');
+                        var filterControls = document.querySelectorAll('input[type=range}');
+                        function applyFilter() {
+                            var computedFilters = '';
+                            filterControls.forEach(function (item, index) {
+                                computedFilters += item.getAttribute('data-filter')+'('+ item.value + item.getAttribute('data-scale')+')';
+                            });
+                            image.style.filter= computedFilters;
+                        };
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
