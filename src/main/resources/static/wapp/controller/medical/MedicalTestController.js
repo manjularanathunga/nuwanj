@@ -125,7 +125,7 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
         $scope.uicompo.ref.medicalTest = $scope.mtest.id;
         var refItem = $scope.uicompo.ref;
         if(!refItem.gender){Pop.msgWithButton('Reference field SEX cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
-        if(refItem.ageMin >= 0){Pop.msgWithButton('Reference Minimum Age Range cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
+        if(!refItem.ageMin){Pop.msgWithButton('Reference Minimum Age Range cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
         if(!refItem.ageMax){Pop.msgWithButton('Reference field  Maximum Age Range  cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
         if(!refItem.unit){Pop.msgWithButton('Reference field UNIT cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
         if(!refItem.reference){Pop.msgWithButton('Reference field Reference cannot be empty.', $scope.uicompo.modalpagetitle , 'error'); return;}
