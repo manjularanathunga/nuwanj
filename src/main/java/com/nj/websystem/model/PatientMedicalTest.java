@@ -38,7 +38,6 @@ public class PatientMedicalTest {
     private String dosevalue;
     private String selectIndication;
     private String selectFinding;
-    private String bhtClinicNo;
     @Column(length = 2000)
     private String procedure;
     @Column(length = 2000)
@@ -218,14 +217,6 @@ public class PatientMedicalTest {
         this.remarks = remarks;
     }
 
-    public String getBhtClinicNo() {
-        return bhtClinicNo;
-    }
-
-    public void setBhtClinicNo(String bhtClinicNo) {
-        this.bhtClinicNo = bhtClinicNo;
-    }
-
     public String getProcedure() {
         return procedure;
     }
@@ -307,7 +298,6 @@ public class PatientMedicalTest {
                 ", dosevalue='" + dosevalue + '\'' +
                 ", selectIndication='" + selectIndication + '\'' +
                 ", selectFinding='" + selectFinding + '\'' +
-                ", bhtClinicNo='" + bhtClinicNo + '\'' +
                 ", procedure='" + procedure + '\'' +
                 ", indication='" + indication + '\'' +
                 ", finding='" + finding + '\'' +

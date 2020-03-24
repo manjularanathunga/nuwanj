@@ -29,6 +29,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
     $scope.uicompo.selectedTest = {};
     $scope.uicompo.itemDisabled = true;
     $scope.uicompo.selectedTotal = 0.0;
+    $scope.uicompo.priority = false;
 
     $scope.disabledAddTest = false;
     $scope.disabledSaveTestList = true;
@@ -145,8 +146,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
         saveTest.name = selected.name;
         saveTest.testType = selected.testType;
         saveTest.labType = selected.labType;
-
-        console.log('saveTest > ' + JSON.stringify(selected));
+        saveTest.priority = $scope.uicompo.priority;
 
         console.log('saveTest > ' + JSON.stringify(saveTest));
 
@@ -177,16 +177,7 @@ app.controller('BillingController', function($scope, $rootScope, $http, $locatio
             return;
         }
 
-
-
-       //private String reference;
-        //private String units;
-        //private String results;
-        //private String remarks;
-
-
-
-        console.log('saveTest > ' + JSON.stringify(saveTest));
+        console.log('saveTest ww > ' + JSON.stringify(saveTest));
 
         if(validateAlreadyAdded(saveTest)){
             Pop.msgWithButton('ADD MEDICAL TEST', 'Test Already Added', 'error');

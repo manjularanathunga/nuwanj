@@ -73,7 +73,7 @@ public class ScanLoader {
             }
 
             String idpatient = dataFormatter.formatCellValue(cellIterator.next());
-            String bhtclinicno = dataFormatter.formatCellValue(cellIterator.next());
+            //String bhtclinicno = dataFormatter.formatCellValue(cellIterator.next());
             String dose = dataFormatter.formatCellValue(cellIterator.next());
             String procedure = dataFormatter.formatCellValue(cellIterator.next());
             String indication = dataFormatter.formatCellValue(cellIterator.next());
@@ -86,7 +86,7 @@ public class ScanLoader {
             p.setLabType(LabType.Scan);
             p.setDose(dose);
             p.setPatientId(idpatient);
-            p.setBhtClinicNo(bhtclinicno);
+            //p.setBhtClinicNo(bhtclinicno);
             p.setProcedure(procedure);
             p.setIndication(indication);
             p.setFinding(finding);
@@ -200,17 +200,6 @@ public class ScanLoader {
 
             } catch (Exception e) {
                 logError(l, p, "Error in DateCreated :" + e.getMessage());
-            }
-
-            try {
-                String data = l.get(2);
-                if (StringUtility.get(data)) {
-                    p.setBhtClinicNo(data);
-                } else {
-                    logError(l, p, "Error in BhtClinicNo :" + data);
-                }
-            } catch (Exception e) {
-                logError(l, p, "Error in BhtClinicNo :" + e.getMessage());
             }
 
 
@@ -341,7 +330,7 @@ public class ScanLoader {
             //PatientMedicalTest{id=null, testNumber='null', patientId='1906909', testType=null, billingNumber='19S02493', name='Bone Mineral Density Test (DXA)', price=null, reference='null', units='mU/L', results='20', seenBy='"Dr.D.Nanayakkara- MBBS- M Phil. (U.K)PhD-FANMB', labType=null, actionBy='admin', dateCreated=Tue Jan 12 00:00:00 SGT 2021, lastModified=null, status=ACTIVE, remarks='null'}
 
             p.setReferBy(patVals.get("R13"));
-            p.setBhtClinicNo(patVals.get("R11"));
+            //p.setBhtClinicNo(patVals.get("R11"));
             p.setSeenBy(patVals.get("R15"));
             // p.setName(patVals.get("R14"));
 /*            List<MedicalTest> lst = medicalTestService.findAllByName(p.getName());
