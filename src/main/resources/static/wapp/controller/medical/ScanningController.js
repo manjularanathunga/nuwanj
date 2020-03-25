@@ -34,19 +34,17 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         resetComponent();
         var searchNum ='';
         if("BILLING" == type){
-            var billingNumber = $scope.uicompo.billingNumber.trim();
-            if(!billingNumber){
+            if(!$scope.uicompo.billingNumber){
                 Pop.timeMsg('error', ' SCAN NUMMBER NOT FOUND ', 'SEARCH SCAN', 2000);
                 return;
             }
-            searchNum = billingNumber;
+            searchNum = $scope.uicompo.billingNumber.trim();
         }else{
-            var scanNumber = $scope.uicompo.scanNumber.trim();
-            if(!scanNumber){
+            if(!$scope.uicompo.scanNumber){
                 Pop.timeMsg('error', ' SCAN NUMMBER NOT FOUND ', 'SEARCH SCAN', 2000);
                 return;
             }
-            searchNum = scanNumber;
+            searchNum = $scope.uicompo.scanNumber.trim();
         }
 
         var res = $http.get("scan/getPatientByBilling?searchNum=" + searchNum+"&type="+type);
@@ -175,4 +173,15 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     }
 
     loadList();
+
+    $scope.applyFilter = function() {
+        console.log("applyFilter");
+/*        var image = document.querySelector('img');
+        var filterControls = document.querySelectorAll('input[type=range}');
+        var computedFilters = '';
+        filterControls.forEach(function (item, index) {
+            computedFilters += item.getAttribute('data-filter')+'('+ item.value + item.getAttribute('data-scale')+')';
+        });
+        image.style.filter= computedFilters;*/
+    }
 });

@@ -378,20 +378,9 @@
                     <img ng-src="{{uicompo.imageurl}}" class="img-responsive">
                     <br><br>
                     <label>Brightness</label>
-                    <input type="range" min="0" max="200" value="100" step="1" onchange="applyFilter()" data-filter="brightness" data-scalt="%"><br><br>
+                    <input type="range" min="0" max="200" value="100" step="1" ng-change="applyFilter()" ng-model="brightness" data-filter="brightness" data-scalt="%"><br><br>
                     <label>Contrast</label>
-                    <input type="range" min="0" max="200" value="100" step="1" onchange="applyFilter()" data-filter="Contrast" data-scalt="%"><br>
-                    <script type="text/javascript">
-                        var image = document.querySelector('img');
-                        var filterControls = document.querySelectorAll('input[type=range}');
-                        function applyFilter() {
-                            var computedFilters = '';
-                            filterControls.forEach(function (item, index) {
-                                computedFilters += item.getAttribute('data-filter')+'('+ item.value + item.getAttribute('data-scale')+')';
-                            });
-                            image.style.filter= computedFilters;
-                        };
-                    </script>
+                    <input type="range" min="0" max="200" value="100" step="1" ng-change="applyFilter()" ng-model="contrast" data-filter="contrast" data-scalt="%"><br>
                 </div>
             </div>
         </div>
