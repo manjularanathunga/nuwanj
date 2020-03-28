@@ -20,6 +20,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
     $scope.uicompo.selectIndicationList = [];
     $scope.uicompo.selectFindingList = [];
     $scope.uicompo.imageurl  = '';
+    $scope.uicompo.showContainer  = false;
 
     var resetComponent = function(){
         $scope.patient = {};
@@ -28,6 +29,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $scope.scanHistortyList = [];
         $scope.uicompo.showItem  = false;
         $scope.uicompo.showSave  = false;
+        $scope.uicompo.showContainer = false;
     }
 
     $scope.searchBilling = function (type) {
@@ -85,6 +87,18 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
                     $scope.uicompo.showItem  = true;
                     $scope.uicompo.showSave  = false;
 
+                    if($scope.patientTest && $scope.patientTest.scanNumber){
+
+                        if($scope.patientTest.scanNumber.includes("null")){
+                            $scope.patientTest.scanNumber = $scope.patientTest.scanNumber.replace("nulll","");
+                        }
+
+                        if($scope.patientTest.scanNumber.includes("#")){
+                            $scope.uicompo.showContainer = false;
+                        }else{
+                            $scope.uicompo.showContainer = true;
+                        }
+                    }
                 } else {
                     Pop.timeMsg('error', 'SEARCH SCAN', obj.exception, 2000);
                 }
@@ -99,6 +113,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
         $scope.scanHistortyList = [];
         $scope.uicompo.showItem  = false;
         $scope.uicompo.showSave  = false;
+        $scope.uicompo.showContainer  = false;
     }
 
     $scope.onChangeIndication = function() {
@@ -122,6 +137,7 @@ app.controller('ScanningController', function($scope, $rootScope, $http, $locati
                 if(resp.data.success){
                     Pop.timeMsg('success', 'SAVE SCAN', ' SCAN HAS BEEN SAVED SUCCESSFULLY ', 2000);
                     $scope.uicompo.showSave  = false;
+                    $scope.uicompo.showContainer = true;
                 }else{
                     Pop.timeMsg('error', resp.data.exception, 'SAVE SCAN', 2000);
                 }

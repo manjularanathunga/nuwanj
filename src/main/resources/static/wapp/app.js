@@ -1,7 +1,6 @@
 var app = angular.module('app', ['ngRoute', 'ngCookies'])
     .run(['$rootScope', '$location', '$window', '$http', '$cookies', function ($rootScope, $location, $window, $http, $cookies) {
 
-
         $rootScope.currentUserId = $window.localStorage.getItem('mdbUserId') || false;
         $rootScope.mdbRole = $window.localStorage.getItem('mdbRole') || false;
         $rootScope.authdata = $window.localStorage.getItem('mdbAuthData') || false;
