@@ -64,7 +64,7 @@ public class PatientResultsLoader {
             }
             p = new PatientMedicalTest();
 
-            p.setLabType(LabType.Blood);
+            p.setLabType(LabType.BLOOD);
 
             try {
                 String data = l.get(1);

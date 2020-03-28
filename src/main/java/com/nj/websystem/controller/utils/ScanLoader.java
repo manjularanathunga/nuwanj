@@ -83,7 +83,7 @@ public class ScanLoader {
             String submitDate = dataFormatter.formatCellValue(cellIterator.next());
 
             p = new PatientMedicalTest();
-            p.setLabType(LabType.Scan);
+            p.setLabType(LabType.SCAN);
             p.setDose(dose);
             p.setPatientId(idpatient);
             //p.setBhtClinicNo(bhtclinicno);
@@ -181,7 +181,7 @@ public class ScanLoader {
             p = new PatientMedicalTest();
 
 
-            p.setLabType(LabType.Scan);
+            p.setLabType(LabType.SCAN);
             Patient patient = null;
             try {
                 String data = l.get(1);

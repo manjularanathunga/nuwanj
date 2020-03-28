@@ -36,7 +36,9 @@ app.controller('MedicalTestController', function ($scope, $rootScope, $http, $lo
             $scope.itemDisabled = true;
             $scope.mtest = itm;
         }
-        $scope.uicompo.pros = itm.scanOpsionProps;
+        if(itm && itm.scanOpsionProps){
+            $scope.uicompo.pros = itm.scanOpsionProps;
+        }
         $scope.mtest.optTests ="FSH,TSH";
         $("#modal-inv").modal("show");
     };

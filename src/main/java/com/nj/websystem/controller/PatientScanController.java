@@ -75,9 +75,9 @@ public class PatientScanController {
         List<PatientMedicalTest> patientMedicalTestList = new ArrayList<>();
 
         if(type.equalsIgnoreCase("BILLING")){
-            patientMedicalTestList = patientMedicalTestService.findAllByBillingNumberAndLabType(searchNum, LabType.Scan);
+            patientMedicalTestList = patientMedicalTestService.findAllByBillingNumberAndLabType(searchNum, LabType.SCAN);
         }else{
-            patientMedicalTestList = patientMedicalTestService.findAllByScanNumberAndLabType(searchNum, LabType.Scan);
+            patientMedicalTestList = patientMedicalTestService.findAllByScanNumberAndLabType(searchNum, LabType.SCAN);
         }
 
         if (patientMedicalTestList.size() > 0) {
