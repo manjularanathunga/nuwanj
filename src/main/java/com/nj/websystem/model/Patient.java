@@ -35,7 +35,10 @@ public class Patient {
     private String billingNumber;
     @Column(columnDefinition="TEXT")
     private String oldValues;
-
+    @OneToOne
+    private City city;
+    @OneToOne
+    private District district;
 
     public String getPatientAddress() {
         return patientAddress;

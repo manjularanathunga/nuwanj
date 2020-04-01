@@ -2,12 +2,11 @@ package com.nj.websystem.controller;
 
 import com.nj.websystem.enums.Status;
 import com.nj.websystem.enums.TestType;
-import com.nj.websystem.model.Patient;
-import com.nj.websystem.model.PatientMedicalTest;
+import com.nj.websystem.model.*;
 import com.nj.websystem.rest.HttpResponse;
 import com.nj.websystem.rest.Rest;
-import com.nj.websystem.service.PatientMedicalTestService;
-import com.nj.websystem.service.PatientService;
+import com.nj.websystem.rest.lab.LabBaen;
+import com.nj.websystem.service.*;
 import com.nj.websystem.util.DateUtility;
 import com.nj.websystem.util.StringUtility;
 import org.slf4j.Logger;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +31,15 @@ public class PatientMedicalTestController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private BillingService billingService;
+
+    @Autowired
+    private MedicalTestService medicalTestService;
+
+    @Autowired
+    private PatientTestService patientTestService;
 
     @RequestMapping(value = "/getList", method = RequestMethod.GET, headers = "Accept=application/json")
     public List getList() {
@@ -173,14 +182,6 @@ public class PatientMedicalTestController {
 
         PatientMedicalTest savedMedicalTest = services.save(obj);
 
-/*        Optional<PatientMedicalTest> dbobj = services.findAllByScanNumber(obj.getScanNumber());
-        if(dbobj.isPresent()){
-            res.setSuccess(false);
-            res.setException("Scan Id : " + obj.getScanNumber() + "  already exist");
-            return res;
-        }*/
-
-
         if (savedMedicalTest != null) {
             res.setResponse(savedMedicalTest);
             res.setSuccess(true);
@@ -209,23 +210,6 @@ public class PatientMedicalTestController {
         return response;
     }
 
-/*    @RequestMapping(value = "/delete", method = RequestMethod.DELETE, headers = "Accept=application/json")
-    public HttpResponse delete(@RequestParam(value = "id", required = false) Long id) {
-        logger.info("Delete UserAdmin Name : {} " + id);
-        HttpResponse response = new HttpResponse();
-        UserAdmin item = services.getOne(id);
-        if (item != null) {
-            services.delete(item);
-            response.setSuccess(true);
-        } else {
-            response.setSuccess(false);
-            logger.info("Record has been already deleted : {} " + id);
-            response.setException("Record has been already deleted");
-        }
-        return response;
-    }
-*/
-
     @RequestMapping(value = "/findAllByPatientIdAndBillingNumber", method = RequestMethod.GET, headers = "Accept=application/json")
     public HttpResponse findAllByPatientIdAndBillingNumber(@RequestParam(value = "patientid", required = false) String patientid, @RequestParam(value = "billingNumber", required = false) String billingNumber) {
         logger.info("Delete OfficeRoom Name : {} " + billingNumber);
@@ -247,21 +231,28 @@ public class PatientMedicalTestController {
     public HttpResponse findAllByBillingNumber(@RequestParam(value = "billingNumber", required = false) String billingNumber) {
         logger.info("findAllByBillingNumber : {} " + billingNumber);
         HttpResponse response = new HttpResponse();
-        List<PatientMedicalTest> itemList = services.findAllByBillingNumber(billingNumber);
-        if (itemList != null && itemList.size() > 0) {
-            if (itemList.size() > 0) {
-                Patient patient = patientService.findByPatientId(itemList.get(0).getPatientId()).get(0);
-                List test = new ArrayList();
-                test.add(patient);
-                test.add(itemList);
-                response.setResponse(test);
+        Optional<Billing> blOps = billingService.findByBillingNumber(billingNumber);
+        if(blOps.isPresent()){
+            Billing bl = blOps.get();
+            List<PatientTest> listOfPatientTst = bl.getListOfPatientTst();
+            if (listOfPatientTst != null && listOfPatientTst.size() > 0) {
+                LabBaen labBaen = new LabBaen();
+                List neanLst = new ArrayList();
+                if (listOfPatientTst.size() > 0) {
+                    listOfPatientTst.forEach(r ->{
+                        neanLst.add(initLabBaen(r,bl));
+                    });
+                    response.setResponse(neanLst);
+                    response.setSuccess(true);
+                    response.setRecCount(neanLst.size());
+                    return response;
+                }
             }
-            response.setSuccess(true);
-        } else {
-            response.setSuccess(false);
-            logger.info("Record not found  : {} " + billingNumber);
-            response.setException("Record not found  : {} " + billingNumber);
         }
+
+        response.setSuccess(false);
+        logger.info("Record not found  : {} " + billingNumber);
+        response.setException("Record not found  : {} " + billingNumber);
         return response;
     }
 
@@ -294,8 +285,24 @@ public class PatientMedicalTestController {
         items.forEach(i ->
                 i.setId(null)
         );
-        List result = services.saveAll(items);
-        if (result != null && result.size() > 0) {
+        List<PatientMedicalTest> resultLst = services.saveAll(items);
+
+        Billing bln = initPatientMedicalTest(resultLst.get(0));
+        billingService.save(bln);
+
+        resultLst.forEach(r ->{
+            PatientTest pt = initPatientTest(r);
+            pt.setBilling(bln);
+            // pt.setRemarks(); // set by doctor
+            //pt.setPrescription();// set by doctor
+            //pt.setReferBy();// set by doctor
+            patientTestService.save(pt);
+
+        });
+        //saving bill number
+
+
+        if (resultLst != null && resultLst.size() > 0) {
             response.setSuccess(true);
         } else {
             response.setSuccess(false);
@@ -305,4 +312,42 @@ public class PatientMedicalTestController {
 
     }
 
+    private Billing initPatientMedicalTest(PatientMedicalTest pmt){
+        Billing blg = new Billing();
+        blg.setBillingNumber(pmt.getBillingNumber());
+        blg.setPriority(pmt.getPriority());
+        Patient p = patientService.findByPatientId(pmt.getPatientId()).get(0);
+        blg.setPatient(p);
+        blg.setActionBy(pmt.getActionBy());
+        blg.setDateCreated(new Date());
+        blg.setStatus(Status.OPEN);
+        //blg.setLastModified(); // set by printer or doc
+        return blg;
+    }
+
+    private PatientTest initPatientTest(PatientMedicalTest pmt){
+        MedicalTest mt = medicalTestService.findAllByTestNumber(pmt.getTestNumber()).get(0);
+        PatientTest pt = new PatientTest();
+        pt.setLabType(mt.getLabType());
+        pt.setMedicalTest(mt);
+        pt.setStatus(Status.OPEN);
+        pt.setSeenBy(pmt.getSeenBy());
+        pt.setPriority(pmt.getPriority());
+        return pt;
+    }
+
+    private LabBaen initLabBaen(PatientTest rec, Billing b){
+        LabBaen labBaen = new LabBaen();
+        MedicalTest mt = rec.getMedicalTest();
+        labBaen.setStatus(Status.OPEN);
+        labBaen.setTestNumber(mt.getTestNumber());
+        labBaen.setPatientName(b.getPatient().getPatientName());
+        labBaen.setPatientDOB(b.getPatient().getDateOfBirth());
+        labBaen.setBillingDate(b.getDateCreated());
+        labBaen.setName(rec.getMedicalTest().getName());
+        labBaen.setDistrictName(b.getPatient().getDistrictName());
+        //labBaen.setReference();
+        // labBaen.setResults(); adding in the screeen
+      return labBaen;
+    }
 }

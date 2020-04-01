@@ -16,9 +16,13 @@ app.controller('LabResultsController', function($scope, $rootScope, $http, $loca
         var res = $http.get("patientmedicaltest/findAllByBillingNumber?billingNumber=" + $scope.uicompo.billingNumber)
             .then(function(response) {
                 if (response.data.success) {
-                    var dList = response.data.response;
-                    $scope.patient = dList[0];
-                    $scope.patientMediTestList = dList[1];
+                    var resObj = response.data.response;
+                    $scope.patientMediTestList = resObj;
+                    $scope.patient.patientName = resObj[0].patientName;
+                    $scope.patient.districtName = resObj[0].districtName;
+                    $scope.patient.dateCreated = resObj[0].billingDate;
+
+                    $scope.patientMediTestList = resObj;
                     $scope.uicompo.showContent = true;
                 } else {
                     $scope.patientMediTestList = [];

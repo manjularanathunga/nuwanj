@@ -11,8 +11,10 @@ public class UserScreen {
     @SequenceGenerator(name = "TBL_USER_SCREEN_SEQ", sequenceName = "TBL_USER_SCREEN_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TBL_USER_SCREEN_SEQ")
     private Long id;
-    private Long userAdminId;
-    private Long systemScreenId;
+    @ManyToOne
+    private SystemScreen systemScreen;
+    @ManyToOne
+    private UserScreen screen;
     private String prop;
     private boolean readEnabled;
     private boolean writeEnabled;
@@ -23,22 +25,6 @@ public class UserScreen {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserAdminId() {
-        return userAdminId;
-    }
-
-    public void setUserAdminId(Long userAdminId) {
-        this.userAdminId = userAdminId;
-    }
-
-    public Long getSystemScreenId() {
-        return systemScreenId;
-    }
-
-    public void setSystemScreenId(Long systemScreenId) {
-        this.systemScreenId = systemScreenId;
     }
 
     public String getProp() {
